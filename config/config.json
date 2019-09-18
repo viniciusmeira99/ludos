@@ -1,0 +1,16 @@
+{
+  "development": {
+    "username": "root",
+    "password": null,
+    "database": "ludos",
+    "host": "localhost",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "node",
+    "password": "uscsdevolveminhavida",
+    "database": "ludos",
+    "host": "35.199.71.108",
+    "dialect": "mysql"
+  }
+}

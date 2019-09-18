@@ -189,7 +189,7 @@ const SignIn = props => {
       }).catch((err) => {
         setFormState(formState => ({
           ...formState,
-          errors: err.response.data.errors,
+          errors: err.response.data.errors || {},
         }));
       }).then(() => {
         setIsLoading(false);

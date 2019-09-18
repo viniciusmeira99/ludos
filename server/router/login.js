@@ -32,6 +32,9 @@ router.post('/login', (req, res) => {
       }
 
       res.status(200).json(user.toJSON());
+    })
+    .catch((err) => {
+      res.status(500).json(err);
     });
 });
 

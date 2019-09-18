@@ -21,6 +21,4 @@ const User = sequelize.define('user', {
   },
 });
 
-// User.drop().then(() => User.sync());
-
 module.exports = User;

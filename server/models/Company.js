@@ -1,7 +1,7 @@
 const { STRING } = require('sequelize');
 const sequelize = require('../sequelize');
 
-const Company = sequelize.define('user', {
+const Company = sequelize.define('company', {
   name: {
     type: STRING,
     allowNull: false

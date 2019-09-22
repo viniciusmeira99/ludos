@@ -8,13 +8,12 @@ const drop = async () => {
 
 const create = async () => {
   await Company.sync();
-  User.belongsTo(Company);
   await User.sync();
 };
 
 const dropAndCreate = () => drop().then(create);
 
-dropAndCreate().catch(console.log);
+dropAndCreate();
 
 module.exports = {
   drop,

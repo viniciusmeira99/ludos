@@ -49,6 +49,9 @@ const Profile = props => {
         {user.name}
       </Typography>
       <Typography variant="body2">{user.email}</Typography>
+      <Typography variant="body2">
+        {user.company.name}
+      </Typography>
     </div>
   );
 };

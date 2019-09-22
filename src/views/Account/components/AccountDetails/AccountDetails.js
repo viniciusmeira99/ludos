@@ -116,7 +116,7 @@ const AccountDetails = props => {
                 name="name"
                 onChange={handleChange}
                 required
-                value={values.name}
+                value={values.name || ''}
                 variant="outlined"
               />
             </Grid>
@@ -134,7 +134,7 @@ const AccountDetails = props => {
                 name="email"
                 onChange={handleChange}
                 required
-                value={values.email}
+                value={values.email || ''}
                 variant="outlined"
               />
             </Grid>
@@ -151,7 +151,7 @@ const AccountDetails = props => {
                 name="phone"
                 onChange={handleChange}
                 type="string"
-                value={values.phone}
+                value={values.phone || ''}
                 variant="outlined"
               />
             </Grid>

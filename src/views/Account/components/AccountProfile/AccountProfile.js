@@ -70,6 +70,13 @@ const AccountProfile = props => {
             >
               {user.email}
             </Typography>
+            <Typography
+              className={classes.locationText}
+              color="textSecondary"
+              variant="body1"
+            >
+              {user.company.name}
+            </Typography>
           </div>
           <Avatar
             className={classes.avatar}

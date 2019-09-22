@@ -13,7 +13,7 @@ const create = async () => {
 
 const dropAndCreate = () => drop().then(create);
 
-dropAndCreate().catch(console.log);
+dropAndCreate();
 
 module.exports = {
   drop,

@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { User } = require('../models/index');
+const { User, Company } = require('../models/index');
 
 const router = new Router();
 
@@ -10,6 +10,9 @@ router.post('/login', (req, res) => {
       where: {
         email,
       },
+      include: [
+        { model: Company }
+      ],
     })
     .then((user) => {
       if (!user) {

@@ -59,11 +59,6 @@ const Sidebar = props => {
       icon: <ShoppingBasketIcon />
     },
     {
-      title: 'Authentication',
-      href: '/entrar',
-      icon: <LockOpenIcon />
-    },
-    {
       title: 'Typography',
       href: '/typography',
       icon: <TextFieldsIcon />
@@ -103,7 +98,6 @@ const Sidebar = props => {
           className={classes.nav}
           pages={pages}
         />
-        <UpgradePlan />
       </div>
     </Drawer>
   );

@@ -10,9 +10,8 @@ import TextFieldsIcon from '@material-ui/icons/TextFields';
 import ImageIcon from '@material-ui/icons/Image';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import SettingsIcon from '@material-ui/icons/Settings';
-import LockOpenIcon from '@material-ui/icons/LockOpen';
 
-import { Profile, SidebarNav, UpgradePlan } from './components';
+import { Profile, SidebarNav } from './components';
 
 const useStyles = makeStyles(theme => ({
   drawer: {
@@ -46,39 +45,46 @@ const Sidebar = props => {
     {
       title: 'Dashboard',
       href: '/',
-      icon: <DashboardIcon />
+      icon: <DashboardIcon />,
+      devel: false,
     },
     {
-      title: 'Users',
+      title: 'Usuários',
       href: '/users',
-      icon: <PeopleIcon />
+      icon: <PeopleIcon />,
+      devel: false,
     },
     {
-      title: 'Products',
+      title: 'Produtos',
       href: '/products',
-      icon: <ShoppingBasketIcon />
+      icon: <ShoppingBasketIcon />,
+      devel: true,
     },
     {
-      title: 'Typography',
+      title: 'Tipografia',
       href: '/typography',
-      icon: <TextFieldsIcon />
+      icon: <TextFieldsIcon />,
+      devel: true,
     },
     {
-      title: 'Icons',
+      title: 'Icones',
       href: '/icons',
-      icon: <ImageIcon />
+      icon: <ImageIcon />,
+      devel: true,
     },
     {
-      title: 'Account',
+      title: 'Minha conta',
       href: '/account',
-      icon: <AccountBoxIcon />
+      icon: <AccountBoxIcon />,
+      devel: false,
     },
     {
-      title: 'Settings',
+      title: 'Configurações',
       href: '/settings',
-      icon: <SettingsIcon />
+      icon: <SettingsIcon />,
+      devel: true,
     }
-  ];
+  ].filter(page => !(process.env.NODE_ENV === 'production' && page.devel));
 
   return (
     <Drawer

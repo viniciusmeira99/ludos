@@ -16,6 +16,12 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import api from '../../api';
 
 const schema = {
+  company: {
+    presence: { allowEmpty: false, message: 'Empresa é obrigatória' },
+    length: {
+      maximum: 32
+    }
+  },
   name: {
     presence: { allowEmpty: false, message: 'Nome é obrigatório' },
     length: {
@@ -243,6 +249,20 @@ const SignUp = props => {
                 >
                   Cadastrar uma nova conta
                 </Typography>
+                <TextField
+                  className={classes.textField}
+                  error={hasError('company')}
+                  fullWidth
+                  helperText={
+                    hasError('company') ? formState.errors.company[0] : null
+                  }
+                  label="Empresa"
+                  name="company"
+                  onChange={handleChange}
+                  type="text"
+                  value={formState.values.company || ''}
+                  variant="outlined"
+                />
                 <TextField
                   className={classes.textField}
                   error={hasError('name')}

@@ -1,24 +1,33 @@
 const { Router } = require('express');
-const { User } = require('../models/index');
+const { User, Company } = require('../models/index');
 
 const router = new Router();
 
 router.post('/users', (req, res) => {
-  return User
-    .create(req.body)
-    .then((user) => {
-      res.status(201).json({ id: user.id});
-    })
-    .catch((err) => {
-      const messages = err.errors ? err.errors.map(err => err.message) : [];
-      if (messages.includes('email must be unique')) {
-        res.status(400)
-          .json({ errors: { email: ['E-mail já cadastrado.'] } });
-        return;
-      }
+  const { company, ...user } = req.body;
+  return Company.findOrCreate({ 
+    where: { 
+      name: company,
+    }
+  }).then(([company]) => {
+    return User
+      .create(user)
+      .then((user) => {
+        company.addUsers([user]).then(user => user.save()).then((user) => {
+          res.status(201).json({ id: user.id });
+        })
+      })
+      .catch((err) => {
+        const messages = err.errors ? err.errors.map(err => err.message) : [];
+        if (messages.includes('email must be unique')) {
+          res.status(400)
+            .json({ errors: { email: ['E-mail já cadastrado.'] } });
+          return;
+        }
 
-      res.status(400).json(err);
-    })
+        res.status(400).json(err);
+      });
+  })
     .catch((err) => {
       res.status(500).json(err);
     });

@@ -22,7 +22,8 @@ const User = sequelize.define('user', {
   },
   level: {
     type: ENUM(LEVEL_MASTER, LEVEL_ADMIN, LEVEL_USER),
-    allowNull: true,
+    allowNull: false,
+    defaultValue: LEVEL_ADMIN,
   },
 });
 

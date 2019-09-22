@@ -8,7 +8,6 @@ const drop = async () => {
 
 const create = async () => {
   await Company.sync();
-  User.belongsTo(Company);
   await User.sync();
 };
 

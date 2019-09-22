@@ -59,11 +59,6 @@ const Sidebar = props => {
       icon: <ShoppingBasketIcon />
     },
     {
-      title: 'Authentication',
-      href: '/entrar',
-      icon: <LockOpenIcon />
-    },
-    {
       title: 'Typography',
       href: '/typography',
       icon: <TextFieldsIcon />

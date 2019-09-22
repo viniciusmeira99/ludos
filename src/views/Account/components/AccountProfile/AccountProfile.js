@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import moment from 'moment';
 import { makeStyles } from '@material-ui/styles';
 import {
   Card,
@@ -79,7 +78,7 @@ const AccountProfile = props => {
         </div>
         <div className={classes.progress}>
           <Typography variant="body1">
-            {`Perfil ${porcentagemPerfilCompleto}% completo.`}
+            {`Perfil ${porcentagemPerfilCompleto.toFixed(0)}% completo.`}
           </Typography>
           <LinearProgress
             value={porcentagemPerfilCompleto}

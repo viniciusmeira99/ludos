@@ -9,7 +9,8 @@ import {
   IconButton,
   TextField,
   Link,
-  Typography
+  Typography,
+  CircularProgress
 } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import api from '../../api';
@@ -123,6 +124,8 @@ const SignUp = props => {
 
   const classes = useStyles();
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const [formState, setFormState] = useState({
     isValid: false,
     values: {},
@@ -165,15 +168,21 @@ const SignUp = props => {
 
   const handleSignUp = event => {
     event.preventDefault();
+    setIsLoading(true);
+
     api.post('/users', formState.values)
       .then(() => {
         history.push('/entrar');
-      }).catch((err) => {
+      })
+      .catch((err) => {
         setFormState(formState => ({
           ...formState,
-          errors: err.response.data
+          errors: err.response.data.errors || {},
         }))
       })
+      .then(() => {
+        setIsLoading(false);
+      });
   };
 
   const hasError = field =>
@@ -239,7 +248,7 @@ const SignUp = props => {
                   error={hasError('name')}
                   fullWidth
                   helperText={
-                    hasError('name') ? formState.errors.name : null
+                    hasError('name') ? formState.errors.name[0] : null
                   }
                   label="Nome"
                   name="name"
@@ -253,7 +262,7 @@ const SignUp = props => {
                   error={hasError('email')}
                   fullWidth
                   helperText={
-                    hasError('email') ? formState.errors.email : null
+                    hasError('email') ? formState.errors.email[0] : null
                   }
                   label="E-mail"
                   name="email"
@@ -267,7 +276,7 @@ const SignUp = props => {
                   error={hasError('password')}
                   fullWidth
                   helperText={
-                    hasError('password') ? formState.errors.password : null
+                    hasError('password') ? formState.errors.password[0] : null
                   }
                   label="Senha"
                   name="password"
@@ -279,13 +288,19 @@ const SignUp = props => {
                 <Button
                   className={classes.signUpButton}
                   color="primary"
-                  disabled={!formState.isValid}
+                  disabled={!formState.isValid || isLoading}
                   fullWidth
                   size="large"
                   type="submit"
                   variant="contained"
                 >
                   Cadastrar agora!
+                  {isLoading && (
+                    <CircularProgress
+                      className={classes.circularProgress}
+                      size={30}
+                    />
+                  )}
                 </Button>
                 <Typography
                   color="textSecondary"

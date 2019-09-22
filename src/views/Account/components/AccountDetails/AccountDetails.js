@@ -73,7 +73,7 @@ const AccountDetails = props => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    api.put('/users/${values.id}', values)
+    api.put(`/users/${values.id}`, values)
       .then(() => {
         setUser(values);
       }).catch((err) => {

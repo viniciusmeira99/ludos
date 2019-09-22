@@ -12,10 +12,15 @@ router.post('/users', (req, res) => {
     .catch((err) => {
       const messages = err.errors ? err.errors.map(err => err.message) : [];
       if (messages.includes('email must be unique')) {
-        res.status(400).json({ email: 'E-mail já cadastrado.'});
+        res.status(400)
+          .json({ errors: { email: ['E-mail já cadastrado.'] } });
         return;
       }
+
       res.status(400).json(err);
+    })
+    .catch((err) => {
+      res.status(500).json(err);
     });
 });
 

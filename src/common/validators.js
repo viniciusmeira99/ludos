@@ -4,6 +4,14 @@ const checked = (value, options) => {
   }
 };
 
+const phone = (value, options) => {
+  const tamanho = value.replace(/\D/g, '').length; 
+  if (tamanho !== 10 && tamanho !== 11) {
+    return options.message || 'tamanho inválido';
+  }
+};
+
 export default {
-  checked
+  checked,
+  phone,
 };

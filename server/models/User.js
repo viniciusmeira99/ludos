@@ -1,5 +1,6 @@
-const { STRING } = require('sequelize');
+const { STRING, ENUM } = require('sequelize');
 const sequelize = require('../sequelize');
+const { LEVEL_MASTER, LEVEL_ADMIN, LEVEL_USER } = require('../constants');
 
 const User = sequelize.define('user', {
   name: {
@@ -17,6 +18,10 @@ const User = sequelize.define('user', {
   },
   phone: {
     type: STRING,
+    allowNull: true,
+  },
+  level: {
+    type: ENUM(LEVEL_MASTER, LEVEL_ADMIN, LEVEL_USER),
     allowNull: true,
   },
 });

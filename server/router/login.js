@@ -7,7 +7,6 @@ router.post('/login', (req, res) => {
   const { email, password } = req.body;
   return User
     .findOne({
-      columns: ['id', 'name', 'email', 'createdAt', 'updatedAt'],
       where: {
         email,
       },
@@ -31,7 +30,11 @@ router.post('/login', (req, res) => {
         return;
       }
 
-      res.status(200).json(user.toJSON());
+      
+      res.status(200).json({
+        ...user.toJSON(),
+        password: undefined,
+      });
     })
     .catch((err) => {
       res.status(500).json(err);

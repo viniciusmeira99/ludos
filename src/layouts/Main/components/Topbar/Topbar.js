@@ -20,7 +20,10 @@ const useStyles = makeStyles(theme => ({
   },
   signOutButton: {
     marginLeft: theme.spacing(1)
-  }
+  },
+  signOutLink: {
+    color: 'inherit'
+  },
 }));
 
 const Topbar = props => {
@@ -54,12 +57,17 @@ const Topbar = props => {
               <NotificationsIcon />
             </Badge>
           </IconButton>
-          <IconButton
-            className={classes.signOutButton}
-            color="inherit"
+          <RouterLink
+            className={classes.signOutLink}
+            to="/sair"
           >
-            <InputIcon />
-          </IconButton>
+            <IconButton
+              className={classes.signOutButton}
+              color="inherit"
+            >
+              <InputIcon />
+            </IconButton>
+          </RouterLink>
         </Hidden>
         <Hidden lgUp>
           <IconButton

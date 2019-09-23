@@ -114,11 +114,10 @@ const UsersTable = props => {
                       onChange={handleSelectAll}
                     />
                   </TableCell>
-                  <TableCell>Name</TableCell>
-                  <TableCell>Email</TableCell>
-                  <TableCell>Location</TableCell>
-                  <TableCell>Phone</TableCell>
-                  <TableCell>Registration date</TableCell>
+                  <TableCell>Nome</TableCell>
+                  <TableCell>E-mail</TableCell>
+                  <TableCell>Telefone</TableCell>
+                  <TableCell>Data do cadastro</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -149,10 +148,6 @@ const UsersTable = props => {
                       </div>
                     </TableCell>
                     <TableCell>{user.email}</TableCell>
-                    <TableCell>
-                      {user.address.city}, {user.address.state},{' '}
-                      {user.address.country}
-                    </TableCell>
                     <TableCell>{user.phone}</TableCell>
                     <TableCell>
                       {moment(user.createdAt).format('DD/MM/YYYY')}

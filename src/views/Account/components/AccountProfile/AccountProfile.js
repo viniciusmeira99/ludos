@@ -13,6 +13,7 @@ import {
   LinearProgress
 } from '@material-ui/core';
 import { Context } from 'context';
+import { getInitials } from 'helpers';
 
 const useStyles = makeStyles(theme => ({
   root: {},
@@ -21,7 +22,7 @@ const useStyles = makeStyles(theme => ({
   },
   avatar: {
     marginLeft: 'auto',
-    height: 110,
+    height: 100,
     width: 100,
     flexShrink: 0,
     flexGrow: 0
@@ -39,13 +40,6 @@ const AccountProfile = props => {
 
   const { user } = useContext(Context);
   const classes = useStyles();
-
-  const defaultUser = {
-    city: 'Los Angeles',
-    country: 'USA',
-    timezone: 'GTM-7',
-    avatar: '/images/avatars/avatar_11.png'
-  };
 
   const porcentagemPerfilCompleto = (Object.values(user).filter(Boolean).length / Object.values(user).length * 100);
 
@@ -80,8 +74,10 @@ const AccountProfile = props => {
           </div>
           <Avatar
             className={classes.avatar}
-            src={defaultUser.avatar}
-          />
+            src={user.avatar}
+          >
+            {getInitials(user.name)}
+          </Avatar>
         </div>
         <div className={classes.progress}>
           <Typography variant="body1">

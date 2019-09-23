@@ -1,6 +1,4 @@
-const env = process.env.NODE_ENV || 'development';
-
-const sequelize = env === 'production' 
+const sequelize = process.env.NODE_ENV === 'production' 
   ? require('./sequelize-prod') 
   : require('./sequelize-dev');
 

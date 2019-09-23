@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
 import { Avatar, Typography } from '@material-ui/core';
 import { Context } from 'context';
+import { getInitials } from 'helpers';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -28,8 +29,6 @@ const Profile = props => {
 
   const classes = useStyles();
 
-  const avatar = '/images/avatars/avatar_11.png';
-
   return (
     <div
       {...rest}
@@ -39,9 +38,11 @@ const Profile = props => {
         alt="Person"
         className={classes.avatar}
         component={RouterLink}
-        src={avatar}
+        src={user.avatar}
         to="/settings"
-      />
+      >
+        {getInitials(user.name)}
+      </Avatar>
       <Typography
         className={classes.name}
         variant="h4"

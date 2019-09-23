@@ -13,7 +13,8 @@ const create = async () => {
 
 const dropAndCreate = () => drop().then(create);
 
-dropAndCreate();
+dropAndCreate()
+  .then(() => process.exit());
 
 module.exports = {
   drop,

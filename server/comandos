@@ -1,0 +1,8 @@
+# criando processo do mysql no docker
+docker run -p 3306:3306 --name=mysql1 -d mysql/mysql-server:5.7.24
+
+# login mysql no docker
+docker exec -it mysql1 mysql -uroot -p
+
+# inicializando processo do mysql no docker
+docker start mysql1

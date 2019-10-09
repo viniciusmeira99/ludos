@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
@@ -12,6 +12,8 @@ import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import SettingsIcon from '@material-ui/icons/Settings';
 
 import { Profile, SidebarNav } from './components';
+import { Context } from 'context';
+import { LEVEL_ADMIN } from 'consts';
 
 const useStyles = makeStyles(theme => ({
   drawer: {
@@ -38,6 +40,7 @@ const useStyles = makeStyles(theme => ({
 
 const Sidebar = props => {
   const { open, variant, onClose, className, ...rest } = props;
+  const { user } = useContext(Context);
 
   const classes = useStyles();
 
@@ -48,7 +51,7 @@ const Sidebar = props => {
       icon: <DashboardIcon />,
       devel: false,
     },
-    {
+    user.level === LEVEL_ADMIN && {
       title: 'Usuários',
       href: '/users',
       icon: <PeopleIcon />,
@@ -84,7 +87,9 @@ const Sidebar = props => {
       icon: <SettingsIcon />,
       devel: true,
     }
-  ].filter(page => !(process.env.NODE_ENV === 'production' && page.devel));
+  ]
+    .filter(page => !(process.env.NODE_ENV === 'production' && page.devel))
+    .filter(Boolean);
 
   return (
     <Drawer

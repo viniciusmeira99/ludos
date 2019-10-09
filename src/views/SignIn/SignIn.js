@@ -187,10 +187,12 @@ const SignIn = props => {
         setUser(user);
         history.push('/');
       }).catch((err) => {
-        setFormState(formState => ({
-          ...formState,
-          errors: err.response.data.errors || {},
-        }));
+        if (err.response) {
+          setFormState(formState => ({
+            ...formState,
+            errors: err.response.data.errors || {},
+          }));
+        }
       }).then(() => {
         setIsLoading(false);
       });

@@ -96,9 +96,11 @@ const AccountProfile = props => {
           color="primary"
           variant="text"
         >
-          Upload picture
+          Enviar foto
         </Button>
-        <Button variant="text">Remove picture</Button>
+        <Button variant="text">
+          Remover foto
+        </Button>
       </CardActions>
     </Card>
   );

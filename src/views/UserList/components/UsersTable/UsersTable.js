@@ -16,10 +16,11 @@ import {
   TableHead,
   TableRow,
   Typography,
-  TablePagination
+  TablePagination,
 } from '@material-ui/core';
 
 import { getInitials } from 'helpers';
+import LevelChip from '../LevelChip';
 
 const useStyles = makeStyles(theme => ({
   root: {},
@@ -117,6 +118,7 @@ const UsersTable = props => {
                   <TableCell>Nome</TableCell>
                   <TableCell>E-mail</TableCell>
                   <TableCell>Telefone</TableCell>
+                  <TableCell>Nível</TableCell>
                   <TableCell>Data do cadastro</TableCell>
                 </TableRow>
               </TableHead>
@@ -149,6 +151,9 @@ const UsersTable = props => {
                     </TableCell>
                     <TableCell>{user.email}</TableCell>
                     <TableCell>{user.phone}</TableCell>
+                    <TableCell>
+                      <LevelChip level={user.level} />
+                    </TableCell>  
                     <TableCell>
                       {moment(user.createdAt).format('DD/MM/YYYY')}
                     </TableCell>

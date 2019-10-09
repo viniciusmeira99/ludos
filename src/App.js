@@ -12,6 +12,7 @@ import './assets/scss/index.scss';
 import validators from './common/validators';
 import Routes from './Routes';
 import { Provider } from 'context';
+import { SnackbarProvider } from 'notistack';
 
 const browserHistory = createBrowserHistory();
 
@@ -30,11 +31,13 @@ export default class App extends Component {
   render() {
     return (
       <Provider>
-        <ThemeProvider theme={theme}>
-          <Router history={browserHistory}>
-            <Routes />
-          </Router>
-        </ThemeProvider>
+        <SnackbarProvider>
+          <ThemeProvider theme={theme}>
+            <Router history={browserHistory}>
+              <Routes />
+            </Router>
+          </ThemeProvider>
+        </SnackbarProvider>
       </Provider>
     );
   }

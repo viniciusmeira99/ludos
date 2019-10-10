@@ -1,6 +1,5 @@
 import React, { useState, useContext } from 'react';
 import { withRouter } from 'react-router-dom';
-import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import validate from 'validate.js';
 import { makeStyles } from '@material-ui/styles';
@@ -70,7 +69,7 @@ const schema = {
 };
 
 const UserDetails = props => {
-  const { className, ...rest } = props;
+  const { history } = props;
   const { enqueueSnackbar } = useSnackbar();
 
   const classes = useStyles();
@@ -103,7 +102,7 @@ const UserDetails = props => {
       .then(() => {
         setValues({ level: LEVEL_USER });
         enqueueSnackbar('Usuário cadastrado', { variant: 'success',  });
-        props.history.goBack();
+        history.goBack();
       }).catch((err) => {
         if (err.response.data.errors) {
           setErrors(err.response.data.errors);
@@ -112,10 +111,7 @@ const UserDetails = props => {
   };
 
   return (
-    <Card
-      {...rest}
-      className={clsx(classes.root, className)}
-    >
+    <Card className={classes.root}>
       <form
         autoComplete="off"
         noValidate

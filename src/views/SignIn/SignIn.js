@@ -185,16 +185,16 @@ const SignIn = props => {
     api.post('/login', formState.values)
       .then(({ data: user }) => {
         setUser(user);
+        setIsLoading(false);
         history.push('/');
       }).catch((err) => {
+        setIsLoading(false);
         if (err.response) {
           setFormState(formState => ({
             ...formState,
             errors: err.response.data.errors || {},
           }));
         }
-      }).then(() => {
-        setIsLoading(false);
       });
   };
 

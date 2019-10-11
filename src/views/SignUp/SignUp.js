@@ -178,16 +178,15 @@ const SignUp = props => {
 
     api.post('/users', formState.values)
       .then(() => {
+        setIsLoading(false);
         history.push('/entrar');
       })
       .catch((err) => {
+        setIsLoading(false);
         setFormState(formState => ({
           ...formState,
           errors: err.response.data.errors || {},
         }))
-      })
-      .then(() => {
-        setIsLoading(false);
       });
   };
 

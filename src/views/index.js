@@ -9,3 +9,5 @@ export { default as SignUp } from './SignUp';
 export { default as Typography } from './Typography';
 export { default as UserCreate } from './UserCreate';
 export { default as UserList } from './UserList';
+export { default as GameList } from './GameList';
+export { default as GameCreate } from './GameCreate';

@@ -1,13 +1,21 @@
-const { TIME } = require('sequelize');
+const { DATE, STRING } = require('sequelize');
 const sequelize = require('../sequelize');
 
 const Game = sequelize.define('game', {
-  start: {
-    type: TIME,
+  name: {
+    type: STRING,
     allowNull: false
   },
-  end: {
-    type: TIME,
+  description: {
+    type: STRING,
+    allowNull: false
+  },
+  startDate: {
+    type: DATE,
+    allowNull: false
+  },
+  endDate: {
+    type: DATE,
     allowNull: false
   },
 });

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { makeStyles } from '@material-ui/styles';
 
-import { UsersToolbar, UsersTable } from './components';
+import { GamesToolbar, GamesTable } from './components';
 import api from 'api';
 import { Context } from 'context';
 
@@ -14,27 +14,27 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const UserList = () => {
+const GameList = () => {
   const classes = useStyles();
   const { user } = useContext(Context);
 
-  const [users, setUsers] = useState([]);
+  const [games, setGames] = useState([]);
 
   useEffect(() => {
-    api.get('/users', { 
+    api.get('/games', {
       params: { companyId: user.company.id },
     })
-      .then(response => setUsers(response.data))
+      .then(response => setGames(response.data))
   }, [user.company.id]);
 
   return (
     <div className={classes.root}>
-      <UsersToolbar />
+      <GamesToolbar />
       <div className={classes.content}>
-        <UsersTable users={users} />
+        <GamesTable games={games} />
       </div>
     </div>
   );
 };
 
-export default UserList;
+export default GameList;

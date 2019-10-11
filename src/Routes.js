@@ -15,7 +15,9 @@ import {
   Settings as SettingsView,
   SignUp as SignUpView,
   SignIn as SignInView,
-  NotFound as NotFoundView
+  NotFound as NotFoundView,
+  GameList as GameListView,
+  GameCreate as GameCreateView,
 } from './views';
 
 const Routes = () => {
@@ -43,6 +45,22 @@ const Routes = () => {
         isPrivate
         layout={MainLayout}
         path="/users/create"
+      />
+      <RouteWithLayout
+        component={GameListView}
+        exact
+        isAdminOnly
+        isPrivate
+        layout={MainLayout}
+        path="/games"
+      />
+      <RouteWithLayout
+        component={GameCreateView}
+        exact
+        isAdminOnly
+        isPrivate
+        layout={MainLayout}
+        path="/games/create"
       />
       <RouteWithLayout
         component={ProductListView}

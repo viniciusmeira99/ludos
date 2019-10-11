@@ -39,7 +39,7 @@ router.get('/users/:id', (req, res) => User
 router.get('/users', (req, res) => {
   const { companyId } = req.query;
   return User
-    .findAll({ where: companyId })
+    .findAll({ where: { companyId } })
     .then(users => res.status(200).json(users))
     .catch(err => res.status(400).json({ err: err.message }))
 });

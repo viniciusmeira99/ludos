@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
 import { Divider, Drawer } from '@material-ui/core';
 import DashboardIcon from '@material-ui/icons/Dashboard';
+import GamepadIcon from '@material-ui/icons/Gamepad';
 import PeopleIcon from '@material-ui/icons/People';
 import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
 import TextFieldsIcon from '@material-ui/icons/TextFields';
@@ -55,6 +56,12 @@ const Sidebar = props => {
       title: 'Usuários',
       href: '/users',
       icon: <PeopleIcon />,
+      devel: false,
+    },
+    user.level === LEVEL_ADMIN && {
+      title: 'Jogos',
+      href: '/games',
+      icon: <GamepadIcon />,
       devel: false,
     },
     {

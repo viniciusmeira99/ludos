@@ -11,3 +11,4 @@ export { default as UserCreate } from './UserCreate';
 export { default as UserList } from './UserList';
 export { default as GameList } from './GameList';
 export { default as GameCreate } from './GameCreate';
+export { default as GameDashboard } from './GameDashboard';

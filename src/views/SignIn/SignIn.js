@@ -186,7 +186,10 @@ const SignIn = props => {
       .then(({ data: user }) => {
         setUser(user);
         setIsLoading(false);
-        history.push('/');
+        if(user.level == 'A')
+          history.push('/');
+        else
+          history.push('/game-select');
       }).catch((err) => {
         setIsLoading(false);
         if (err.response) {

@@ -18,6 +18,7 @@ import {
   NotFound as NotFoundView,
   GameList as GameListView,
   GameCreate as GameCreateView,
+  GameDashboard as GameDashboardView,
 } from './views';
 
 const Routes = () => {
@@ -61,6 +62,13 @@ const Routes = () => {
         isPrivate
         layout={MainLayout}
         path="/games/create"
+      />
+      <RouteWithLayout
+        component={GameDashboardView}
+        exact
+        isPrivate
+        layout={MainLayout}
+        path="/game-select"
       />
       <RouteWithLayout
         component={ProductListView}

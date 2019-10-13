@@ -6,7 +6,6 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import api from 'api';
 import { Context } from 'context';
 
-import mockData from './data';
 import { GameCard } from './components';
 
 

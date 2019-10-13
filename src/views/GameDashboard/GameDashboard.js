@@ -30,14 +30,14 @@ const GameDashboard = () => {
 
   const { user } = useContext(Context);
 
-  const [games, setGames] = useState([]);
+  const [userGames, setGames] = useState([]);
 
   useEffect(() => {
-    api.get('/games', {
-      params: { companyId: user.company.id },
+    api.get('/user-games', {
+      params: { userId: user.id },
     })
       .then(response => setGames(response.data))
-  }, [user.company.id]);
+  }, [user.id]);
 
   return (
     <div className={classes.root}>
@@ -46,7 +46,7 @@ const GameDashboard = () => {
           container
           spacing={3}
         >
-          {games.map(game => (
+          {userGames.map(game => (
             <Grid
               item
               key={game.id}
@@ -62,5 +62,6 @@ const GameDashboard = () => {
     </div>
   );
 };
+
 
 export default GameDashboard;

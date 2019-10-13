@@ -58,4 +58,23 @@ router.put('/games/:id', (req, res) => {
     .catch(err => res.status(400).json(err));
 });
 
+router.get('/user-games', (req, res) => {
+  const a = Game
+  .findAll({ 
+    include: [{
+      model: User,
+      as: 'players',
+      required: true,
+      where: {
+        id: req.query.userId
+      }
+    }]
+  })
+  .then(function(users){
+    console.log(users);
+    res.status(200).json(users);
+  });
+  return a;
+  });
+
 module.exports = router;

@@ -11,16 +11,19 @@ import {
   Grid,
   Button,
   TextField,
+  FormLabel,
+  FormGroup,
+  FormHelperText,
 } from '@material-ui/core';
 import { Context } from 'context';
 import api from 'api';
 import { BackButton } from 'components';
 import { useSnackbar } from 'notistack';
+import { PlayerSelectionTable } from '..';
 
 const useStyles = makeStyles(() => ({
   root: {}
 }));
-
 
 const GameDetails = props => {
   const { history } = props;
@@ -50,7 +53,7 @@ const GameDetails = props => {
     })
       .then(() => {
         setValues({});
-        enqueueSnackbar('Jogo cadastrado', { variant: 'success',  });
+        enqueueSnackbar('Jogo cadastrado', { variant: 'success', });
         history.goBack();
       }).catch((err) => {
         if (err.response.data.errors) {
@@ -58,6 +61,9 @@ const GameDetails = props => {
         }
       });
   };
+
+  const hasError = name => Boolean(errors[name]);
+  const getError = name => hasError(name) ? errors[name][0] : '';
 
   return (
     <Card className={classes.root}>
@@ -81,9 +87,9 @@ const GameDetails = props => {
               xs={12}
             >
               <TextField
-                error={!!errors && errors.name}
+                error={hasError('name')}
                 fullWidth
-                helperText={errors && errors.name && errors.name[0]}
+                helperText={getError('name')}
                 label="Nome"
                 margin="dense"
                 name="name"
@@ -98,9 +104,9 @@ const GameDetails = props => {
               xs={12}
             >
               <TextField
-                error={!!errors && errors.description}
+                error={hasError('description')}
                 fullWidth
-                helperText={errors && errors.description && errors.description[0]}
+                helperText={getError('description')}
                 label="Descrição"
                 margin="dense"
                 name="description"
@@ -115,14 +121,19 @@ const GameDetails = props => {
               xs={6}
             >
               <TextField
-                error={!!errors && errors.startDate}
+                error={hasError('startDate')}
                 fullWidth
-                helperText={errors && errors.startDate && errors.startDate[0]}
+                helperText={getError('startDate')}
+                // eslint-disable-next-line react/jsx-sort-props
+                InputLabelProps={{
+                  shrink: true,
+                }}
                 label="Data inicial"
                 margin="dense"
                 name="startDate"
                 onChange={handleChange}
                 required
+                type="date"
                 value={values.startDate || ''}
                 variant="outlined"
               />
@@ -132,17 +143,45 @@ const GameDetails = props => {
               xs={6}
             >
               <TextField
-                error={!!errors && errors.endDate}
+                error={hasError('endDate')}
                 fullWidth
-                helperText={errors && errors.endDate && errors.endDate[0]}
+                helperText={getError('endDate')}
+                // eslint-disable-next-line react/jsx-sort-props
+                InputLabelProps={{
+                  shrink: true,
+                }}
                 label="Data inicial"
                 margin="dense"
                 name="endDate"
                 onChange={handleChange}
                 required
+                type="date"
                 value={values.endDate || ''}
                 variant="outlined"
               />
+            </Grid>
+            <Grid
+              item
+              xs={12}
+            >
+              <FormGroup>
+                <FormLabel
+                  error={hasError('playersIds')}
+                >
+                  Disponibilizar para os usuários:
+                </FormLabel>
+                <PlayerSelectionTable
+                  companyId={user.company.id}
+                  onChange={(playersIds) => {
+                    setValues(values => ({ ...values, playersIds }))
+                  }}
+                />
+                {hasError('playersIds') && (
+                  <FormHelperText error>
+                    {getError('playersIds')}
+                  </FormHelperText>
+                )}
+              </FormGroup>
             </Grid>
           </Grid>
         </CardContent>

@@ -125,7 +125,6 @@ const UsersTable = props => {
               <TableBody>
                 {users.slice(0, rowsPerPage).map(user => (
                   <TableRow
-                    className={classes.tableRow}
                     hover
                     key={user.id}
                     selected={selectedUsers.indexOf(user.id) !== -1}

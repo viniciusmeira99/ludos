@@ -1,8 +1,8 @@
 const { Router } = require('express');
-const { User, Game } = require('../models/index');
+const { User, Game, UsersGames } = require('../models/index');
 
 const router = new Router();
-const validarBodyPostGames = (body) => {
+const validarBodyPostGames = body => {
   const errors = {};
   if (!body.companyId) {
     errors.companyId = ['Informe a empresa'];
@@ -19,6 +19,9 @@ const validarBodyPostGames = (body) => {
   if (!body.endDate) {
     errors.endDate = ['Data final é obrigatória'];
   }
+  if (!body.playersIds || !body.playersIds.length || body.playersIds === 0) {
+    errors.playersIds = ['Selecione um jogador'];
+  }
   return errors;
 };
 
@@ -26,55 +29,59 @@ router.post('/games', (req, res) => {
   const { body } = req;
   const errors = validarBodyPostGames(body);
   if (Object.values(errors).length) {
-    return res.status(500).json({ errors });
+    return res.status(400).json({ errors });
   }
 
-  return Game
-    .create(body)
-    .then(game => res.status(200).json(game.toJSON()))
-    .catch((err) => {
-      res.status(500).json(err);
-    });
+  return Game.create(body)
+    .then(game =>
+      game
+        .setPlayers(body.playersIds)
+        .then(() => res.status(200).json(game.toJSON())),
+    )
+    .catch(err => res.status(500).json(err));
 });
-
-router.get('/games/:id', (req, res) => User
-  .findByPk(req.params.id)
-  .then(user => res.status(200).json(user.toJSON())));
 
 router.get('/games', (req, res) => {
   const { companyId } = req.query;
-  // return res.status(500).json({companyId});
-  return Game
-    .findAll({ where: { companyId } })
-    .then(users => res.status(200).json(users))
-    .catch(err => res.status(400).json({ err: err.message }))
+
+  return Game.findAll({
+    where: { companyId },
+    include: [
+      {
+        model: User,
+        as: 'players',
+      },
+    ],
+  })
+    .then(games => res.status(200).json(games))
+    .catch(err => res.status(400).json({ err: err.message }));
 });
 
-router.put('/games/:id', (req, res) => {
-  User
-    .findByPk(req.params.id)
-    .then(user => user.update(req.body))
-    .then(() => res.status(204))
-    .catch(err => res.status(400).json(err));
+router.delete('/games/:id', (req, res) => {
+  const { id } = req.params;
+
+  return Game.findByPk(id)
+    .then(game => game.destroy())
+    .then(() => res.status(204).json({}))
+    .catch(err => res.status(400).json({ err: err.message }));
 });
 
 router.get('/user-games', (req, res) => {
-  const a = Game
-  .findAll({ 
-    include: [{
-      model: User,
-      as: 'players',
-      required: true,
-      where: {
-        id: req.query.userId
-      }
-    }]
-  })
-  .then(function(users){
-    console.log(users);
+  const a = Game.findAll({
+    include: [
+      {
+        model: User,
+        as: 'players',
+        required: true,
+        where: {
+          id: req.query.userId,
+        },
+      },
+    ],
+  }).then(function (users) {
     res.status(200).json(users);
   });
   return a;
-  });
+});
 
 module.exports = router;

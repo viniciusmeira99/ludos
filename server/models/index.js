@@ -1,4 +1,3 @@
-
 const Company = require('./Company');
 const Game = require('./Game');
 const UsersGames = require('./UsersGames');
@@ -16,5 +15,5 @@ module.exports = {
   Company,
   User,
   UsersGames,
-  Game,
+  Game
 };

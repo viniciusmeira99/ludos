@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import { makeStyles } from '@material-ui/styles';
+import DeleteIcon from '@material-ui/icons/Delete';
 import {
   Card,
   CardActions,
@@ -14,30 +15,32 @@ import {
   TableHead,
   TableRow,
   TablePagination,
+  Button,
+  IconButton,
 } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
   root: {},
   content: {
-    padding: 0
+    padding: 0,
   },
   inner: {
-    minWidth: 1050
+    minWidth: 1050,
   },
   nameContainer: {
     display: 'flex',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   avatar: {
-    marginRight: theme.spacing(2)
+    marginRight: theme.spacing(2),
   },
   actions: {
-    justifyContent: 'flex-end'
-  }
+    justifyContent: 'flex-end',
+  },
 }));
 
 const GamesTable = props => {
-  const { className, games, ...rest } = props;
+  const { className, deleteGame, games, ...rest } = props;
 
   const classes = useStyles();
 
@@ -68,6 +71,7 @@ const GamesTable = props => {
                   <TableCell>Data inicial</TableCell>
                   <TableCell>Data final</TableCell>
                   <TableCell>Data do cadastro</TableCell>
+                  <TableCell>Opções</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -79,9 +83,23 @@ const GamesTable = props => {
                   >
                     <TableCell>{game.name}</TableCell>
                     <TableCell>{game.description}</TableCell>
-                    <TableCell>{moment(game.startDate).format('DD/MM/YYYY')}</TableCell>
-                    <TableCell>{moment(game.endDate).format('DD/MM/YYYY')}</TableCell>
-                    <TableCell>{moment(game.createdAt).format('DD/MM/YYYY')}</TableCell>
+                    <TableCell>
+                      {moment(game.startDate).format('DD/MM/YYYY')}
+                    </TableCell>
+                    <TableCell>
+                      {moment(game.endDate).format('DD/MM/YYYY')}
+                    </TableCell>
+                    <TableCell>
+                      {moment(game.createdAt).format('DD/MM/YYYY')}
+                    </TableCell>
+                    <TableCell>
+                      <IconButton
+                        aria-label="delete"
+                        onClick={() => deleteGame(game.id)}
+                      >
+                        <DeleteIcon fontSize="small" />
+                      </IconButton>
+                    </TableCell>
                   </TableRow>
                 ))}
               </TableBody>
@@ -106,7 +124,8 @@ const GamesTable = props => {
 
 GamesTable.propTypes = {
   className: PropTypes.string,
-  games: PropTypes.array.isRequired
+  deleteGame: PropTypes.func.isRequired,
+  games: PropTypes.array.isRequired,
 };
 
 export default GamesTable;

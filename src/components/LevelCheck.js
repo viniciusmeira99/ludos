@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import PropTypes from 'prop-types';
-import { Context } from 'context';
+import Context from 'Context';
 
 const LevelCheck = props => {
   const { user } = useContext(Context);

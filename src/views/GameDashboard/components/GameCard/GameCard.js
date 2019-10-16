@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/styles';
@@ -10,9 +10,8 @@ import {
   Grid,
   Divider
 } from '@material-ui/core';
-import AccessTimeIcon from '@material-ui/icons/AccessTime';
-import ForwardIcon from '@material-ui/icons/Forward';
 import Button from '@material-ui/core/Button'
+import Context from 'Context';
 
 const useStyles = makeStyles(theme => ({
   root: {},
@@ -45,6 +44,7 @@ const useStyles = makeStyles(theme => ({
 
 const GameCard = props => {
   const { className, game, ...rest } = props;
+  const { selectedGame, setSelectedGame } = useContext(Context);
 
   const classes = useStyles();
 
@@ -86,14 +86,20 @@ const GameCard = props => {
           <Grid
             item
             sm={3}
-          ></Grid>
+          />
           <Grid
             className={classes.statsItem}
             item
             sm={3}
           >
-           <Button size="small" color="primary">
-              Entrar
+            <Button
+              color="primary"
+              onClick={() => setSelectedGame(
+                !selectedGame || selectedGame.id !== game.id ? game : null
+              )}
+              size="small"
+            >
+              {!selectedGame || selectedGame.id !== game.id ? 'Entrar' : 'Sair'}
             </Button>
           </Grid>
         </Grid>

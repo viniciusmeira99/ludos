@@ -13,7 +13,7 @@ import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import SettingsIcon from '@material-ui/icons/Settings';
 
 import { Profile, SidebarNav } from './components';
-import { Context } from 'context';
+import Context from 'Context';
 import { LEVEL_ADMIN } from 'consts';
 
 const useStyles = makeStyles(theme => ({

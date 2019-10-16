@@ -10,16 +10,14 @@ import {
   Divider,
   Grid,
   Button,
-  TextField,
   Select,
   MenuItem,
   Typography
 } from '@material-ui/core';
-import { Context } from 'context';
+import Context from 'Context';
 import api from 'api';
 import { BackButton } from 'components';
 import { useSnackbar } from 'notistack';
-import { SelectMultiple } from '../SelectMultiple/';
 
 const useStyles = makeStyles(() => ({
   root: {}
@@ -55,7 +53,7 @@ const ActionDetails = props => {
     })
       .then(() => {
         setValues({});
-        enqueueSnackbar('Jogo cadastrado', { variant: 'success',  });
+        enqueueSnackbar('Jogo cadastrado', { variant: 'success', });
         history.goBack();
       }).catch((err) => {
         if (err.response.data.errors) {
@@ -84,55 +82,55 @@ const ActionDetails = props => {
         />
         <Divider />
         <CardContent>
-          
-            <Grid
-              item
-              xs={12}
-            >
-              <Select
-                fullWidth
-                label="Nível"
-                margin="dense"
-                name="level"
-                onChange={handleChange}
-                required
-                type="string"
-                value={values.level || ''}
-                variant="outlined"
-              >
-                 {userGames.map(game => (
-                    <MenuItem value={game.id}>{game.name}</MenuItem>
-                ))}
-              </Select>
-              <Typography variant="body1">
-                Selecione o jogo para listar as categorias e usuários
-              </Typography>
-            </Grid>
 
-            <Grid
-              item
-              xs={12}
+          <Grid
+            item
+            xs={12}
+          >
+            <Select
+              fullWidth
+              label="Nível"
+              margin="dense"
+              name="level"
+              onChange={handleChange}
+              required
+              type="string"
+              value={values.level || ''}
+              variant="outlined"
             >
-              <Select
-                fullWidth
-                label="Nível"
-                margin="dense"
-                name="level"
-                onChange={handleChange}
-                required
-                type="string"
-                value={values.level || ''}
-                variant="outlined"
-              >
-                <MenuItem value="1">Venda realizada</MenuItem>
-                <MenuItem value="2">Novo prospecto conseguido</MenuItem>
-                <MenuItem value="3">Problema de cliente resolvido</MenuItem>
-              </Select>
-              <Typography variant="body1">
-                Selecione a categoria
-              </Typography>
-            </Grid>
-            
+              {userGames.map(game => (
+                <MenuItem value={game.id}>{game.name}</MenuItem>
+              ))}
+            </Select>
+            <Typography variant="body1">
+              Selecione o jogo para listar as categorias e usuários
+            </Typography>
+          </Grid>
+
+          <Grid
+            item
+            xs={12}
+          >
+            <Select
+              fullWidth
+              label="Nível"
+              margin="dense"
+              name="level"
+              onChange={handleChange}
+              required
+              type="string"
+              value={values.level || ''}
+              variant="outlined"
+            >
+              <MenuItem value="1">Venda realizada</MenuItem>
+              <MenuItem value="2">Novo prospecto conseguido</MenuItem>
+              <MenuItem value="3">Problema de cliente resolvido</MenuItem>
+            </Select>
+            <Typography variant="body1">
+              Selecione a categoria
+            </Typography>
+          </Grid>
+
         </CardContent>
         <Divider />
         <CardActions>

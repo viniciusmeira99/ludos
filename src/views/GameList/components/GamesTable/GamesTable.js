@@ -15,7 +15,6 @@ import {
   TableHead,
   TableRow,
   TablePagination,
-  Button,
   IconButton,
 } from '@material-ui/core';
 

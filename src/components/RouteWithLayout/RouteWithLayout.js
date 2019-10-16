@@ -1,17 +1,17 @@
 import React, { useContext } from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { Context } from 'context';
+import Context from 'Context';
 import { LEVEL_ADMIN, LEVEL_USER } from 'consts';
 
 const RouteWithLayout = props => {
-  const { 
-    layout: Layout, 
+  const {
+    layout: Layout,
     isAdminOnly,
     isUserOnly,
     isPrivate,
-    component: Component, 
-    ...rest 
+    component: Component,
+    ...rest
   } = props;
 
 

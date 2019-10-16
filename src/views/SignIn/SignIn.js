@@ -12,7 +12,7 @@ import {
   CircularProgress,
 } from '@material-ui/core';
 import api from 'api';
-import { Context } from 'context';
+import Context from 'Context';
 
 const schema = {
   email: {
@@ -186,7 +186,7 @@ const SignIn = props => {
       .then(({ data: user }) => {
         setUser(user);
         setIsLoading(false);
-        if(user.level == 'A')
+        if (user.level == 'A')
           history.push('/');
         else
           history.push('/game-select');

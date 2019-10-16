@@ -11,7 +11,7 @@ import 'react-perfect-scrollbar/dist/css/styles.css';
 import './assets/scss/index.scss';
 import validators from './common/validators';
 import Routes from './Routes';
-import { Provider } from 'context';
+import Provider from 'Provider';
 import { SnackbarProvider } from 'notistack';
 
 const browserHistory = createBrowserHistory();

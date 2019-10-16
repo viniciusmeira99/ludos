@@ -12,7 +12,7 @@ import {
   Button,
   LinearProgress
 } from '@material-ui/core';
-import { Context } from 'context';
+import Context from 'Context';
 import { getInitials } from 'helpers';
 
 const useStyles = makeStyles(theme => ({

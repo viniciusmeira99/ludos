@@ -15,7 +15,7 @@ import {
   FormGroup,
   FormHelperText,
 } from '@material-ui/core';
-import { Context } from 'context';
+import Context from 'Context';
 import api from 'api';
 import { BackButton } from 'components';
 import { useSnackbar } from 'notistack';

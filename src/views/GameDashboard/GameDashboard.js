@@ -1,10 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { makeStyles } from '@material-ui/styles';
-import { IconButton, Grid, Typography } from '@material-ui/core';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import { Grid } from '@material-ui/core';
 import api from 'api';
-import { Context } from 'context';
+import Context from 'Context';
 
 import { GameCard } from './components';
 

@@ -4,7 +4,7 @@ import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
 import { Avatar, Typography } from '@material-ui/core';
-import { Context } from 'context';
+import Context from 'Context';
 import { getInitials } from 'helpers';
 
 const useStyles = makeStyles(theme => ({

@@ -15,11 +15,10 @@ import {
   MenuItem,
   Typography
 } from '@material-ui/core';
-import { Context } from 'context';
+import Context from 'Context';
 import api from 'api';
 import { BackButton } from 'components';
 import { useSnackbar } from 'notistack';
-import { LEVEL_ADMIN, LEVEL_USER, ADMIN_PRIVILEGES_TEXT, USER_PRIVILEGES_TEXT } from 'consts';
 
 const useStyles = makeStyles(() => ({
   root: {}
@@ -55,7 +54,7 @@ const ActionCategoryDetails = props => {
     })
       .then(() => {
         setValues({});
-        enqueueSnackbar('Jogo cadastrado', { variant: 'success',  });
+        enqueueSnackbar('Jogo cadastrado', { variant: 'success', });
         history.goBack();
       }).catch((err) => {
         if (err.response.data.errors) {
@@ -153,8 +152,8 @@ const ActionCategoryDetails = props => {
                 value={values.level || ''}
                 variant="outlined"
               >
-                 {userGames.map(game => (
-                    <MenuItem value={game.id}>{game.name}</MenuItem>
+                {userGames.map(game => (
+                  <MenuItem value={game.id}>{game.name}</MenuItem>
                 ))}
               </Select>
               <Typography variant="body1">

@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/styles';
 
 import { UsersToolbar, UsersTable } from './components';
 import api from 'api';
-import { Context } from 'context';
+import Context from 'Context';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -21,7 +21,7 @@ const UserList = () => {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    api.get('/users', { 
+    api.get('/users', {
       params: { companyId: user.company.id },
     })
       .then(response => setUsers(response.data))

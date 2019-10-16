@@ -13,7 +13,7 @@ import {
   Button,
   TextField
 } from '@material-ui/core';
-import { Context } from 'context';
+import Context from 'Context';
 import api from 'api';
 
 const useStyles = makeStyles(() => ({

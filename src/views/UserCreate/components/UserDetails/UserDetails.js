@@ -16,7 +16,7 @@ import {
   MenuItem,
   Typography,
 } from '@material-ui/core';
-import { Context } from 'context';
+import Context from 'Context';
 import api from 'api';
 import { LEVEL_ADMIN, LEVEL_USER, ADMIN_PRIVILEGES_TEXT, USER_PRIVILEGES_TEXT } from 'consts';
 import { BackButton } from 'components';

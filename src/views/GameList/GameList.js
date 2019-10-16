@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/styles';
 
 import { GamesToolbar, GamesTable } from './components';
 import api from 'api';
-import { Context } from 'context';
+import Context from 'Context';
 import { useSnackbar } from 'notistack';
 import { Button } from '@material-ui/core';
 

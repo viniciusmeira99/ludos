@@ -14,3 +14,5 @@ export { default as GameCreate } from './GameCreate';
 export { default as GameDashboard } from './GameDashboard';
 export { default as ActionCategoryCreate } from './ActionCategoryCreate';
 export { default as ActionCreate } from './ActionCreate';
+export { default as QuestionList } from './QuestionList';
+export { default as QuestionCreate } from './QuestionCreate';

@@ -11,6 +11,7 @@ import TextFieldsIcon from '@material-ui/icons/TextFields';
 import ImageIcon from '@material-ui/icons/Image';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import SettingsIcon from '@material-ui/icons/Settings';
+import QuestionIcon from '@material-ui/icons/QuestionAnswer'
 
 import { Profile, SidebarNav } from './components';
 import Context from 'Context';
@@ -62,6 +63,12 @@ const Sidebar = props => {
       title: 'Jogos',
       href: '/games',
       icon: <GamepadIcon />,
+      devel: false,
+    },
+    user.level === LEVEL_ADMIN && {
+      title: 'Perguntas',
+      href: '/questions',
+      icon: <QuestionIcon />,
       devel: false,
     },
     {

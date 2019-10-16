@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { User, Game, UsersGames } = require('../models/index');
+const { User, Game } = require('../models/index');
 
 const router = new Router();
 const validarBodyPostGames = body => {

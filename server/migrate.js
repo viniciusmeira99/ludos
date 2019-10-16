@@ -1,6 +1,15 @@
-const { User, Company, Game, UsersGames } = require('./models/index');
+const {
+  User,
+  Company,
+  Game,
+  UsersGames,
+  Question,
+  Answer,
+} = require('./models/index');
 
 const drop = async () => {
+  await Answer.drop();
+  await Question.drop();
   await UsersGames.drop();
   await User.drop();
   await Game.drop();
@@ -8,7 +17,7 @@ const drop = async () => {
 };
 
 const createFakeData = async () => {
-  await Company.create(
+  const company = await Company.create(
     {
       name: 'Ludos',
       users: [
@@ -38,9 +47,41 @@ const createFakeData = async () => {
       ],
     },
     {
-      include: [User, Game],
+      include: [
+        User,
+        Game,
+      ],
     },
   );
+
+  Question.bulkCreate([
+    {
+      companyId: company.id,
+      description: 'A gamificação possui muitos componentes.',
+      answers: [
+        {
+          description: 'Primeira resposta',
+          isCorrect: false,
+          companyId: company.id,
+        },
+        {
+          description: 'Segunda resposta',
+          isCorrect: false,
+          companyId: company.id,
+        },
+        {
+          description: 'Terceira resposta',
+          isCorrect: true,
+          companyId: company.id,
+        },
+        {
+          description: 'Quarta resposta',
+          isCorrect: false,
+          companyId: company.id,
+        },
+      ],
+    }
+  ], { include: [Answer] });
 
   const game = await Game.create({
     name: 'Dia das crianças',
@@ -58,6 +99,8 @@ const create = async () => {
   await Game.sync();
   await User.sync();
   await UsersGames.sync();
+  await Question.sync();
+  await Answer.sync();
 };
 
 const migrate = () =>

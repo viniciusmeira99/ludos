@@ -3,11 +3,13 @@ const {
   Company,
   Game,
   UsersGames,
+  QuestionsGames,
   Question,
   Alternative,
 } = require('./models/index');
 
 const drop = async () => {
+  await QuestionsGames.drop();
   await Alternative.drop();
   await Question.drop();
   await UsersGames.drop();
@@ -83,12 +85,16 @@ const createFakeData = async () => {
     }
   ], { include: [Alternative] });
 
+
   const game = await Game.create({
     name: 'Dia das crianças',
     description: 'Fazer a garotada feliz',
     startDate: '2019-10-01',
     endDate: '2019-10-12',
     companyId: 1,
+    questions: [{ questionId: 1, score: 1 }],
+  }, {
+    include: [Game.QuestionsGames]
   });
 
   await game.setPlayers([2]);
@@ -100,6 +106,7 @@ const create = async () => {
   await User.sync();
   await UsersGames.sync();
   await Question.sync();
+  await QuestionsGames.sync();
   await Alternative.sync();
 };
 

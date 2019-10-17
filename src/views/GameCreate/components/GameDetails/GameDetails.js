@@ -19,7 +19,7 @@ import Context from 'Context';
 import api from 'api';
 import { BackButton } from 'components';
 import { useSnackbar } from 'notistack';
-import { PlayerSelectionTable } from '..';
+import { PlayerSelectionTable, QuestionSelectionTable } from '..';
 
 const useStyles = makeStyles(() => ({
   root: {}
@@ -170,6 +170,7 @@ const GameDetails = props => {
                 >
                   Disponibilizar para os usuários:
                 </FormLabel>
+                <br />
                 <PlayerSelectionTable
                   companyId={user.company.id}
                   onChange={(playersIds) => {
@@ -179,6 +180,30 @@ const GameDetails = props => {
                 {hasError('playersIds') && (
                   <FormHelperText error>
                     {getError('playersIds')}
+                  </FormHelperText>
+                )}
+              </FormGroup>
+            </Grid>
+            <Grid
+              item
+              xs={12}
+            >
+              <FormGroup>
+                <FormLabel
+                  error={hasError('questions')}
+                >
+                  Disponibilizar para os usuários:
+                </FormLabel>
+                <br />
+                <QuestionSelectionTable
+                  companyId={user.company.id}
+                  onChange={(questions) => {
+                    setValues(values => ({ ...values, questions }))
+                  }}
+                />
+                {hasError('questions') && (
+                  <FormHelperText error>
+                    {getError('questions')}
                   </FormHelperText>
                 )}
               </FormGroup>

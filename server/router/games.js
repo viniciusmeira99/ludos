@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { User, Game } = require('../models/index');
+const { User, Game, Question, QuestionsGames } = require('../models/index');
 
 const router = new Router();
 const validarBodyPostGames = body => {
@@ -32,10 +32,11 @@ router.post('/games', (req, res) => {
     return res.status(400).json({ errors });
   }
 
-  return Game.create(body)
+  return Game.create(body, {
+    include: [Game.QuestionsGames],
+  })
     .then(game =>
-      game
-        .setPlayers(body.playersIds)
+      game.setPlayers(body.playersIds)
         .then(() => res.status(200).json(game.toJSON())),
     )
     .catch(err => res.status(500).json(err));
@@ -51,6 +52,7 @@ router.get('/games', (req, res) => {
         model: User,
         as: 'players',
       },
+      Game.QuestionsGames,
     ],
   })
     .then(games => res.status(200).json(games))

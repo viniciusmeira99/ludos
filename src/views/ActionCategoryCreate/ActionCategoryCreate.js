@@ -23,7 +23,7 @@ const ActionCategoryCreate = () => {
           item
           lg={3}
           md={3}
-          xl={6}
+          xl={3}
         />
         <Grid
           item

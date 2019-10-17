@@ -1,6 +1,6 @@
 const Company = require('./Company');
 const Question = require('./Question');
-const Answer = require('./Answer');
+const Alternative = require('./Alternative');
 const Game = require('./Game');
 const UsersGames = require('./UsersGames');
 const User = require('./User');
@@ -8,14 +8,14 @@ const User = require('./User');
 Company.hasMany(User);
 Company.hasMany(Game);
 Company.hasMany(Question);
-Company.hasMany(Answer);
+Company.hasMany(Alternative);
 
 User.belongsTo(Company);
 
 User.belongsToMany(Game, { through: UsersGames, as: 'games' });
 Game.belongsToMany(User, { through: UsersGames, as: 'players' });
 
-Question.hasMany(Answer);
+Question.hasMany(Alternative);
 
 module.exports = {
   Company,
@@ -23,5 +23,5 @@ module.exports = {
   UsersGames,
   Game,
   Question,
-  Answer,
+  Alternative,
 };

@@ -72,7 +72,7 @@ const QuestionsTable = props => {
               <TableHead>
                 <TableRow>
                   <TableCell>Descrição</TableCell>
-                  <TableCell>Respostas</TableCell>
+                  <TableCell>Alternativas</TableCell>
                   <TableCell>Data do cadastro</TableCell>
                   <TableCell>Opções</TableCell>
                 </TableRow>
@@ -87,12 +87,12 @@ const QuestionsTable = props => {
                     <TableCell>{question.description}</TableCell>
                     <TableCell size="small">
                       <List dense>
-                        {question.answers.map(answer => (
-                          <ListItem key={answer.id}>
+                        {question.alternatives.map(alternative => (
+                          <ListItem key={alternative.id}>
                             <ListItemIcon>
-                              {answer.isCorrect ? <CheckIcon /> : <CloseIcon />}
+                              {alternative.isCorrect ? <CheckIcon /> : <CloseIcon />}
                             </ListItemIcon>
-                            <ListItemText primary={answer.description} />
+                            <ListItemText primary={alternative.description} />
                           </ListItem>
                         ))}
                       </List>

@@ -24,21 +24,21 @@ const QuestionDetails = props => {
 
   const [errors, setErrors] = useState({});
   const [description, setDescription] = useState('');
-  const [correctAnswer, setCorrectAnswer] = useState('');
-  const [wrongAnswers, setWrongAnswers] = useState([]);
+  const [correctAlternative, setCorrectAlternative] = useState('');
+  const [wrongAlternatives, setWrongAlternatives] = useState([]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     api.post('/questions', {
       description,
-      answers: [
+      alternatives: [
         {
           isCorrect: true,
-          description: correctAnswer,
+          description: correctAlternative,
         },
-        ...wrongAnswers.map((wrongAnswer) => ({
+        ...wrongAlternatives.map((wrongAlternative) => ({
           isCorrect: false,
-          description: wrongAnswer,
+          description: wrongAlternative,
         }))
       ],
       companyId: user.companyId,
@@ -57,10 +57,10 @@ const QuestionDetails = props => {
   const hasError = name => Boolean(errors[name]);
   const getError = name => hasError(name) ? errors[name][0] : '';
 
-  const onChangeWrongAnswer = (index, value) => {
-    const newWrongAnsers = [...wrongAnswers];
+  const onChangeWrongAlternative = (index, value) => {
+    const newWrongAnsers = [...wrongAlternatives];
     newWrongAnsers[index] = value;
-    setWrongAnswers(newWrongAnsers);
+    setWrongAlternatives(newWrongAnsers);
   };
 
   return (
@@ -102,15 +102,15 @@ const QuestionDetails = props => {
               xs={12}
             >
               <TextField
-                error={hasError('answers')}
+                error={hasError('alternatives')}
                 fullWidth
-                helperText={getError('answers')}
-                label="Resposta correta:"
+                helperText={getError('alternatives')}
+                label="Alternativa correta:"
                 margin="dense"
-                name="correctAnswer"
-                onChange={event => setCorrectAnswer(event.target.value)}
+                name="correctAlternative"
+                onChange={event => setCorrectAlternative(event.target.value)}
                 required
-                value={correctAnswer}
+                value={correctAlternative}
                 variant="outlined"
               />
             </Grid>
@@ -119,15 +119,15 @@ const QuestionDetails = props => {
               xs={12}
             >
               <TextField
-                error={hasError('answers')}
+                error={hasError('alternatives')}
                 fullWidth
-                helperText={getError('answers')}
-                label="Resposta errada #1"
+                helperText={getError('alternatives')}
+                label="Alternativa errada #1"
                 margin="dense"
-                name="wrongAnswer[]"
-                onChange={event => onChangeWrongAnswer(0, event.target.value)}
+                name="wrongAlternative[]"
+                onChange={event => onChangeWrongAlternative(0, event.target.value)}
                 required
-                value={wrongAnswers[0] || ''}
+                value={wrongAlternatives[0] || ''}
                 variant="outlined"
               />
             </Grid>
@@ -136,15 +136,15 @@ const QuestionDetails = props => {
               xs={12}
             >
               <TextField
-                error={hasError('answers')}
+                error={hasError('alternatives')}
                 fullWidth
-                helperText={getError('answers')}
-                label="Resposta errada #2"
+                helperText={getError('alternatives')}
+                label="Alternativa errada #2"
                 margin="dense"
-                name="wrongAnswer[]"
-                onChange={event => onChangeWrongAnswer(1, event.target.value)}
+                name="wrongAlternative[]"
+                onChange={event => onChangeWrongAlternative(1, event.target.value)}
                 required
-                value={wrongAnswers[1] || ''}
+                value={wrongAlternatives[1] || ''}
                 variant="outlined"
               />
             </Grid>
@@ -153,15 +153,15 @@ const QuestionDetails = props => {
               xs={12}
             >
               <TextField
-                error={hasError('answers')}
+                error={hasError('alternatives')}
                 fullWidth
-                helperText={getError('answers')}
-                label="Resposta errada #3"
+                helperText={getError('alternatives')}
+                label="Alternativa errada #3"
                 margin="dense"
-                name="wrongAnswer[]"
-                onChange={event => onChangeWrongAnswer(2, event.target.value)}
+                name="wrongAlternative[]"
+                onChange={event => onChangeWrongAlternative(2, event.target.value)}
                 required
-                value={wrongAnswers[2] || ''}
+                value={wrongAlternatives[2] || ''}
                 variant="outlined"
               />
             </Grid>

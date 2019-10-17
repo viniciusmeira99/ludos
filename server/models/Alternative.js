@@ -1,7 +1,7 @@
 const { STRING, BOOLEAN } = require('sequelize');
 const sequelize = require('../sequelize');
 
-const Answer = sequelize.define('answer', {
+const Alternative = sequelize.define('alternative', {
   description: {
     type: STRING,
     allowNull: false,
@@ -12,4 +12,4 @@ const Answer = sequelize.define('answer', {
   },
 });
 
-module.exports = Answer;
+module.exports = Alternative;

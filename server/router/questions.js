@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { Question, Answer } = require('../models/index');
+const { Question, Alternative } = require('../models/index');
 
 const router = new Router();
 
@@ -13,16 +13,16 @@ const validateBodyPostQuestion = body => {
     errors.description = ['Informe a descrição da pergunta'];
   }
 
-  if (!body.answers || !Array.isArray(body.answers)) {
-    errors.answers = ['Informe as respostas'];
+  if (!body.alternatives || !Array.isArray(body.alternatives)) {
+    errors.alternatives = ['Informe as alternativas'];
   }
 
-  if (Array.isArray(body.answers) && body.answers.length !== 4) {
-    errors.answers = ['Deve conter 4 respostas'];
+  if (Array.isArray(body.alternatives) && body.alternatives.length !== 4) {
+    errors.alternatives = ['Deve conter 4 alternativas'];
   }
 
-  if (Array.isArray(body.answers) && body.answers.filter(answer => answer.isCorrect).length !== 1) {
-    errors.answers = ['Deve conter 1 resposta correta'];
+  if (Array.isArray(body.alternatives) && body.alternatives.filter(alternative => alternative.isCorrect).length !== 1) {
+    errors.alternatives = ['Deve conter 1 alternativa correta'];
   }
 
   return errors;
@@ -40,7 +40,7 @@ router.post('/questions', (req, res) => {
     body,
     {
       include: [
-        Answer,
+        Alternative,
       ]
     }
   )
@@ -54,7 +54,7 @@ router.get('/questions', (req, res) => {
   return Question.findAll({
     where: { companyId },
     include: [
-      Answer,
+      Alternative,
     ],
   })
     .then(questions => res.status(200).json(questions))

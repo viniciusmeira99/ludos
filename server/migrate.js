@@ -4,11 +4,11 @@ const {
   Game,
   UsersGames,
   Question,
-  Answer,
+  Alternative,
 } = require('./models/index');
 
 const drop = async () => {
-  await Answer.drop();
+  await Alternative.drop();
   await Question.drop();
   await UsersGames.drop();
   await User.drop();
@@ -58,30 +58,30 @@ const createFakeData = async () => {
     {
       companyId: company.id,
       description: 'A gamificação possui muitos componentes.',
-      answers: [
+      alternatives: [
         {
-          description: 'Primeira resposta',
+          description: 'Primeira alternativa',
           isCorrect: false,
           companyId: company.id,
         },
         {
-          description: 'Segunda resposta',
+          description: 'Segunda alternativa',
           isCorrect: false,
           companyId: company.id,
         },
         {
-          description: 'Terceira resposta',
+          description: 'Terceira alternativa',
           isCorrect: true,
           companyId: company.id,
         },
         {
-          description: 'Quarta resposta',
+          description: 'Quarta alternativa',
           isCorrect: false,
           companyId: company.id,
         },
       ],
     }
-  ], { include: [Answer] });
+  ], { include: [Alternative] });
 
   const game = await Game.create({
     name: 'Dia das crianças',
@@ -100,7 +100,7 @@ const create = async () => {
   await User.sync();
   await UsersGames.sync();
   await Question.sync();
-  await Answer.sync();
+  await Alternative.sync();
 };
 
 const migrate = () =>
@@ -109,7 +109,7 @@ const migrate = () =>
     .then(createFakeData);
 
 migrate()
-  .catch(console.log)
+  .catch(console.error)
   .then(() => process.exit());
 
 module.exports = {

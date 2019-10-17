@@ -1,5 +1,5 @@
 
-const Sequelize = require('sequelize');
+const { Sequelize } = require('sequelize');
 
 const sequelizeProd = new Sequelize('ludos', 'ludos', 'uscsdevolveminhavida', {
   // host: '35.226.83.197',

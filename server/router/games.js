@@ -1,5 +1,6 @@
 const { Router } = require('express');
-const { User, Game, Question, QuestionsGames } = require('../models/index');
+const { Op } = require('sequelize');
+const { User, Game, Question, Alternative } = require('../models/index');
 
 const router = new Router();
 const validarBodyPostGames = body => {
@@ -45,6 +46,7 @@ router.post('/games', (req, res) => {
 router.get('/games', (req, res) => {
   const { companyId } = req.query;
 
+
   return Game.findAll({
     where: { companyId },
     include: [
@@ -69,21 +71,39 @@ router.delete('/games/:id', (req, res) => {
 });
 
 router.get('/user-games', (req, res) => {
-  const a = Game.findAll({
-    include: [
-      {
-        model: User,
-        as: 'players',
-        required: true,
-        where: {
-          id: req.query.userId,
+  const { userId } = req.query;
+
+  return Game
+    .findAll({
+      where: {
+        startDate: {
+          [Op.lte]: new Date().toISOString(),
+        },
+        endDate: {
+          [Op.gte]: new Date().toISOString(),
         },
       },
-    ],
-  }).then(function (users) {
-    res.status(200).json(users);
-  });
-  return a;
+      include: [
+        {
+          model: User,
+          as: 'players',
+          required: true,
+          where: {
+            id: userId,
+          },
+        },
+        {
+          association: Game.QuestionsGames,
+          include: [
+            {
+              model: Question,
+              include: [Alternative]
+            }
+          ],
+        }
+      ],
+    })
+    .then(games => res.status(200).json(games))
 });
 
 module.exports = router;

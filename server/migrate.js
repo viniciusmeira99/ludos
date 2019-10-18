@@ -90,7 +90,7 @@ const createFakeData = async () => {
     name: 'Dia das crianças',
     description: 'Fazer a garotada feliz',
     startDate: '2019-10-01',
-    endDate: '2019-10-12',
+    endDate: '2019-11-11',
     companyId: 1,
     questions: [{ questionId: 1, score: 1 }],
   }, {

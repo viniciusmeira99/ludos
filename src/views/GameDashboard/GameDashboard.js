@@ -5,6 +5,7 @@ import api from 'api';
 import Context from 'Context';
 
 import { GameCard } from './components';
+import { EmptyList } from 'components';
 
 
 const useStyles = makeStyles(theme => ({
@@ -27,7 +28,7 @@ const GameDashboard = () => {
 
   const { user } = useContext(Context);
 
-  const [userGames, setGames] = useState([]);
+  const [games, setGames] = useState(null);
 
   useEffect(() => {
     api.get('/user-games', {
@@ -36,25 +37,37 @@ const GameDashboard = () => {
       .then(response => setGames(response.data))
   }, [user.id]);
 
+  if (!games) {
+    return null;
+  }
+
   return (
     <div className={classes.root}>
       <div className={classes.content}>
-        <Grid
-          container
-          spacing={3}
-        >
-          {userGames.map(game => (
+        {games.length === 0
+          ? (
+            <EmptyList
+              subtitle="Entre em contato com o administrador da sua empresa para disponibilizar os jogos."
+              title="Nenhum jogo disponível."
+            />
+          ): (
             <Grid
-              item
-              key={game.id}
-              lg={4}
-              md={6}
-              xs={12}
+              container
+              spacing={3}
             >
-              <GameCard game={game} />
+              {games && games.map(game => (
+                <Grid
+                  item
+                  key={game.id}
+                  lg={4}
+                  md={6}
+                  xs={12}
+                >
+                  <GameCard game={game} />
+                </Grid>
+              ))}
             </Grid>
-          ))}
-        </Grid>
+          )}
       </div>
     </div>
   );

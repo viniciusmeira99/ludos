@@ -10,6 +10,7 @@ import {
   Divider,
   Grid,
   Button,
+  TextField,
   Select,
   MenuItem,
   Typography
@@ -77,60 +78,106 @@ const ActionDetails = props => {
         onSubmit={handleSubmit}
       >
         <CardHeader
-          subheader="Preencha os dados para lançar a ação"
-          title="Lançamento de ações"
+          subheader="Digite os dados da categoria usada para lançar ações"
+          title="Cadastro de categorias de ação"
         />
         <Divider />
         <CardContent>
-
           <Grid
-            item
-            xs={12}
+            container
+            spacing={3}
           >
-            <Select
-              fullWidth
-              label="Nível"
-              margin="dense"
-              name="level"
-              onChange={handleChange}
-              required
-              type="string"
-              value={values.level || ''}
-              variant="outlined"
+            <Grid
+              item
+              xs={12}
             >
-              {userGames.map(game => (
-                <MenuItem value={game.id}>{game.name}</MenuItem>
-              ))}
-            </Select>
-            <Typography variant="body1">
-              Selecione o jogo para listar as categorias e usuários
-            </Typography>
-          </Grid>
-
-          <Grid
-            item
-            xs={12}
-          >
-            <Select
-              fullWidth
-              label="Nível"
-              margin="dense"
-              name="level"
-              onChange={handleChange}
-              required
-              type="string"
-              value={values.level || ''}
-              variant="outlined"
+              <TextField
+                error={!!errors && errors.name}
+                fullWidth
+                helperText={errors && errors.name && errors.name[0]}
+                label="Nome"
+                margin="dense"
+                name="name"
+                onChange={handleChange}
+                required
+                value={values.name || ''}
+                variant="outlined"
+              />
+            </Grid>
+            <Grid
+              item
+              xs={12}
             >
-              <MenuItem value="1">Venda realizada</MenuItem>
-              <MenuItem value="2">Novo prospecto conseguido</MenuItem>
-              <MenuItem value="3">Problema de cliente resolvido</MenuItem>
-            </Select>
-            <Typography variant="body1">
-              Selecione a categoria
-            </Typography>
+              <TextField
+                error={!!errors && errors.description}
+                fullWidth
+                helperText={errors && errors.description && errors.description[0]}
+                label="Descrição"
+                margin="dense"
+                name="description"
+                onChange={handleChange}
+                required
+                value={values.description || ''}
+                variant="outlined"
+              />
+            </Grid>
+            <Grid
+              item
+              xs={12}
+            >
+              <TextField
+                error={!!errors && errors.identifier}
+                fullWidth
+                helperText={errors && errors.identifier && errors.identifier[0]}
+                label="Identificador"
+                margin="dense"
+                name="identifier"
+                onChange={handleChange}
+                value={values.identifier || ''}
+                variant="outlined"
+              />
+            </Grid>
+            <Grid
+              item
+              xs={12}
+            >
+              <Select
+                fullWidth
+                label="Nível"
+                margin="dense"
+                name="level"
+                onChange={handleChange}
+                required
+                type="string"
+                value={values.level || ''}
+                variant="outlined"
+              >
+                {userGames.map(game => (
+                  <MenuItem value={game.id}>{game.name}</MenuItem>
+                ))}
+              </Select>
+              <Typography variant="body1">
+                Selecione o jogo na qual a categoria fará parte
+              </Typography>
+            </Grid>
+            <Grid
+              item
+              xs={6}
+            >
+              <TextField
+                error={!!errors && errors.points}
+                fullWidth
+                helperText={errors && errors.points && errors.points[0]}
+                label="Pontuação"
+                margin="dense"
+                name="points"
+                onChange={handleChange}
+                required
+                value={values.points || ''}
+                variant="outlined"
+              />
+            </Grid>
           </Grid>
-
         </CardContent>
         <Divider />
         <CardActions>
@@ -139,7 +186,7 @@ const ActionDetails = props => {
             type="submit"
             variant="contained"
           >
-            Lançar ação
+            Criar categoria
           </Button>
           <BackButton />
         </CardActions>

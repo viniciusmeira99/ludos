@@ -19,7 +19,6 @@ import {
   GameList as GameListView,
   GameCreate as GameCreateView,
   GameDashboard as GameDashboardView,
-  ActionCategoryCreate as ActionCategoryCreateView,
   ActionCreate as ActionCreateView,
   QuestionList as QuestionListView,
   QuestionCreate as QuestionCreateView,
@@ -89,14 +88,6 @@ const Routes = () => {
         isPrivate
         layout={MainLayout}
         path="/game-select"
-      />
-      <RouteWithLayout
-        component={ActionCategoryCreateView}
-        exact
-        isAdminOnly
-        isPrivate
-        layout={MainLayout}
-        path="/action/category/create"
       />
       <RouteWithLayout
         component={ActionCreateView}

@@ -35,7 +35,9 @@ const ActionDetails = props => {
 
   const [errors, setErrors] = useState({});
   const [values, setValues] = useState({});
-  const [userGames, setGames] = useState([]);
+
+  const hasError = name => Boolean(errors[name]);
+  const getError = name => hasError(name) ? errors[name][0] : '';
 
   const handleChange = event => {
     const newValues = {
@@ -48,13 +50,13 @@ const ActionDetails = props => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    api.post('/games', {
+    api.post('/action', {
       ...values,
       companyId: user.companyId,
     })
       .then(() => {
         setValues({});
-        enqueueSnackbar('Jogo cadastrado', { variant: 'success', });
+        enqueueSnackbar('Ação cadastrada', { variant: 'success', });
         history.goBack();
       }).catch((err) => {
         if (err.response.data.errors) {
@@ -62,13 +64,6 @@ const ActionDetails = props => {
         }
       });
   };
-
-  useEffect(() => {
-    api.get('/games', {
-      params: { companyId: user.company.id },
-    })
-      .then(response => setGames(response.data))
-  }, [user.company.id]);
 
   return (
     <Card className={classes.root}>
@@ -92,9 +87,9 @@ const ActionDetails = props => {
               xs={12}
             >
               <TextField
-                error={!!errors && errors.name}
+                error={hasError('name')}
                 fullWidth
-                helperText={errors && errors.name && errors.name[0]}
+                helperText={getError('name')}
                 label="Nome"
                 margin="dense"
                 name="name"
@@ -109,9 +104,9 @@ const ActionDetails = props => {
               xs={12}
             >
               <TextField
-                error={!!errors && errors.description}
+                error={hasError('description')}
                 fullWidth
-                helperText={errors && errors.description && errors.description[0]}
+                helperText={getError('description')}
                 label="Descrição"
                 margin="dense"
                 name="description"
@@ -126,9 +121,9 @@ const ActionDetails = props => {
               xs={12}
             >
               <TextField
-                error={!!errors && errors.identifier}
+                error={hasError('identifier')}
                 fullWidth
-                helperText={errors && errors.identifier && errors.identifier[0]}
+                helperText={getError('identifier')}
                 label="Identificador"
                 margin="dense"
                 name="identifier"
@@ -142,9 +137,9 @@ const ActionDetails = props => {
               xs={6}
             >
               <TextField
-                error={!!errors && errors.points}
+                error={hasError('points')}
                 fullWidth
-                helperText={errors && errors.points && errors.points[0]}
+                helperText={getError('points')}
                 label="Pontuação"
                 margin="dense"
                 name="points"

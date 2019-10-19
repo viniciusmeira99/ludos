@@ -34,4 +34,24 @@ router.post('/action', (req, res) => {
     .catch(err => res.status(500).json(err));
 });
 
+router.get('/actions', (req, res) => {
+  const { companyId } = req.query;
+
+
+  return Action.findAll({
+    where: { companyId }
+  })
+    .then(actions => res.status(200).json(actions))
+    .catch(err => res.status(400).json({ err: err.message }));
+});
+
+router.delete('/actions/:id', (req, res) => {
+  const { id } = req.params;
+
+  return Action.findByPk(id)
+    .then(action => action.destroy())
+    .then(() => res.status(204).json({}))
+    .catch(err => res.status(400).json({ err: err.message }));
+});
+
 module.exports = router;

@@ -20,6 +20,7 @@ import {
   GameCreate as GameCreateView,
   GameDashboard as GameDashboardView,
   ActionCreate as ActionCreateView,
+  ActionList as ActionListView,
   QuestionList as QuestionListView,
   QuestionCreate as QuestionCreateView,
 } from './views';
@@ -95,7 +96,15 @@ const Routes = () => {
         isAdminOnly
         isPrivate
         layout={MainLayout}
-        path="/action/create"
+        path="/actions/create"
+      />
+      <RouteWithLayout
+        component={ActionListView}
+        exact
+        isAdminOnly
+        isPrivate
+        layout={MainLayout}
+        path="/actions"
       />
       <RouteWithLayout
         component={ProductListView}

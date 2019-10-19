@@ -12,6 +12,7 @@ import ImageIcon from '@material-ui/icons/Image';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import SettingsIcon from '@material-ui/icons/Settings';
 import QuestionIcon from '@material-ui/icons/QuestionAnswer'
+import ActionIcon from '@material-ui/icons/Assignment'
 
 import { Profile, SidebarNav } from './components';
 import Context from 'Context';
@@ -69,6 +70,12 @@ const Sidebar = props => {
       title: 'Perguntas',
       href: '/questions',
       icon: <QuestionIcon />,
+      devel: false,
+    },
+    user.level === LEVEL_ADMIN && {
+      title: 'Ações',
+      href: '/actions',
+      icon: <ActionIcon />,
       devel: false,
     },
     {

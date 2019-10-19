@@ -5,11 +5,13 @@ const Game = require('./Game');
 const UsersGames = require('./UsersGames');
 const QuestionsGames = require('./QuestionsGames');
 const User = require('./User');
+const Action = require('./Action');
 
 Company.hasMany(User);
 Company.hasMany(Game);
 Company.hasMany(Question);
 Company.hasMany(Alternative);
+Company.hasMany(Action);
 
 User.belongsTo(Company);
 
@@ -30,4 +32,5 @@ module.exports = {
   Game,
   Question,
   Alternative,
+  Action
 };

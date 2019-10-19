@@ -78,8 +78,8 @@ const ActionDetails = props => {
         onSubmit={handleSubmit}
       >
         <CardHeader
-          subheader="Digite os dados da categoria usada para lançar ações"
-          title="Cadastro de categorias de ação"
+          subheader="Digite os dados da nova ação"
+          title="Cadastro de ação"
         />
         <Divider />
         <CardContent>
@@ -139,29 +139,6 @@ const ActionDetails = props => {
             </Grid>
             <Grid
               item
-              xs={12}
-            >
-              <Select
-                fullWidth
-                label="Nível"
-                margin="dense"
-                name="level"
-                onChange={handleChange}
-                required
-                type="string"
-                value={values.level || ''}
-                variant="outlined"
-              >
-                {userGames.map(game => (
-                  <MenuItem value={game.id}>{game.name}</MenuItem>
-                ))}
-              </Select>
-              <Typography variant="body1">
-                Selecione o jogo na qual a categoria fará parte
-              </Typography>
-            </Grid>
-            <Grid
-              item
               xs={6}
             >
               <TextField
@@ -186,7 +163,7 @@ const ActionDetails = props => {
             type="submit"
             variant="contained"
           >
-            Criar categoria
+            Criar ação
           </Button>
           <BackButton />
         </CardActions>

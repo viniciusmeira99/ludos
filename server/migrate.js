@@ -6,6 +6,7 @@ const {
   QuestionsGames,
   Question,
   Alternative,
+  Action
 } = require('./models/index');
 
 const drop = async () => {
@@ -16,6 +17,7 @@ const drop = async () => {
   await User.drop();
   await Game.drop();
   await Company.drop();
+  await Action.drop();
 };
 
 const createFakeData = async () => {
@@ -108,6 +110,7 @@ const create = async () => {
   await Question.sync();
   await QuestionsGames.sync();
   await Alternative.sync();
+  await Action.sync();
 };
 
 const migrate = () =>

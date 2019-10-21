@@ -25,28 +25,22 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const QuestionSelectionTable = props => {
-  const { companyId, onChange } = props;
+  const { companyId, questions, setQuestions } = props;
   const classes = useStyles();
 
-  const [questions, setQuestions] = useState([]);
+  const [loadedQuestions, setLoadedQuestions] = useState([]);
 
   useEffect(() => {
     api.get('/questions', {
       params: { companyId },
     })
-      .then(response => setQuestions(response.data))
+      .then(response => setLoadedQuestions(response.data))
   }, [companyId]);
 
-  const [selectedQuestions, setSelectedUsers] = useState([]);
-
-  useEffect(() => {
-    onChange(selectedQuestions)
-  }, [selectedQuestions]);
-
   const handleSelectAll = event => {
-    setSelectedUsers(
+    setQuestions(
       event.target.checked
-        ? questions.map(question => ({
+        ? loadedQuestions.map(question => ({
           questionId: question.id,
           score: 0,
         }))
@@ -55,14 +49,14 @@ const QuestionSelectionTable = props => {
   };
 
   const handleSelectOne = (event, id) => {
-    setSelectedUsers(
+    setQuestions(
       event.target.checked
-        ? selectedQuestions.concat({ questionId: id, score: 0 })
-        : selectedQuestions.filter(({ questionId }) => questionId !== id),
+        ? questions.concat({ questionId: id, score: 0 })
+        : questions.filter(({ questionId }) => questionId !== id),
     );
   };
 
-  const getQuestion = id => selectedQuestions.find(({ questionId }) => questionId === id);
+  const getQuestion = id => questions.find(({ questionId }) => questionId === id);
   const isSelected = id => !!getQuestion(id);
 
   const getError = (id) => {
@@ -73,7 +67,7 @@ const QuestionSelectionTable = props => {
   const hasError = id => !!getError(id);
 
   const setScore = (id, score) => {
-    setSelectedUsers(selectedQuestions.map((selectedQuestion) => {
+    setQuestions(questions.map((selectedQuestion) => {
       if (selectedQuestion.questionId !== id) {
         return selectedQuestion;
       }
@@ -92,11 +86,11 @@ const QuestionSelectionTable = props => {
             <TableRow>
               <TableCell padding="checkbox">
                 <Checkbox
-                  checked={selectedQuestions.length === questions.length}
+                  checked={questions.length === loadedQuestions.length}
                   color="primary"
                   indeterminate={
-                    selectedQuestions.length > 0 &&
-                    selectedQuestions.length < questions.length
+                    questions.length > 0 &&
+                    questions.length < loadedQuestions.length
                   }
                   onChange={handleSelectAll}
                 />
@@ -106,7 +100,7 @@ const QuestionSelectionTable = props => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {questions.map(question => (
+            {loadedQuestions.map(question => (
               <TableRow
                 className={classes.tableRow}
                 hover
@@ -153,7 +147,8 @@ const QuestionSelectionTable = props => {
 
 QuestionSelectionTable.propTypes = {
   companyId: PropTypes.number.isRequired,
-  onChange: PropTypes.func.isRequired,
+  questions: PropTypes.array.isRequired,
+  setQuestions: PropTypes.func.isRequired,
 };
 
 export default QuestionSelectionTable;

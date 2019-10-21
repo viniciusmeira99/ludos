@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
@@ -11,9 +11,6 @@ import {
   Grid,
   Button,
   TextField,
-  Select,
-  MenuItem,
-  Typography
 } from '@material-ui/core';
 import Context from 'Context';
 import api from 'api';

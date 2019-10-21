@@ -10,7 +10,6 @@ import {
   Divider,
   Grid,
   Button,
-  TextField,
   FormLabel,
   FormGroup,
   FormHelperText,
@@ -23,7 +22,6 @@ import api from 'api';
 import { BackButton } from 'components';
 import { useSnackbar } from 'notistack';
 import { PlayerSelectionTable } from '..';
-import { LEVEL_ADMIN, LEVEL_USER, ADMIN_PRIVILEGES_TEXT, USER_PRIVILEGES_TEXT } from 'consts';
 
 const useStyles = makeStyles(() => ({
   root: {}

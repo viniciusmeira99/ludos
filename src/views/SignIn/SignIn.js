@@ -186,7 +186,7 @@ const SignIn = props => {
       .then(({ data: user }) => {
         setUser(user);
         setIsLoading(false);
-        if (user.level == 'A')
+        if (user.level === 'A')
           history.push('/');
         else
           history.push('/game-select');

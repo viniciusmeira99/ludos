@@ -173,9 +173,8 @@ const GameDetails = props => {
                 <br />
                 <PlayerSelectionTable
                   companyId={user.company.id}
-                  onChange={(playersIds) => {
-                    setValues(values => ({ ...values, playersIds }))
-                  }}
+                  playersIds={values.playersIds || []}
+                  setPlayersIds={playersIds => setValues(values => ({ ...values, playersIds }))}
                 />
                 {hasError('playersIds') && (
                   <FormHelperText error>
@@ -197,9 +196,8 @@ const GameDetails = props => {
                 <br />
                 <QuestionSelectionTable
                   companyId={user.company.id}
-                  onChange={(questions) => {
-                    setValues(values => ({ ...values, questions }))
-                  }}
+                  questions={values.questions || []}
+                  setQuestions={questions => setValues(values => ({ ...values, questions }))}
                 />
                 {hasError('questions') && (
                   <FormHelperText error>

@@ -30,7 +30,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const PlayerSelectionTable = props => {
-  const { companyId, onChange } = props;
+  const { companyId, playersIds, setPlayersIds } = props;
   const classes = useStyles();
 
   const [users, setUsers] = useState([]);
@@ -42,42 +42,36 @@ const PlayerSelectionTable = props => {
       .then(response => setUsers(response.data.filter(user => user.level === LEVEL_USER)))
   }, [companyId]);
 
-  const [selectedUsers, setSelectedUsers] = useState([]);
-
-  useEffect(() => {
-    onChange(selectedUsers)
-  }, [selectedUsers]);
-
   const handleSelectAll = event => {
-    let selectedUsers;
+    let playersIds;
 
     if (event.target.checked) {
-      selectedUsers = users.map(user => user.id);
+      playersIds = users.map(user => user.id);
     } else {
-      selectedUsers = [];
+      playersIds = [];
     }
 
-    setSelectedUsers(selectedUsers);
+    setPlayersIds(playersIds);
   };
 
   const handleSelectOne = (event, id) => {
-    const selectedIndex = selectedUsers.indexOf(id);
+    const selectedIndex = playersIds.indexOf(id);
     let newSelectedUsers = [];
 
     if (selectedIndex === -1) {
-      newSelectedUsers = newSelectedUsers.concat(selectedUsers, id);
+      newSelectedUsers = newSelectedUsers.concat(playersIds, id);
     } else if (selectedIndex === 0) {
-      newSelectedUsers = newSelectedUsers.concat(selectedUsers.slice(1));
-    } else if (selectedIndex === selectedUsers.length - 1) {
-      newSelectedUsers = newSelectedUsers.concat(selectedUsers.slice(0, -1));
+      newSelectedUsers = newSelectedUsers.concat(playersIds.slice(1));
+    } else if (selectedIndex === playersIds.length - 1) {
+      newSelectedUsers = newSelectedUsers.concat(playersIds.slice(0, -1));
     } else if (selectedIndex > 0) {
       newSelectedUsers = newSelectedUsers.concat(
-        selectedUsers.slice(0, selectedIndex),
-        selectedUsers.slice(selectedIndex + 1)
+        playersIds.slice(0, selectedIndex),
+        playersIds.slice(selectedIndex + 1)
       );
     }
 
-    setSelectedUsers(newSelectedUsers);
+    setPlayersIds(newSelectedUsers);
   };
 
   return (
@@ -88,11 +82,11 @@ const PlayerSelectionTable = props => {
             <TableRow>
               <TableCell padding="checkbox">
                 <Checkbox
-                  checked={selectedUsers.length === users.length}
+                  checked={playersIds.length === users.length}
                   color="primary"
                   indeterminate={
-                    selectedUsers.length > 0 &&
-                    selectedUsers.length < users.length
+                    playersIds.length > 0 &&
+                    playersIds.length < users.length
                   }
                   onChange={handleSelectAll}
                 />
@@ -107,11 +101,11 @@ const PlayerSelectionTable = props => {
                 className={classes.tableRow}
                 hover
                 key={user.id}
-                selected={selectedUsers.indexOf(user.id) !== -1}
+                selected={playersIds.indexOf(user.id) !== -1}
               >
                 <TableCell padding="checkbox">
                   <Checkbox
-                    checked={selectedUsers.indexOf(user.id) !== -1}
+                    checked={playersIds.indexOf(user.id) !== -1}
                     color="primary"
                     onChange={event => handleSelectOne(event, user.id)}
                     value="true"
@@ -142,7 +136,8 @@ const PlayerSelectionTable = props => {
 
 PlayerSelectionTable.propTypes = {
   companyId: PropTypes.number.isRequired,
-  onChange: PropTypes.func.isRequired,
+  playersIds: PropTypes.array.isRequired,
+  setPlayersIds: PropTypes.func.isRequired,
 };
 
 export default PlayerSelectionTable;

@@ -191,7 +191,7 @@ const GameDetails = props => {
                 <FormLabel
                   error={hasError('questions')}
                 >
-                  Disponibilizar para os usuários:
+                  Selecione as perguntas do jogo:
                 </FormLabel>
                 <br />
                 <QuestionSelectionTable

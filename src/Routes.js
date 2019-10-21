@@ -21,6 +21,7 @@ import {
   GameDashboard as GameDashboardView,
   ActionCreate as ActionCreateView,
   ActionList as ActionListView,
+  ActionUserCreate as ActionUserCreateView,
   QuestionList as QuestionListView,
   QuestionCreate as QuestionCreateView,
 } from './views';
@@ -105,6 +106,14 @@ const Routes = () => {
         isPrivate
         layout={MainLayout}
         path="/actions"
+      />
+      <RouteWithLayout
+        component={ActionUserCreateView}
+        exact
+        isAdminOnly
+        isPrivate
+        layout={MainLayout}
+        path="/actions/users-create"
       />
       <RouteWithLayout
         component={ProductListView}

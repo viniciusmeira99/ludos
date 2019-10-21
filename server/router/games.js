@@ -70,8 +70,8 @@ router.delete('/games/:id', (req, res) => {
     .catch(err => res.status(400).json({ err: err.message }));
 });
 
-router.get('/user-games', (req, res) => {
-  const { userId } = req.query;
+router.get('/users/:userId/games', (req, res) => {
+  const { userId } = req.params;
 
   return Game
     .findAll({

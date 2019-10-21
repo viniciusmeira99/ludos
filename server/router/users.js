@@ -1,12 +1,12 @@
 const { Router } = require('express');
-const { User, Company, Game } = require('../models/index');
+const { User, Company } = require('../models/index');
 
 const router = new Router();
 
 router.post('/users', (req, res) => {
   const { company, ...user } = req.body;
-  return Company.findOrCreate({ 
-    where: { 
+  return Company.findOrCreate({
+    where: {
       name: company,
     }
   })
@@ -42,26 +42,6 @@ router.get('/users', (req, res) => {
     .findAll({ where: { companyId } })
     .then(users => res.status(200).json(users))
     .catch(err => res.status(400).json({ err: err.message }))
-});
-
-router.get('/user-games', (req, res) => {
-  console.log('chegou na api');
-  const { gameId } = req.query;
-  return User
-  .findAll({ 
-    include: [
-      {
-        model: Game,
-        as: 'games',
-        required: true,
-        where: {
-          id: gameId,
-        },
-      }
-    ] 
-  })
-  .then(users => res.status(200).json(users))
-  .catch(err => res.status(400).json({ err: err.message }))
 });
 
 router.put('/users/:id', (req, res) => {

@@ -3,7 +3,7 @@ const { DECIMAL } = require('sequelize');
 
 const QuestionsGames = sequelize.define('questions_games', {
   score: {
-    type: DECIMAL,
+    type: DECIMAL(3, 2),
     allowNull: false
   },
 });

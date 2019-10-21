@@ -31,9 +31,7 @@ const GameDashboard = () => {
   const [games, setGames] = useState(null);
 
   useEffect(() => {
-    api.get('/user-games', {
-      params: { userId: user.id },
-    })
+    api.get(`/users/${user.id}/games`)
       .then(response => setGames(response.data))
   }, [user.id]);
 
@@ -50,7 +48,7 @@ const GameDashboard = () => {
               subtitle="Entre em contato com o administrador da sua empresa para disponibilizar os jogos."
               title="Nenhum jogo disponível."
             />
-          ): (
+          ) : (
             <Grid
               container
               spacing={3}

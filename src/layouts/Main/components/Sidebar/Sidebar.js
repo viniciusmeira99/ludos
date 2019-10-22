@@ -16,7 +16,7 @@ import ActionIcon from '@material-ui/icons/Assignment'
 
 import { Profile, SidebarNav } from './components';
 import Context from 'Context';
-import { LEVEL_ADMIN } from 'consts';
+import { LEVEL_ADMIN, LEVEL_USER } from 'consts';
 
 const useStyles = makeStyles(theme => ({
   drawer: {
@@ -69,6 +69,12 @@ const Sidebar = props => {
     user.level === LEVEL_ADMIN && {
       title: 'Perguntas',
       href: '/questions',
+      icon: <QuestionIcon />,
+      devel: false,
+    },
+    user.level === LEVEL_USER && {
+      title: 'Perguntas',
+      href: '/user-questions',
       icon: <QuestionIcon />,
       devel: false,
     },

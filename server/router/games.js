@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const { Op } = require('sequelize');
-const { User, Game, Question, Alternative } = require('../models/index');
+const { User, Game } = require('../models/index');
 
 const router = new Router();
 const validarBodyPostGames = body => {
@@ -92,15 +92,6 @@ router.get('/users/:userId/games', (req, res) => {
             id: userId,
           },
         },
-        {
-          association: Game.QuestionsGames,
-          include: [
-            {
-              model: Question,
-              include: [Alternative]
-            }
-          ],
-        }
       ],
     })
     .then(games => res.status(200).json(games))

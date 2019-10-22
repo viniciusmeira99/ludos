@@ -21,11 +21,12 @@ User.belongsToMany(Game, { through: UsersGames, as: 'games' });
 Game.belongsToMany(User, { through: UsersGames, as: 'players' });
 
 Game.QuestionsGames = Game.hasMany(QuestionsGames, { as: 'questions' });
-Question.QuestionsGames = Question.hasMany(QuestionsGames);
+Question.QuestionsGames = Question.hasMany(QuestionsGames, { as: 'game' });
 QuestionsGames.belongsTo(Question);
 
 Question.hasMany(Alternative);
 
+QuestionsGames.hasOne(Answer);
 Answer.belongsTo(QuestionsGames);
 Answer.belongsTo(User);
 Answer.belongsTo(Alternative);

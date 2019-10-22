@@ -15,8 +15,6 @@ import {
 } from '@material-ui/core';
 
 import { getInitials } from 'helpers';
-import api from 'api';
-import { LEVEL_USER } from 'consts';
 
 const useStyles = makeStyles(theme => ({
   root: {},
@@ -30,17 +28,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const PlayerSelectionTable = props => {
-  const { companyId, playersIds, setPlayersIds } = props;
+  const { playersIds, setPlayersIds, users } = props;
   const classes = useStyles();
-
-  const [users, setUsers] = useState([]);
-
-  useEffect(() => {
-    api.get('/users', {
-      params: { companyId },
-    })
-      .then(response => setUsers(response.data.filter(user => user.level === LEVEL_USER)))
-  }, [companyId]);
 
   const handleSelectAll = event => {
     let playersIds;
@@ -135,7 +124,6 @@ const PlayerSelectionTable = props => {
 };
 
 PlayerSelectionTable.propTypes = {
-  companyId: PropTypes.number.isRequired,
   playersIds: PropTypes.array.isRequired,
   setPlayersIds: PropTypes.func.isRequired,
 };

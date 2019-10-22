@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
@@ -17,9 +17,11 @@ import {
 } from '@material-ui/core';
 import Context from 'Context';
 import api from 'api';
-import { BackButton } from 'components';
+import { BackButton, PlayerSelectionTable } from 'components';
 import { useSnackbar } from 'notistack';
-import { PlayerSelectionTable, QuestionSelectionTable } from '..';
+import { QuestionSelectionTable } from '..';
+import { LEVEL_USER } from 'consts';
+
 
 const useStyles = makeStyles(() => ({
   root: {}
@@ -33,8 +35,16 @@ const GameDetails = props => {
 
   const { user } = useContext(Context);
 
+  const [users, setUsers] = useState([]);
   const [errors, setErrors] = useState({});
   const [values, setValues] = useState({});
+
+  useEffect(() => {
+    api.get('/users', {
+      params: { companyId: user.companyId },
+    })
+      .then(response => setUsers(response.data.filter(user => user.level === LEVEL_USER)))
+  }, [user.companyId]);
 
   const handleChange = event => {
     const newValues = {
@@ -172,9 +182,9 @@ const GameDetails = props => {
                 </FormLabel>
                 <br />
                 <PlayerSelectionTable
-                  companyId={user.company.id}
                   playersIds={values.playersIds || []}
                   setPlayersIds={playersIds => setValues(values => ({ ...values, playersIds }))}
+                  users={users}
                 />
                 {hasError('playersIds') && (
                   <FormHelperText error>

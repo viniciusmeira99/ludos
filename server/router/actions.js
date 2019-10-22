@@ -21,7 +21,6 @@ const validarBodyPostGames = body => {
 };
 
 router.post('/action', (req, res) => {
-  console.log('chegou na api');
   const { body } = req;
   const errors = validarBodyPostGames(body);
   if (Object.values(errors).length) {

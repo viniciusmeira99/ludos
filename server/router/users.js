@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { User, Company } = require('../models/index');
+const { User, Company, Game } = require('../models/index');
 
 const router = new Router();
 
@@ -50,6 +50,25 @@ router.put('/users/:id', (req, res) => {
     .then(user => user.update(req.body))
     .then(() => res.status(204))
     .catch(err => res.status(400).json(err));
+});
+
+router.get('/users/:gameId/game', (req, res) => {
+  const { gameId } = req.params;
+
+  return User
+    .findAll({
+      include: [
+        {
+          model: Game,
+          as: 'games',
+          required: true,
+          where: {
+            id: gameId,
+          },
+        }
+      ],
+    })
+    .then(games => res.status(200).json(games))
 });
 
 module.exports = router;

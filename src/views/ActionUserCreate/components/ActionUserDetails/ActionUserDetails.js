@@ -19,9 +19,9 @@ import {
 } from '@material-ui/core';
 import Context from 'Context';
 import api from 'api';
-import { BackButton } from 'components';
+import { BackButton, PlayerSelectionTable } from 'components';
 import { useSnackbar } from 'notistack';
-import { PlayerSelectionTable } from '..';
+import { LEVEL_USER } from 'consts';
 
 const useStyles = makeStyles(() => ({
   root: {}
@@ -35,10 +35,12 @@ const ActionUserDetails = props => {
 
   const { user } = useContext(Context);
   const [games, setGames] = useState([]);
+  const [users, setUsers] = useState([]);
 
   const [errors, setErrors] = useState({});
   const [values, setValues] = useState({});
 
+  const [gameId, setGameId] = useState({});
 
   useEffect(() => {
     api
@@ -48,13 +50,18 @@ const ActionUserDetails = props => {
       .then(response => setGames(response.data));
   }, [user.company.id]);
 
+  useEffect(() => {
+    api.get(`/users/${gameId}/game`)
+      .then(response => setUsers(response.data))
+  }, [gameId]);
+
   const handleChange = event => {
     const newValues = {
       ...values,
       [event.target.name]: event.target.value
     };
-
     setValues(newValues);
+    setGameId(event.target.value);
   };
 
   const handleSubmit = (e) => {
@@ -102,11 +109,11 @@ const ActionUserDetails = props => {
                 fullWidth
                 label="Nível"
                 margin="dense"
-                name="level"
+                name="game"
                 onChange={handleChange}
                 required
                 type="string"
-                value={values.level || ''}
+                value={values.game || ''}
                 variant="outlined"
               >
                 {games.map(game => (
@@ -129,10 +136,9 @@ const ActionUserDetails = props => {
                 </FormLabel>
                 <br />
                 <PlayerSelectionTable
-                  companyId={user.company.id}
-                  onChange={(playersIds) => {
-                    setValues(values => ({ ...values, playersIds }))
-                  }}
+                  playersIds={values.playersIds || []}
+                  setPlayersIds={playersIds => setValues(values => ({ ...values, playersIds }))}
+                  users={users}
                 />
                 {hasError('playersIds') && (
                   <FormHelperText error>

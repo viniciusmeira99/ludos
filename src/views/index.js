@@ -17,3 +17,4 @@ export { default as ActionList } from './ActionList';
 export { default as ActionUserCreate } from './ActionUserCreate';
 export { default as QuestionList } from './QuestionList';
 export { default as QuestionCreate } from './QuestionCreate';
+export { default as UserQuestions } from './UserQuestions';

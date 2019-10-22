@@ -9,6 +9,7 @@ const {
   Alternative,
   Action
 } = require('./models/index');
+const fakeQuestions = require('./fakeQuestions');
 
 const drop = async () => {
   await Answer.drop();
@@ -86,7 +87,8 @@ const createFakeData = async () => {
           companyId: company.id,
         },
       ],
-    }
+    },
+    ...fakeQuestions,
   ], { include: [Alternative] });
 
 
@@ -96,7 +98,14 @@ const createFakeData = async () => {
     startDate: '2019-10-01',
     endDate: '2019-11-11',
     companyId: 1,
-    questions: [{ questionId: 1, score: 1.5 }],
+    questions: [
+      { questionId: 1, score: 1.5 },
+      { questionId: 2, score: 1.5 },
+      { questionId: 3, score: 1.5 },
+      { questionId: 4, score: 1.5 },
+      { questionId: 5, score: 1.5 },
+      { questionId: 6, score: 1.5 },
+    ],
   }, {
     include: [Game.QuestionsGames]
   });

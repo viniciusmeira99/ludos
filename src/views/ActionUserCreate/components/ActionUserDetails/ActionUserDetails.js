@@ -21,7 +21,7 @@ import Context from 'Context';
 import api from 'api';
 import { BackButton } from 'components';
 import { useSnackbar } from 'notistack';
-import { PlayerSelectionTable } from '..';
+// import { PlayerSelectionTable } from '..';
 
 const useStyles = makeStyles(() => ({
   root: {}
@@ -128,12 +128,12 @@ const ActionUserDetails = props => {
                   Disponibilizar para os usuários:
                 </FormLabel>
                 <br />
-                <PlayerSelectionTable
+                {/* <PlayerSelectionTable
                   companyId={user.company.id}
                   onChange={(playersIds) => {
                     setValues(values => ({ ...values, playersIds }))
                   }}
-                />
+                /> */}
                 {hasError('playersIds') && (
                   <FormHelperText error>
                     {getError('playersIds')}

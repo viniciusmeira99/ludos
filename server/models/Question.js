@@ -1,9 +1,9 @@
-const { STRING } = require('sequelize');
+const { TEXT } = require('sequelize');
 const sequelize = require('../sequelize');
 
 const Question = sequelize.define('question', {
   description: {
-    type: STRING,
+    type: TEXT,
     allowNull: false
   },
 });

@@ -24,6 +24,7 @@ import {
   ActionUserCreate as ActionUserCreateView,
   QuestionList as QuestionListView,
   QuestionCreate as QuestionCreateView,
+  UserQuestions as UserQuestionsView,
 } from './views';
 
 const Routes = () => {
@@ -90,6 +91,13 @@ const Routes = () => {
         isPrivate
         layout={MainLayout}
         path="/game-select"
+      />
+      <RouteWithLayout
+        component={UserQuestionsView}
+        exact
+        isPrivate
+        layout={MainLayout}
+        path="/user-questions"
       />
       <RouteWithLayout
         component={ActionCreateView}

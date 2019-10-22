@@ -19,7 +19,7 @@ const useStyles = makeStyles(theme => ({
 const UserQuestions = () => {
   const classes = useStyles();
   const [questions, setQuestions] = useState([]);
-  const { selectedGame } = useContext(Context);
+  const { selectedGame, user } = useContext(Context);
 
   useEffect(() => {
     if (!selectedGame) {
@@ -51,12 +51,29 @@ const UserQuestions = () => {
     );
   }
 
-
+  const onAnswer = ({
+    score,
+    questionsGameId,
+    alternativeId,
+  }) => {
+    api.post('/answers', {
+      score,
+      companyId: user.companyId,
+      questionsGameId,
+      userId: user.id,
+      alternativeId,
+    }).then(() => {
+      api.get(`/games/${selectedGame.id}/questions`)
+        .then(response => setQuestions(response.data));
+    });
+  };
 
   return (
     <div className={classes.root}>
-      {/* {selectedGame.name} */}
-      <QuestionList questions={questions} />
+      <QuestionList
+        onAnswer={onAnswer}
+        questions={questions}
+      />
     </div>
   );
 };

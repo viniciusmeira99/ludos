@@ -6,6 +6,7 @@ const sequelizeProd = new Sequelize('ludos', 'ludos', 'uscsdevolveminhavida', {
   dialect: 'mysql',
   dialectOptions: {
     socketPath: '/cloudsql/ludos-node:us-central1:ludos',
+    decimalNumbers: true,
   },
 });
 

@@ -7,7 +7,7 @@ import { EmptyList } from 'components';
 import { QuestionCard } from './';
 
 const QuestionList = props => {
-  const { questions } = props;
+  const { questions, onAnswer } = props;
 
   if (questions.length === 0) {
     return (
@@ -26,13 +26,16 @@ const QuestionList = props => {
       {questions.map((question) => (
         <Grid
           item
+          key={question.id}
           xs={12}
         >
           <QuestionCard
             alternatives={question.question.alternatives}
+            answer={question.answer}
             description={question.question.description}
             id={question.id}
-            key={question.id}
+            onAnswer={onAnswer}
+            score={question.score}
           />
         </Grid>
       ))}
@@ -41,6 +44,7 @@ const QuestionList = props => {
 };
 
 QuestionList.propTypes = {
+  onAnswer: PropTypes.func.isRequired,
   questions: PropTypes.array.isRequired,
 };
 

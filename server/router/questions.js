@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { Question, Alternative } = require('../models/index');
+const { Question, Alternative, QuestionsGames, Answer } = require('../models/index');
 
 const router = new Router();
 
@@ -68,6 +68,20 @@ router.delete('/questions/:id', (req, res) => {
     .then(question => question.destroy())
     .then(() => res.status(204).json({}))
     .catch(err => res.status(400).json({ err: err.message }));
+});
+
+router.get('/games/:gameId/questions', (req, res) => {
+  const { gameId } = req.params;
+
+  return QuestionsGames
+    .findAll({
+      where: { gameId },
+      include: [
+        { model: Question, include: [Alternative] },
+        Answer,
+      ],
+    })
+    .then(games => res.status(200).json(games))
 });
 
 module.exports = router;

@@ -26,10 +26,6 @@ const QuestionList = props => {
       {questions.map((question) => (
         <Grid
           item
-          lg={3}
-          md={4}
-          sm={6}
-          xl={3}
           xs={12}
         >
           <QuestionCard

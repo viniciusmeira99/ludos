@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   Card,
@@ -15,6 +15,7 @@ import {
 
 const QuestionCard = props => {
   const { description, alternatives, id } = props;
+  const [checked, setChecked] = useState(null);
   return (
     <Card>
       <CardHeader title={description} />
@@ -25,7 +26,9 @@ const QuestionCard = props => {
             <FormControlLabel
               control={
                 <Radio
+                  checked={alternative.id === checked}
                   name={`question-${id}-alternative`}
+                  onChange={event => event.target.checked && setChecked(alternative.id)}
                   value={alternative.id}
                 />
               }

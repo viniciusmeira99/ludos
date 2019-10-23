@@ -21,7 +21,6 @@ import Context from 'Context';
 import api from 'api';
 import { BackButton, PlayerSelectionTable } from 'components';
 import { useSnackbar } from 'notistack';
-import { LEVEL_USER } from 'consts';
 
 const useStyles = makeStyles(() => ({
   root: {}

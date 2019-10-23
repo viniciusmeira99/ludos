@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import PerfectScrollbar from 'react-perfect-scrollbar';
@@ -126,6 +126,12 @@ const PlayerSelectionTable = props => {
 PlayerSelectionTable.propTypes = {
   playersIds: PropTypes.array.isRequired,
   setPlayersIds: PropTypes.func.isRequired,
+  users: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+    avatarUrl: PropTypes.string.avatarUrl,
+    createdAt: PropTypes.string.isRequired,
+  })),
 };
 
 export default PlayerSelectionTable;

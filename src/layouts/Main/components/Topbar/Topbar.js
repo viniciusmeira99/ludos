@@ -1,11 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
-import { AppBar, Toolbar, Hidden, IconButton } from '@material-ui/core';
+import { AppBar, Toolbar, Hidden, IconButton, Button } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import InputIcon from '@material-ui/icons/Input';
+import GamepadIcon from '@material-ui/icons/Gamepad';
+import Context from 'Context';
+import { LEVEL_USER } from 'consts';
+
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -20,13 +24,17 @@ const useStyles = makeStyles(theme => ({
   signOutButton: {
     marginLeft: theme.spacing(1)
   },
-  signOutLink: {
-    color: 'inherit'
+  gamepadIcon: {
+    marginRight: theme.spacing(1)
+  },
+  linkButton: {
+    color: 'inherit',
   },
 }));
 
 const Topbar = props => {
   const { className, onSidebarOpen, ...rest } = props;
+  const { user, selectedGame } = useContext(Context);
 
   const classes = useStyles();
 
@@ -44,8 +52,19 @@ const Topbar = props => {
           />
         </RouterLink>
         <div className={classes.flexGrow} />
+        {user.level === LEVEL_USER && (
+          <RouterLink
+            className={classes.linkButton}
+            to="/game-select"
+          >
+            <Button color="inherit">
+              <GamepadIcon className={classes.gamepadIcon} />
+              {selectedGame ? selectedGame.name : 'Selecionar jogo'}
+            </Button>
+          </RouterLink>
+        )}
         <RouterLink
-          className={classes.signOutLink}
+          className={classes.linkButton}
           to="/sair"
         >
           <IconButton

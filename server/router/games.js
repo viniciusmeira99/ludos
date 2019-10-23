@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { Op } = require('sequelize');
+const { Op, literal } = require('sequelize');
 const { User, Game } = require('../models/index');
 
 const router = new Router();
@@ -75,6 +75,14 @@ router.get('/users/:userId/games', (req, res) => {
 
   return Game
     .findAll({
+      attributes: {
+        include: [
+          [
+            literal(`(SELECT SUM(score) FROM answers WHERE userId = ${userId} AND answers.gameId = game.id)`),
+            'score'
+          ],
+        ]
+      },
       where: {
         startDate: {
           [Op.lte]: new Date().toISOString(),
@@ -95,6 +103,7 @@ router.get('/users/:userId/games', (req, res) => {
       ],
     })
     .then(games => res.status(200).json(games))
+    .catch(err => res.status(500).json(err))
 });
 
 module.exports = router;

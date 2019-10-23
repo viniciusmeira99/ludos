@@ -58,6 +58,7 @@ const UserQuestions = () => {
   }) => {
     api.post('/answers', {
       score,
+      gameId: selectedGame.id,
       companyId: user.companyId,
       questionsGameId,
       userId: user.id,

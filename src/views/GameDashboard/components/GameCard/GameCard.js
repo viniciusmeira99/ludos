@@ -8,7 +8,8 @@ import {
   CardActions,
   Typography,
   Grid,
-  Divider
+  Divider,
+  Chip,
 } from '@material-ui/core';
 import Button from '@material-ui/core/Button'
 import Context from 'Context';
@@ -38,8 +39,8 @@ const useStyles = makeStyles(theme => ({
     marginRight: theme.spacing(1)
   },
   cardContentFixed: {
-    height: '170px'
-  }
+    height: '180px'
+  },
 }));
 
 const GameCard = props => {
@@ -75,6 +76,14 @@ const GameCard = props => {
           variant="body1"
         >
           {game.description}
+        </Typography>
+        <Typography
+          align="center"
+        >
+          <Chip
+            color="primary"
+            label={`Pontuação: ${game.score}`}
+          />
         </Typography>
       </CardContent>
       <Divider />

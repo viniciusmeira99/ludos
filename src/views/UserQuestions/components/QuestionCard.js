@@ -83,6 +83,7 @@ const QuestionCard = props => {
         {!answer && (
           <Button
             color="primary"
+            disabled={!checked}
             onClick={() => onAnswer({
               score: isCorrect() ? score : 0,
               questionsGameId: id,

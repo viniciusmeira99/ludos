@@ -27,9 +27,11 @@ QuestionsGames.belongsTo(Question);
 Question.hasMany(Alternative);
 
 QuestionsGames.hasOne(Answer);
+
 Answer.belongsTo(QuestionsGames);
 Answer.belongsTo(User);
 Answer.belongsTo(Alternative);
+Answer.belongsTo(Game);
 
 module.exports = {
   Company,

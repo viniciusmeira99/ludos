@@ -56,16 +56,21 @@ const UserQuestions = () => {
     questionsGameId,
     alternativeId,
   }) => {
-    api.post('/answers', {
+    const answer = {
       score,
       gameId: selectedGame.id,
       companyId: user.companyId,
       questionsGameId,
       userId: user.id,
       alternativeId,
-    }).then(() => {
-      api.get(`/games/${selectedGame.id}/questions`)
-        .then(response => setQuestions(response.data));
+    };
+
+    const newQuestions = questions.map(question => question.id === questionsGameId
+      ? ({ ...question, answer })
+      : question);
+
+    api.post('/answers', answer).then(() => {
+      setQuestions(newQuestions);
     });
   };
 

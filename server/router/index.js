@@ -5,6 +5,7 @@ const games = require('./games');
 const questions = require('./questions');
 const action = require('./actions');
 const answers = require('./answers');
+const dashboard = require('./dashboard');
 
 const router = new Router();
 router.use(users);
@@ -13,5 +14,6 @@ router.use(games);
 router.use(questions);
 router.use(action);
 router.use(answers);
+router.use(dashboard);
 
 module.exports = router;

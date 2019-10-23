@@ -1,7 +1,7 @@
 const { DATE, STRING } = require('sequelize');
 const sequelize = require('../sequelize');
 
-const Game = sequelize.define('game', {
+const Game = sequelize.define('games', {
   name: {
     type: STRING,
     allowNull: false

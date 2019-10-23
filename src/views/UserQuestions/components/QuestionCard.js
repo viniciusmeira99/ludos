@@ -48,20 +48,30 @@ const QuestionCard = props => {
           {alternatives.map((alternative) => (
             <FormControlLabel
               control={(
-                <Radio
-                  checked={alternative.id === checked || (answer && answer.alternativeId === alternative.id)}
-                  disabled={!!answer}
-                  name={`question-${id}-alternative`}
-                  onChange={event => event.target.checked && setChecked(alternative.id)}
-                  value={alternative.id}
-                />
+                answer
+                  ? (
+                    <Radio
+                      checked={answer.alternativeId === alternative.id}
+                      disabled
+                      name={`question-${id}-alternative`}
+                      value={alternative.id}
+                    />
+                  ) : (
+                    <Radio
+                      checked={alternative.id === checked}
+                      name={`question-${id}-alternative`}
+                      onChange={event => event.target.checked && setChecked(alternative.id)}
+                      value={alternative.id}
+                    />
+                  )
               )}
               key={alternative.id}
               label={(
                 <>
                   {alternative.description}
-                  {answer && answer.alternativeId === alternative.id && (
-                    <AnswerIcon isCorrect={alternative.isCorrect} />
+                  {answer && alternative.isCorrect && <AnswerIcon isCorrect />}
+                  {answer && !alternative.isCorrect && answer.alternativeId === alternative.id && (
+                    <AnswerIcon isCorrect={false} />
                   )}
                 </>
               )}

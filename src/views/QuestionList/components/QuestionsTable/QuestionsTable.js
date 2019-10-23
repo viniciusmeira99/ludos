@@ -23,6 +23,7 @@ import {
   ListItemIcon,
   ListItemText,
 } from '@material-ui/core';
+import { SpanTruncate } from '../index';
 
 const useStyles = makeStyles(theme => ({
   root: {},
@@ -42,6 +43,9 @@ const useStyles = makeStyles(theme => ({
   actions: {
     justifyContent: 'flex-end',
   },
+  tableHeadDescricao: {
+    width: '20%',
+  }
 }));
 
 const QuestionsTable = props => {
@@ -49,7 +53,7 @@ const QuestionsTable = props => {
 
   const classes = useStyles();
 
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
   const [page, setPage] = useState(0);
 
   const handlePageChange = (event, page) => {
@@ -71,7 +75,7 @@ const QuestionsTable = props => {
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableCell>Descrição</TableCell>
+                  <TableCell classNames={classes.tableHeadDescricao}>Descrição</TableCell>
                   <TableCell>Alternativas</TableCell>
                   <TableCell>Data do cadastro</TableCell>
                   <TableCell>Opções</TableCell>
@@ -84,7 +88,11 @@ const QuestionsTable = props => {
                     hover
                     key={question.id}
                   >
-                    <TableCell>{question.description}</TableCell>
+                    <TableCell>
+                      <SpanTruncate length={100}>
+                        {question.description}
+                      </SpanTruncate>
+                    </TableCell>
                     <TableCell size="small">
                       <List dense>
                         {question.alternatives.map(alternative => (

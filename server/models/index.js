@@ -20,11 +20,14 @@ User.Answer             = User.hasMany(Answer);
 User.Game               = User.belongsToMany(Game, { through: UsersGames, as: 'games' });
 
 Game.User               = Game.belongsToMany(User, { through: UsersGames, as: 'players' });
-Game.QuestionsGames     = Game.hasMany(QuestionsGames, { as: 'questions' });
+Game.Question           = Game.belongsToMany(Question, { through: QuestionsGames, as: 'questions' });
+Game.QuestionsGames     = Game.hasMany(QuestionsGames, { as: 'questionsGames' });
 
 Question.Alternative    = Question.hasMany(Alternative);
-Question.QuestionsGames = Question.hasMany(QuestionsGames, { as: 'game' });
+Question.Game           = Question.belongsToMany(Game, { through: QuestionsGames, as: 'game' });
+Question.QuestionsGames = Question.hasMany(QuestionsGames, { as: 'questionsGames' });
 
+QuestionsGames.Game     = QuestionsGames.belongsTo(Game);
 QuestionsGames.Question = QuestionsGames.belongsTo(Question);
 QuestionsGames.Answer   = QuestionsGames.hasOne(Answer);
 

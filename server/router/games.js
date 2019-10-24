@@ -78,7 +78,7 @@ router.get('/users/:userId/games', (req, res) => {
       attributes: {
         include: [
           [
-            literal(`(SELECT SUM(score) FROM answers WHERE userId = ${userId} AND answers.gameId = game.id)`),
+            literal(`(SELECT SUM(score) FROM answers WHERE userId = ${userId} AND answers.gameId = games.id)`),
             'score'
           ],
         ]

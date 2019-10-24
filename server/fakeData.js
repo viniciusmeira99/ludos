@@ -1,4 +1,63 @@
+const fakeUsers = [
+  {
+    name: 'Vinicius',
+    password: '123',
+    email: 'viniciusmeira99@hotmail.com',
+    phone: '11997194631',
+    level: 'A',
+    companyId: 1,
+  },
+  {
+    name: 'Joao',
+    password: '123',
+    email: 'joao@maxscalla.com.br',
+    phone: '11997194631',
+    level: 'U',
+    companyId: 1,
+  },
+  {
+    name: 'Geraldo',
+    password: '123',
+    email: 'geraldo@uscs.com.br',
+    level: 'U',
+    companyId: 1,
+  },
+  {
+    name: 'Ronaldo',
+    password: '123',
+    email: 'ronaldo@uscs.com.br',
+    level: 'U',
+    companyId: 1,
+  },
+];
+
 const fakeQuestions = [
+  {
+    companyId: 1,
+    description: 'A gamificação possui muitos componentes.',
+    alternatives: [
+      {
+        description: 'Primeira alternativa',
+        isCorrect: false,
+        companyId: 1,
+      },
+      {
+        description: 'Segunda alternativa',
+        isCorrect: false,
+        companyId: 1,
+      },
+      {
+        description: 'Terceira alternativa',
+        isCorrect: true,
+        companyId: 1,
+      },
+      {
+        description: 'Quarta alternativa',
+        isCorrect: false,
+        companyId: 1,
+      },
+    ],
+  },
   {
     companyId: 1,
     description: 'Um fabricante de equipamentos eletrônicos, pressionado pela inadimplência dos lojistas compradores de seus produtos, decide assumir o controle do seu processo logístico e chegar ao consumidor final, por meio da venda porta a porta Na situação em questão, o fabricante estará fazendo uso do sistema de venda',
@@ -131,4 +190,96 @@ const fakeQuestions = [
   },
 ];
 
-module.exports = fakeQuestions;
+const fakeGames = [
+  {
+    name: 'Dia das crianças',
+    description: 'Fazer a garotada feliz',
+    startDate: '2019-10-01',
+    endDate: '2019-11-11',
+    companyId: 1,
+    questionsGames: [
+      { questionId: 1, score: 2 },
+      { questionId: 2, score: 1.5 },
+      { questionId: 3, score: 1.5 },
+      { questionId: 4, score: 2 },
+      { questionId: 5, score: 1.5 },
+      { questionId: 6, score: 1.5 },
+    ],
+  },
+  {
+    name: 'Natal',
+    description: 'Aprender sobre vendas de fim de ano',
+    startDate: '2019-10-01',
+    endDate: '2019-11-11',
+    companyId: 1,
+    questionsGames: [
+      { questionId: 1, score: 1.5 },
+      { questionId: 2, score: 2 },
+      { questionId: 3, score: 1.5 },
+      { questionId: 4, score: 1.5 },
+      { questionId: 5, score: 1.5 },
+      { questionId: 6, score: 2 },
+    ],
+  },
+  {
+    name: 'Fim de ano',
+    description: 'Fazer o final do ano melhor',
+    startDate: '2019-10-01',
+    endDate: '2019-11-11',
+    companyId: 1,
+    questionsGames: [
+      { questionId: 1, score: 2 },
+      { questionId: 2, score: 1.5 },
+      { questionId: 3, score: 1.5 },
+      { questionId: 4, score: 2 },
+      { questionId: 5, score: 1.5 },
+      { questionId: 6, score: 1.5 },
+    ],
+  },
+];
+
+const fakeAnswers = [
+  {
+    alternativeId: 3,
+    companyId: 1,
+    questionsGameId: 1,
+    score: 1.5,
+  },
+  {
+    alternativeId: 8,
+    companyId: 1,
+    questionsGameId: 2,
+    score: 2,
+  },
+  {
+    alternativeId: 12,
+    companyId: 1,
+    questionsGameId: 3,
+    score: 1.5,
+  },
+  {
+    alternativeId: 13,
+    companyId: 1,
+    questionsGameId: 4,
+    score: 1.5,
+  },
+  {
+    alternativeId: 19,
+    companyId: 1,
+    questionsGameId: 5,
+    score: 1.5,
+  },
+  {
+    alternativeId: 24,
+    companyId: 1,
+    questionsGameId: 6,
+    score: 2,
+  },
+];
+
+module.exports = {
+  fakeUsers,
+  fakeQuestions,
+  fakeGames,
+  fakeAnswers,
+};

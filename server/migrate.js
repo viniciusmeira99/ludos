@@ -9,7 +9,8 @@ const {
   Alternative,
   Action
 } = require('./models/index');
-const fakeQuestions = require('./fakeQuestions');
+
+const { fakeQuestions, fakeGames, fakeUsers } = require('./fakeData');
 
 const drop = async () => {
   await Answer.drop();
@@ -24,93 +25,14 @@ const drop = async () => {
 };
 
 const createFakeData = async () => {
-  const company = await Company.create(
-    {
-      name: 'Ludos',
-      users: [
-        {
-          name: 'Vinicius',
-          password: '123',
-          email: 'viniciusmeira99@hotmail.com',
-          phone: '11997194631',
-          level: 'A',
-        },
-        {
-          name: 'Joao',
-          password: '123',
-          email: 'joao@maxscalla.com.br',
-          phone: '11997194631',
-          level: 'U',
-        },
-      ],
-      games: [
-        {
-          name: 'Fim de ano',
-          description: 'Fazer o final do ano melhor',
-          startDate: '2019-11-01',
-          endDate: '2019-12-31',
-          companyId: 1,
-        },
-      ],
-    },
-    {
-      include: [
-        User,
-        Game,
-      ],
-    },
-  );
-
-  Question.bulkCreate([
-    {
-      companyId: company.id,
-      description: 'A gamificação possui muitos componentes.',
-      alternatives: [
-        {
-          description: 'Primeira alternativa',
-          isCorrect: false,
-          companyId: company.id,
-        },
-        {
-          description: 'Segunda alternativa',
-          isCorrect: false,
-          companyId: company.id,
-        },
-        {
-          description: 'Terceira alternativa',
-          isCorrect: true,
-          companyId: company.id,
-        },
-        {
-          description: 'Quarta alternativa',
-          isCorrect: false,
-          companyId: company.id,
-        },
-      ],
-    },
-    ...fakeQuestions,
-  ], { include: [Alternative] });
-
-
-  const game = await Game.create({
-    name: 'Dia das crianças',
-    description: 'Fazer a garotada feliz',
-    startDate: '2019-10-01',
-    endDate: '2019-11-11',
-    companyId: 1,
-    questions: [
-      { questionId: 1, score: 1.5 },
-      { questionId: 2, score: 1.5 },
-      { questionId: 3, score: 1.5 },
-      { questionId: 4, score: 1.5 },
-      { questionId: 5, score: 1.5 },
-      { questionId: 6, score: 1.5 },
-    ],
-  }, {
-    include: [Game.QuestionsGames]
+  await Company.create({
+    name: 'Ludos',
   });
 
-  await game.setPlayers([2]);
+  await User.bulkCreate(fakeUsers);
+  await Question.bulkCreate(fakeQuestions, { include: [Alternative] });
+  const games = await Game.bulkCreate(fakeGames, { include: [Game.QuestionsGames] });
+  await Promise.all(games.map(game => game.setPlayers([2, 3, 4])));
 };
 
 const create = async () => {

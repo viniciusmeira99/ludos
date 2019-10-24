@@ -33,7 +33,7 @@ const GameRankingTable = props => {
         {gameRaking.map(({ score, user }, index) => (
           <TableRow
             hover
-            key={user.id}
+            key={user.name}
           >
             <TableCell>{index <= 2 ? `${index + 1}°` : ''}</TableCell>
             <TableCell>{user.name}</TableCell>

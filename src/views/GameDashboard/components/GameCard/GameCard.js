@@ -82,7 +82,7 @@ const GameCard = props => {
         >
           <Chip
             color="primary"
-            label={`Pontuação: ${game.score}`}
+            label={`Pontuação: ${game.score || 0}`}
           />
         </Typography>
       </CardContent>

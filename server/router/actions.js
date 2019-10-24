@@ -1,6 +1,5 @@
 const { Router } = require('express');
-const { Op } = require('sequelize');
-const { Company, Action } = require('../models/index');
+const { Action } = require('../models/index');
 
 const router = new Router();
 const validarBodyPostGames = body => {
@@ -14,8 +13,8 @@ const validarBodyPostGames = body => {
   if (!body.description) {
     errors.description = ['Informe uma descrição para a ação'];
   }
-  if (!body.points) {
-    errors.points = ['Informe uma pontuação para a ação'];
+  if (!body.score) {
+    errors.score = ['Informe uma pontuação para a ação'];
   }
   return errors;
 };

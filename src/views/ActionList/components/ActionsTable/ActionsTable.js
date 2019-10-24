@@ -82,7 +82,7 @@ const ActionsTable = props => {
                   >
                     <TableCell>{action.name}</TableCell>
                     <TableCell>{action.description}</TableCell>
-                    <TableCell>{action.points}</TableCell>
+                    <TableCell>{action.score}</TableCell>
                     <TableCell>{action.identifier}</TableCell>
                     <TableCell>
                       {moment(action.createdAt).format('DD/MM/YYYY')}

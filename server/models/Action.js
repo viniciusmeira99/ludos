@@ -14,8 +14,8 @@ const Action = sequelize.define('action', {
     type: STRING,
     allowNull: true
   },
-  points: {
-    type: DECIMAL,
+  score: {
+    type: DECIMAL(4, 2),
     allowNull: false
   },
 });

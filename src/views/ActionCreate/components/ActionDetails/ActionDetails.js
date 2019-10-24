@@ -134,15 +134,15 @@ const ActionDetails = props => {
               xs={6}
             >
               <TextField
-                error={hasError('points')}
+                error={hasError('score')}
                 fullWidth
-                helperText={getError('points')}
+                helperText={getError('score')}
                 label="Pontuação"
                 margin="dense"
-                name="points"
+                name="score"
                 onChange={handleChange}
                 required
-                value={values.points || ''}
+                value={values.score || ''}
                 variant="outlined"
               />
             </Grid>

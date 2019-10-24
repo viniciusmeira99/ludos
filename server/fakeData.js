@@ -238,8 +238,30 @@ const fakeGames = [
   },
 ];
 
+const fakeActions = [
+  {
+    name: 'Efetuar venda média',
+    description: 'O usuário efetuou uma venda com valor acima de R$ 500,00',
+    score: 8,
+    companyId: 1,
+  },
+  {
+    name: 'Efetuar venda grande',
+    description: 'O usuário efetuou uma venda com valor acima de R$ 1500,00',
+    score: 20,
+    companyId: 1,
+  },
+  {
+    name: 'Atingiu a meta',
+    description: 'O usuário atingiu a meta de venda do mês',
+    score: 20,
+    companyId: 1,
+  },
+];
+
 module.exports = {
   fakeUsers,
   fakeQuestions,
   fakeGames,
+  fakeActions,
 };

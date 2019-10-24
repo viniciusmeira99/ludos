@@ -10,7 +10,7 @@ const {
   Action
 } = require('./models/index');
 
-const { fakeQuestions, fakeGames, fakeUsers } = require('./fakeData');
+const { fakeQuestions, fakeGames, fakeUsers, fakeActions } = require('./fakeData');
 
 const drop = async () => {
   await Answer.drop();
@@ -33,6 +33,7 @@ const createFakeData = async () => {
   await Question.bulkCreate(fakeQuestions, { include: [Alternative] });
   const games = await Game.bulkCreate(fakeGames, { include: [Game.GameQuestion] });
   await Promise.all(games.map(game => game.setPlayers([2, 3, 4])));
+  await Action.bulkCreate(fakeActions);
 };
 
 const create = async () => {

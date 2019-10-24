@@ -20,10 +20,10 @@ router.get('/dashboard/games/:gameId/ranking', (req, res) => {
       },
     ],
     attributes: [
-      [fn('SUM', col('score')), 'score'],
+      [fn('SUM', col('answers.score')), 'score'],
     ],
     group: [[User, 'id'], [User, 'name']],
-    order: [[fn('SUM', col('score')), 'DESC']],
+    order: [[fn('SUM', col('answers.score')), 'DESC']],
   })
     .then(games => res.status(200).json(games));
 });

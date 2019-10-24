@@ -27,7 +27,11 @@ const UserQuestions = () => {
       return;
     }
 
-    api.get(`/games/${selectedGame.id}/questions`)
+    api.get(`/games/${selectedGame.id}/questions`, {
+      params: {
+        userId: user.id,
+      },
+    })
       .then(response => setGameQuestions(response.data));
   }, [selectedGame])
 

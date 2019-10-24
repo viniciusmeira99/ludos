@@ -71,14 +71,15 @@ router.delete('/questions/:id', (req, res) => {
 });
 
 router.get('/games/:gameId/questions', (req, res) => {
+  const { userId } = req.query;
   const { gameId } = req.params;
 
   return GameQuestion
     .findAll({
       where: { gameId },
       include: [
-        { model: Question, include: [Alternative] },
-        GameQuestion.Answer,
+        { association: GameQuestion.Question, include: [Alternative] },
+        { association: GameQuestion.Answer, where: { userId }, required: false },
       ],
     })
     .then(games => res.status(200).json(games))

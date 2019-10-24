@@ -18,8 +18,10 @@ import useGameRanking from './useGameRanking';
 const useStyles = makeStyles(() => ({
   root: {},
   inner: {
-    minWidth: 800,
     height: 415,
+  },
+  classificacao: {
+    width: 20,
   },
 }));
 
@@ -42,16 +44,18 @@ const GameRanking = props => {
             <Table className={classes.table}>
               <TableHead>
                 <TableRow>
+                  <TableCell className={classes.classificacao} />
                   <TableCell>Usuário</TableCell>
                   <TableCell>Pontuação</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {gameRaking.map(({ score, user }) => (
+                {gameRaking.map(({ score, user }, index) => (
                   <TableRow
                     hover
                     key={user.id}
                   >
+                    <TableCell>{index <= 2 ? `${index + 1}°` : ''}</TableCell>
                     <TableCell>{user.name}</TableCell>
                     <TableCell>{score}</TableCell>
                   </TableRow>

@@ -13,7 +13,7 @@ const QuestionList = props => {
     return (
       <EmptyList
         subtitle="Entre em contato com o administrador da sua empresa para disponibilizar as perguntas."
-        title="Nenhuma questão disponível no jogo selecionado."
+        title="Nenhuma pergunta disponível no jogo selecionado."
       />
     )
   }

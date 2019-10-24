@@ -7,13 +7,9 @@ import {
   CardHeader,
   CardContent,
   Divider,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
 } from '@material-ui/core';
 import useGameRanking from './useGameRanking';
+import GameRankingTable from './GameRankingTable';
 
 const useStyles = makeStyles(() => ({
   root: {},
@@ -41,27 +37,7 @@ const GameRanking = props => {
       <CardContent>
         <PerfectScrollbar>
           <div className={classes.inner}>
-            <Table className={classes.table}>
-              <TableHead>
-                <TableRow>
-                  <TableCell className={classes.classificacao} />
-                  <TableCell>Usuário</TableCell>
-                  <TableCell>Pontuação</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {gameRaking.map(({ score, user }, index) => (
-                  <TableRow
-                    hover
-                    key={user.id}
-                  >
-                    <TableCell>{index <= 2 ? `${index + 1}°` : ''}</TableCell>
-                    <TableCell>{user.name}</TableCell>
-                    <TableCell>{score}</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+            <GameRankingTable gameRaking={gameRaking} />
           </div>
         </PerfectScrollbar>
       </CardContent>

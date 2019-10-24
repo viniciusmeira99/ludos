@@ -13,7 +13,7 @@ const Answer = sequelize.define(
   //   indexes: [
   //     {
   //       unique: true,
-  //       fields: ['questionsGameId', 'userId']
+  //       fields: ['gameQuestionId', 'userId']
   //     },
   //   ],
   // },

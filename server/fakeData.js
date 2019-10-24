@@ -197,7 +197,7 @@ const fakeGames = [
     startDate: '2019-10-01',
     endDate: '2019-11-11',
     companyId: 1,
-    questionsGames: [
+    gameQuestion: [
       { questionId: 1, score: 2 },
       { questionId: 2, score: 1.5 },
       { questionId: 3, score: 1.5 },
@@ -212,7 +212,7 @@ const fakeGames = [
     startDate: '2019-10-01',
     endDate: '2019-11-11',
     companyId: 1,
-    questionsGames: [
+    gameQuestion: [
       { questionId: 1, score: 1.5 },
       { questionId: 2, score: 2 },
       { questionId: 3, score: 1.5 },
@@ -227,7 +227,7 @@ const fakeGames = [
     startDate: '2019-10-01',
     endDate: '2019-11-11',
     companyId: 1,
-    questionsGames: [
+    gameQuestion: [
       { questionId: 1, score: 2 },
       { questionId: 2, score: 1.5 },
       { questionId: 3, score: 1.5 },
@@ -238,48 +238,8 @@ const fakeGames = [
   },
 ];
 
-const fakeAnswers = [
-  {
-    alternativeId: 3,
-    companyId: 1,
-    questionsGameId: 1,
-    score: 1.5,
-  },
-  {
-    alternativeId: 8,
-    companyId: 1,
-    questionsGameId: 2,
-    score: 2,
-  },
-  {
-    alternativeId: 12,
-    companyId: 1,
-    questionsGameId: 3,
-    score: 1.5,
-  },
-  {
-    alternativeId: 13,
-    companyId: 1,
-    questionsGameId: 4,
-    score: 1.5,
-  },
-  {
-    alternativeId: 19,
-    companyId: 1,
-    questionsGameId: 5,
-    score: 1.5,
-  },
-  {
-    alternativeId: 24,
-    companyId: 1,
-    questionsGameId: 6,
-    score: 2,
-  },
-];
-
 module.exports = {
   fakeUsers,
   fakeQuestions,
   fakeGames,
-  fakeAnswers,
 };

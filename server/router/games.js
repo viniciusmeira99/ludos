@@ -34,7 +34,7 @@ router.post('/games', (req, res) => {
   }
 
   return Game.create(body, {
-    include: [Game.QuestionsGames],
+    include: [Game.GameQuestion],
   })
     .then(game =>
       game.setPlayers(body.playersIds)
@@ -50,11 +50,8 @@ router.get('/games', (req, res) => {
   return Game.findAll({
     where: { companyId },
     include: [
-      {
-        model: User,
-        as: 'players',
-      },
-      Game.QuestionsGames,
+      Game.User,
+      Game.GameQuestion,
     ],
   })
     .then(games => res.status(200).json(games))
@@ -78,7 +75,7 @@ router.get('/users/:userId/games', (req, res) => {
       attributes: {
         include: [
           [
-            literal(`(SELECT SUM(score) FROM answers WHERE userId = ${userId} AND answers.gameId = games.id)`),
+            literal(`(SELECT SUM(score) FROM answers WHERE answers.userId = ${userId} AND answers.gameId = games.id)`),
             'score'
           ],
         ]
@@ -93,9 +90,7 @@ router.get('/users/:userId/games', (req, res) => {
       },
       include: [
         {
-          model: User,
-          as: 'players',
-          required: true,
+          association: Game.User,
           where: {
             id: userId,
           },

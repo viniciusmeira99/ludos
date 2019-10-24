@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { Question, Alternative, QuestionsGames, Answer } = require('../models/index');
+const { Question, Alternative, GameQuestion } = require('../models/index');
 
 const router = new Router();
 
@@ -73,12 +73,12 @@ router.delete('/questions/:id', (req, res) => {
 router.get('/games/:gameId/questions', (req, res) => {
   const { gameId } = req.params;
 
-  return QuestionsGames
+  return GameQuestion
     .findAll({
       where: { gameId },
       include: [
         { model: Question, include: [Alternative] },
-        Answer,
+        GameQuestion.Answer,
       ],
     })
     .then(games => res.status(200).json(games))

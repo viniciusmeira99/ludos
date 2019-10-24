@@ -1,28 +1,29 @@
 const { Router } = require('express');
-const { literal } = require('sequelize');
-const { Game } = require('../models/index');
+const { fn, col } = require('sequelize');
+const { Answer, User } = require('../models/index');
 
 const router = new Router();
 
-router.get('/dashboard/user-rank', (req, res) => {
-  const { companyId } = req.query;
+router.get('/dashboard/games/:gameId/ranking', (req, res) => {
+  const { gameId } = req.params;
 
-  return Game.findAll({
-    where: {
-      companyId,
-    },
-    attributes: [
-      'name',
-    ],
+  return Answer.findAll({
     include: [
       {
-        association: Game.User,
-        attributes: [
-          'name',
-          [literal('(SELECT SUM(score) FROM answers WHERE answers.userId = players.id AND answers.gameId = games.id)'), 'score'],
-        ],
+        association: Answer.GameQuestion,
+        where: { gameId },
+        attributes: [],
       },
-    ]
+      {
+        association: Answer.User,
+        attributes: ['name'],
+      },
+    ],
+    attributes: [
+      [fn('SUM', col('score')), 'score'],
+    ],
+    group: [[User, 'id'], [User, 'name']],
+    order: [[fn('SUM', col('score')), 'DESC']],
   })
     .then(games => res.status(200).json(games));
 });

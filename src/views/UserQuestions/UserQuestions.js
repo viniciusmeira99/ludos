@@ -18,16 +18,17 @@ const useStyles = makeStyles(theme => ({
 
 const UserQuestions = () => {
   const classes = useStyles();
-  const [questions, setQuestions] = useState([]);
+  const [gameQuestions, setGameQuestions] = useState([]);
   const { selectedGame, user } = useContext(Context);
 
   useEffect(() => {
     if (!selectedGame) {
-      setQuestions([]);
+      setGameQuestions([]);
       return;
     }
+
     api.get(`/games/${selectedGame.id}/questions`)
-      .then(response => setQuestions(response.data));
+      .then(response => setGameQuestions(response.data));
   }, [selectedGame])
 
   if (!selectedGame) {
@@ -52,25 +53,25 @@ const UserQuestions = () => {
   }
 
   const onAnswer = ({
+    gameQuestionId,
     score,
-    questionsGameId,
     alternativeId,
   }) => {
     const answer = {
+      gameQuestionId,
       score,
+      alternativeId,
       gameId: selectedGame.id,
       companyId: user.companyId,
-      questionsGameId,
       userId: user.id,
-      alternativeId,
     };
 
-    const newQuestions = questions.map(question => question.id === questionsGameId
+    const newGameQuestions = gameQuestions.map(question => question.id === gameQuestionId
       ? ({ ...question, answer })
       : question);
 
     api.post('/answers', answer).then(() => {
-      setQuestions(newQuestions);
+      setGameQuestions(newGameQuestions);
     });
   };
 
@@ -78,7 +79,7 @@ const UserQuestions = () => {
     <div className={classes.root}>
       <QuestionList
         onAnswer={onAnswer}
-        questions={questions}
+        questions={gameQuestions}
       />
     </div>
   );

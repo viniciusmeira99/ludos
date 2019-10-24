@@ -3,7 +3,7 @@ const Question = require('./Question');
 const Alternative = require('./Alternative');
 const Game = require('./Game');
 const UsersGames = require('./UsersGames');
-const QuestionsGames = require('./QuestionsGames');
+const GameQuestion = require('./GameQuestion');
 const User = require('./User');
 const Answer = require('./Answer');
 const Action = require('./Action');
@@ -20,18 +20,18 @@ User.Answer             = User.hasMany(Answer);
 User.Game               = User.belongsToMany(Game, { through: UsersGames, as: 'games' });
 
 Game.User               = Game.belongsToMany(User, { through: UsersGames, as: 'players' });
-Game.Question           = Game.belongsToMany(Question, { through: QuestionsGames, as: 'questions' });
-Game.QuestionsGames     = Game.hasMany(QuestionsGames, { as: 'questionsGames' });
+Game.Question           = Game.belongsToMany(Question, { through: GameQuestion, as: 'questions' });
+Game.GameQuestion       = Game.hasMany(GameQuestion, { as: 'gameQuestion' });
 
 Question.Alternative    = Question.hasMany(Alternative);
-Question.Game           = Question.belongsToMany(Game, { through: QuestionsGames, as: 'game' });
-Question.QuestionsGames = Question.hasMany(QuestionsGames, { as: 'questionsGames' });
+Question.Game           = Question.belongsToMany(Game, { through: GameQuestion, as: 'game' });
+Question.GameQuestion   = Question.hasMany(GameQuestion, { as: 'gameQuestion' });
 
-QuestionsGames.Game     = QuestionsGames.belongsTo(Game);
-QuestionsGames.Question = QuestionsGames.belongsTo(Question);
-QuestionsGames.Answer   = QuestionsGames.hasOne(Answer);
+GameQuestion.Game       = GameQuestion.belongsTo(Game);
+GameQuestion.Question   = GameQuestion.belongsTo(Question);
+GameQuestion.Answer     = GameQuestion.hasOne(Answer, { foreignKey: 'gameQuestionId' });
 
-Answer.QuestionsGames   = Answer.belongsTo(QuestionsGames);
+Answer.GameQuestion     = Answer.belongsTo(GameQuestion, { foreignKey: 'gameQuestionId' });
 Answer.User             = Answer.belongsTo(User);
 Answer.Alternative      = Answer.belongsTo(Alternative);
 Answer.Game             = Answer.belongsTo(Game);
@@ -40,7 +40,7 @@ module.exports = {
   Company,
   User,
   UsersGames,
-  QuestionsGames,
+  GameQuestion,
   Game,
   Question,
   Alternative,

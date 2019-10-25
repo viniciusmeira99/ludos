@@ -41,6 +41,10 @@ const useStyles = makeStyles(theme => ({
   cardContentFixed: {
     height: '180px'
   },
+  scoreContainer: {
+    display: 'flex',
+    justifyContent: 'center'
+  },
 }));
 
 const GameCard = props => {
@@ -77,14 +81,12 @@ const GameCard = props => {
         >
           {game.description}
         </Typography>
-        <Typography
-          align="center"
-        >
+        <div className={classes.scoreContainer}>
           <Chip
             color="primary"
             label={`Pontuação: ${game.score || 0}`}
           />
-        </Typography>
+        </div>
       </CardContent>
       <Divider />
       <CardActions>

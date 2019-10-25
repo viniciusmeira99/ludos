@@ -10,49 +10,54 @@ import {
   Divider,
   Grid,
   Button,
-  FormLabel,
-  FormGroup,
-  FormHelperText,
   Select,
   MenuItem,
   Typography,
 } from '@material-ui/core';
 import Context from 'Context';
 import api from 'api';
-import { BackButton, PlayerSelectionTable } from 'components';
+import { BackButton } from 'components';
 import { useSnackbar } from 'notistack';
 
 const useStyles = makeStyles(() => ({
   root: {}
 }));
 
-const ActionUserDetails = props => {
+const UserActionsForm = props => {
   const { history } = props;
   const { enqueueSnackbar } = useSnackbar();
 
   const classes = useStyles();
 
-  const { user } = useContext(Context);
+  const { user: { companyId } } = useContext(Context);
   const [games, setGames] = useState([]);
+  const [actions, setActions] = useState([]);
   const [users, setUsers] = useState([]);
 
-  const [errors, setErrors] = useState({});
   const [values, setValues] = useState({});
-
-  const [gameId, setGameId] = useState({});
 
   useEffect(() => {
     api
       .get('/games', {
-        params: { companyId: user.company.id },
+        params: { companyId },
       })
       .then(response => setGames(response.data));
-  }, [user.company.id]);
+
+    api
+      .get('/actions', {
+        params: { companyId },
+      })
+      .then(response => setActions(response.data));
+  }, [companyId]);
 
   useEffect(() => {
-    api.get(`/users/${gameId}/game`)
-      .then(response => setUsers(response.data))
-  }, [gameId]);
+    if (values.gameId) {
+      api.get(`/users/${values.gameId}/game`)
+        .then(response => setUsers(response.data))
+    } else {
+      setUsers([]);
+    }
+  }, [values.gameId]);
 
   const handleChange = event => {
     const newValues = {
@@ -60,28 +65,20 @@ const ActionUserDetails = props => {
       [event.target.name]: event.target.value
     };
     setValues(newValues);
-    setGameId(event.target.value);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    api.post('/games', {
+    api.post('/user-actions', {
       ...values,
-      companyId: user.companyId,
+      companyId,
     })
       .then(() => {
         setValues({});
-        enqueueSnackbar('Jogo cadastrado', { variant: 'success', });
+        enqueueSnackbar('Ação lançada!', { variant: 'success', });
         history.goBack();
-      }).catch((err) => {
-        if (err.response.data.errors) {
-          setErrors(err.response.data.errors);
-        }
       });
   };
-
-  const hasError = name => Boolean(errors[name]);
-  const getError = name => hasError(name) ? errors[name][0] : '';
 
   return (
     <Card className={classes.root}>
@@ -108,11 +105,31 @@ const ActionUserDetails = props => {
                 fullWidth
                 label="Nível"
                 margin="dense"
-                name="game"
+                name="actionId"
                 onChange={handleChange}
                 required
                 type="string"
-                value={values.game || ''}
+                value={values.actionId || ''}
+                variant="outlined"
+              >
+                {actions.map(action => (
+                  <MenuItem value={action.id}>{action.name}</MenuItem>
+                ))}
+              </Select>
+            </Grid>
+            <Grid
+              item
+              xs={12}
+            >
+              <Select
+                fullWidth
+                label="Nível"
+                margin="dense"
+                name="gameId"
+                onChange={handleChange}
+                required
+                type="string"
+                value={values.gameId || ''}
                 variant="outlined"
               >
                 {games.map(game => (
@@ -127,24 +144,24 @@ const ActionUserDetails = props => {
               item
               xs={12}
             >
-              <FormGroup>
-                <FormLabel
-                  error={hasError('playersIds')}
-                >
-                  Disponibilizar para os usuários:
-                </FormLabel>
-                <br />
-                <PlayerSelectionTable
-                  playersIds={values.playersIds || []}
-                  setPlayersIds={playersIds => setValues(values => ({ ...values, playersIds }))}
-                  users={users}
-                />
-                {hasError('playersIds') && (
-                  <FormHelperText error>
-                    {getError('playersIds')}
-                  </FormHelperText>
-                )}
-              </FormGroup>
+              <Select
+                fullWidth
+                label="Nível"
+                margin="dense"
+                name="userId"
+                onChange={handleChange}
+                required
+                type="string"
+                value={values.userId || ''}
+                variant="outlined"
+              >
+                {users.map(user => (
+                  <MenuItem value={user.id}>{user.name}</MenuItem>
+                ))}
+              </Select>
+              <Typography variant="body1">
+                Selecione o jogo para disponibilizar os usuários
+              </Typography>
             </Grid>
           </Grid>
         </CardContent>
@@ -155,7 +172,7 @@ const ActionUserDetails = props => {
             type="submit"
             variant="contained"
           >
-            Criar jogo
+            Lançar ação
           </Button>
           <BackButton />
         </CardActions>
@@ -164,11 +181,11 @@ const ActionUserDetails = props => {
   );
 };
 
-ActionUserDetails.propTypes = {
+UserActionsForm.propTypes = {
   className: PropTypes.string,
   history: PropTypes.shape({
     goBack: PropTypes.func.isRequired,
   }).isRequired,
 };
 
-export default withRouter(ActionUserDetails);
+export default withRouter(UserActionsForm);

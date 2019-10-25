@@ -2,7 +2,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/styles';
 import { Grid } from '@material-ui/core';
 
-import { ActionUserDetails } from './components';
+import { UserActionsForm } from './components';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -10,7 +10,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const ActionUserCreate = () => {
+const UserActionsCreate = () => {
   const classes = useStyles();
 
   return (
@@ -32,11 +32,11 @@ const ActionUserCreate = () => {
           xl={6}
           xs={12}
         >
-          <ActionUserDetails />
+          <UserActionsForm />
         </Grid>
       </Grid>
     </div>
   );
 };
 
-export default ActionUserCreate;
+export default UserActionsCreate;

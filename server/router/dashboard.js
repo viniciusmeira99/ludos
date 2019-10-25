@@ -4,14 +4,14 @@ const { Answer, User } = require('../models/index');
 
 const router = new Router();
 
-router.get('/dashboard/games/:gameId/ranking', (req, res) => {
-  const { gameId } = req.params;
+router.get('/dashboard/ranking', (req, res) => {
+  const { gameId } = req.query;
 
   return Answer.findAll({
     include: [
       {
         association: Answer.GameQuestion,
-        where: { gameId },
+        where: gameId ? { gameId } : undefined,
         attributes: [],
       },
       {

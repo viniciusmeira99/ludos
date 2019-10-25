@@ -5,7 +5,7 @@ const useGameRanking = (gameId) => {
   const [ranking, setRanking] = useState([]);
 
   useEffect(() => {
-    api.get(`/dashboard/games/${gameId}/ranking`)
+    api.get('/dashboard/ranking', { query: { gameId }})
       .then(response => setRanking(response.data))
   }, [gameId]);
 

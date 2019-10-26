@@ -1,38 +1,31 @@
 const { Router } = require('express');
-const { fn, literal } = require('sequelize');
+const { literal } = require('sequelize');
 const { User } = require('../models/index');
+const { LEVEL_USER } = require('../constants');
 
 const router = new Router();
 
 router.get('/dashboard/ranking', (req, res) => {
   const { companyId, gameId } = req.query;
 
+  const whereGameId = gameId ? ` AND gameId = ${gameId}` : '';
+
   return User.findAll({
     attributes: [
       'id',
       'name',
       [
-        fn('COALESCE', literal('COALESCE(SUM(users_actions.score), 0) + COALESCE(SUM(answers.score), 0)'), 0),
+        literal(`((SELECT SUM(score) FROM answers WHERE userId = user.id${whereGameId}) + (SELECT SUM(score) FROM users_actions WHERE userId = user.id${whereGameId}))`),
         'score',
       ],
     ],
     where: {
       companyId,
+      level: LEVEL_USER,
     },
-    include: [
-      {
-        association: User.Answer,
-        attributes: [],
-        where: gameId ? { gameId } : undefined,
-      },
-      {
-        association: User.UserAction,
-        attributes: [],
-        where: gameId ? { gameId } : undefined,
-      },
-    ],
     group: [
-      'id', 
+      literal('1'), 
+      literal('2'), 
       'name',
     ],
     order: [

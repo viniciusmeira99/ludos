@@ -5,13 +5,18 @@ const router = new Router();
 
 router.get('/user-actions', (req, res) => {
   const { companyId, userId, gameId } = req.query;
+  const where = {
+    companyId,
+  };
+  if (userId) {
+    where.userId = userId;
+  }
+  if (gameId) {
+    where.gameId = gameId;
+  }
   return UserAction
     .findAll({
-      where: { 
-        companyId,
-        userId: userId || undefined,
-        gameId: gameId || undefined,
-      },
+      where,
       include: [
         {
           association: UserAction.User,

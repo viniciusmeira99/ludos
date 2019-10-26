@@ -72,14 +72,31 @@ router.get('/users/:userId/games', (req, res) => {
 
   return Game
     .findAll({
-      attributes: {
-        include: [
-          [
-            literal(`(SELECT SUM(score) FROM answers WHERE answers.userId = ${userId} AND answers.gameId = games.id)`),
-            'score'
-          ],
-        ]
-      },
+      attributes: [
+        'id',
+        'name',
+        'description',
+        [
+          literal('COALESCE(SUM(users_actions.score)) + COALESCE(SUM(answers.score), 0)'),
+          'score'
+        ],
+      ],
+      include: [
+        {
+          association: Game.User,
+          where: {
+            id: userId,
+          },
+        },
+        {
+          association: User.Answer,
+          attributes: [],
+        },
+        {
+          association: User.UserAction,
+          attributes: [],
+        },
+      ],
       where: {
         startDate: {
           [Op.lte]: new Date().toISOString(),
@@ -88,13 +105,10 @@ router.get('/users/:userId/games', (req, res) => {
           [Op.gte]: new Date().toISOString(),
         },
       },
-      include: [
-        {
-          association: Game.User,
-          where: {
-            id: userId,
-          },
-        },
+      group: [
+        'id',
+        'name',
+        'description',
       ],
     })
     .then(games => res.status(200).json(games))

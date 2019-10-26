@@ -14,6 +14,7 @@ import {
 } from '@material-ui/core';
 import Context from 'Context';
 import { getInitials } from 'helpers';
+import { ImageModal } from '../../components';
 
 const useStyles = makeStyles(theme => ({
   root: {},
@@ -91,18 +92,13 @@ const AccountProfile = props => {
       </CardContent>
       <Divider />
       <CardActions>
-        <Button
-          className={classes.uploadButton}
-          color="primary"
-          variant="text"
-        >
-          Enviar foto
-        </Button>
+        <ImageModal></ImageModal>
         <Button variant="text">
           Remover foto
         </Button>
       </CardActions>
     </Card>
+    
   );
 };
 

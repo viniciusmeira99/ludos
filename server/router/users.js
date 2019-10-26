@@ -3,6 +3,7 @@ const { User, Company, Game } = require('../models/index');
 
 const router = new Router();
 
+
 router.post('/users', (req, res) => {
   const { company, ...user } = req.body;
   return Company.findOrCreate({
@@ -47,7 +48,9 @@ router.get('/users', (req, res) => {
 router.put('/users/:id', (req, res) => {
   User
     .findByPk(req.params.id)
-    .then(user => user.update(req.body))
+    .then((user) => {
+      user.update(req.body);
+    })
     .then(() => res.status(204))
     .catch(err => res.status(400).json(err));
 });

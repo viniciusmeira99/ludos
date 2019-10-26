@@ -71,16 +71,16 @@ const AccountDetails = props => {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
 
     api.put(`/users/${values.id}`, values)
-      .then(() => {
-        setUser(values);
+      .then((response) => {
+        // put não entra no then
       }).catch((err) => {
         if (err.errors) {
           setErrors(err.errors);
         }
       });
+      setUser(values);
   };
 
   return (
@@ -94,8 +94,8 @@ const AccountDetails = props => {
         onSubmit={handleSubmit}
       >
         <CardHeader
-          subheader="The information can be edited"
-          title="Profile"
+          subheader="As informações podem ser atualizadas"
+          title="Minha Conta "
         />
         <Divider />
         <CardContent>
@@ -162,8 +162,9 @@ const AccountDetails = props => {
           <Button
             color="primary"
             variant="contained"
+            type="submit"
           >
-            Save details
+            Atualizar
           </Button>
         </CardActions>
       </form>

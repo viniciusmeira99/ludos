@@ -1,4 +1,4 @@
-const { STRING, ENUM } = require('sequelize');
+const { STRING, ENUM, BLOB } = require('sequelize');
 const sequelize = require('../sequelize');
 const { LEVEL_MASTER, LEVEL_ADMIN, LEVEL_USER } = require('../constants');
 
@@ -25,6 +25,10 @@ const User = sequelize.define('user', {
     allowNull: false,
     defaultValue: LEVEL_ADMIN,
   },
+  image: {
+    type: BLOB,
+    allowNull: true,
+  }
 });
 
 module.exports = User;

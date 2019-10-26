@@ -1,13 +1,25 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import api from 'api';
+import Context from 'Context';
 
-const useGameRanking = (gameId) => {
+const useGameRanking = () => {
+  const { user: { companyId }, selectedGame } = useContext(Context);
   const [ranking, setRanking] = useState([]);
 
   useEffect(() => {
-    api.get('/dashboard/ranking', { query: { gameId }})
+    const gameId = selectedGame ? selectedGame.id : undefined;
+    
+    api.get(
+      '/dashboard/ranking', 
+      { 
+        params: { 
+          gameId, 
+          companyId,
+        },
+      },
+    )
       .then(response => setRanking(response.data))
-  }, [gameId]);
+  }, [companyId, selectedGame]);
 
   return ranking;
 };

@@ -19,7 +19,7 @@ const useStyles = makeStyles(theme => ({
 const UserQuestions = () => {
   const classes = useStyles();
   const [gameQuestions, setGameQuestions] = useState([]);
-  const { selectedGame, user } = useContext(Context);
+  const { selectedGame, user: { id: userId, companyId } } = useContext(Context);
 
   useEffect(() => {
     if (!selectedGame) {
@@ -29,11 +29,11 @@ const UserQuestions = () => {
 
     api.get(`/games/${selectedGame.id}/questions`, {
       params: {
-        userId: user.id,
+        userId,
       },
     })
       .then(response => setGameQuestions(response.data));
-  }, [selectedGame])
+  }, [selectedGame, userId])
 
   if (!selectedGame) {
     return (
@@ -66,8 +66,8 @@ const UserQuestions = () => {
       score,
       alternativeId,
       gameId: selectedGame.id,
-      companyId: user.companyId,
-      userId: user.id,
+      companyId,
+      userId,
     };
 
     const newGameQuestions = gameQuestions.map(question => question.id === gameQuestionId

@@ -48,9 +48,8 @@ const GameRankingTable = props => {
 GameRankingTable.propTypes = {
   className: PropTypes.string,
   gameRaking: PropTypes.arrayOf(PropTypes.shape({
-    user: PropTypes.shape({
-      name: PropTypes.string.isRequired,
-    }).isRequired,
+    id: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
     score: PropTypes.number.isRequired,
   })).isRequired,
 };

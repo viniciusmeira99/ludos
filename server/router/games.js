@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { Op, literal } = require('sequelize');
+const { Op, literal, fn, col } = require('sequelize');
 const { User, Game } = require('../models/index');
 
 const router = new Router();
@@ -76,10 +76,7 @@ router.get('/users/:userId/games', (req, res) => {
         'id',
         'name',
         'description',
-        [
-          literal('COALESCE(SUM(users_actions.score)) + COALESCE(SUM(answers.score), 0)'),
-          'score'
-        ],
+        [literal(`((SELECT SUM(score) FROM answers WHERE gameId = games.id AND userId = ${userId}) + (SELECT SUM(score) FROM users_actions WHERE gameId = games.id AND userId = ${userId}))`), 'score']
       ],
       include: [
         {
@@ -87,13 +84,6 @@ router.get('/users/:userId/games', (req, res) => {
           where: {
             id: userId,
           },
-        },
-        {
-          association: User.Answer,
-          attributes: [],
-        },
-        {
-          association: User.UserAction,
           attributes: [],
         },
       ],
@@ -112,7 +102,7 @@ router.get('/users/:userId/games', (req, res) => {
       ],
     })
     .then(games => res.status(200).json(games))
-    .catch(err => res.status(500).json(err))
+    // .catch(err => res.status(500).json(err))
 });
 
 module.exports = router;

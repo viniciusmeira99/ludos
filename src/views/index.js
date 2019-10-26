@@ -15,6 +15,7 @@ export { default as GameDashboard } from './GameDashboard';
 export { default as ActionCreate } from './ActionCreate';
 export { default as ActionList } from './ActionList';
 export { default as UserActionsList } from './UserActionsList';
+export { default as MyActionsList } from './MyActionsList';
 export { default as UserActionsCreate } from './UserActionsCreate';
 export { default as QuestionList } from './QuestionList';
 export { default as QuestionCreate } from './QuestionCreate';

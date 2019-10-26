@@ -4,10 +4,14 @@ const { Action, UserAction } = require('../models/index');
 const router = new Router();
 
 router.get('/user-actions', (req, res) => {
-  const { companyId } = req.query;
+  const { companyId, userId, gameId } = req.query;
   return UserAction
     .findAll({
-      where: { companyId },
+      where: { 
+        companyId,
+        userId: userId || undefined,
+        gameId: gameId || undefined,
+      },
       include: [
         {
           association: UserAction.User,

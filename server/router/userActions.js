@@ -22,6 +22,7 @@ router.get('/user-actions', (req, res) => {
           attributes: ['name'],
         },
       ],
+      order: [['createdAt', 'DESC']]
     })
     .then(action => res.status(200).json(action))
 });

@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { withRouter } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
 import {
@@ -12,7 +12,9 @@ import {
   Button,
   Select,
   MenuItem,
-  Typography,
+  InputLabel,
+  FormControl,
+  FormHelperText,
 } from '@material-ui/core';
 import Context from 'Context';
 import api from 'api';
@@ -23,8 +25,8 @@ const useStyles = makeStyles(() => ({
   root: {}
 }));
 
-const UserActionsForm = props => {
-  const { history } = props;
+const UserActionsForm = () => {
+  const history = useHistory();
   const { enqueueSnackbar } = useSnackbar();
 
   const classes = useStyles();
@@ -88,7 +90,7 @@ const UserActionsForm = props => {
         onSubmit={handleSubmit}
       >
         <CardHeader
-          subheader="Preencha o formulário para lançar ações com pontuação"
+          subheader="Quando um usuário efetuar uma ação, envie para ele receber os pontos"
           title="Lançamento de ação"
         />
         <Divider />
@@ -101,67 +103,103 @@ const UserActionsForm = props => {
               item
               xs={12}
             >
-              <Select
-                fullWidth
-                label="Nível"
-                margin="dense"
-                name="actionId"
-                onChange={handleChange}
-                required
-                type="string"
-                value={values.actionId || ''}
-                variant="outlined"
-              >
-                {actions.map(action => (
-                  <MenuItem value={action.id}>{action.name}</MenuItem>
-                ))}
-              </Select>
+              <FormControl fullWidth>
+                <InputLabel htmlFor="actionIdUserActions">
+                  Ação
+                </InputLabel>
+                <Select
+                  fullWidth
+                  inputProps={{
+                    id: 'actionIdUserActions',
+                  }}
+                  label="Nível"
+                  margin="dense"
+                  name="actionId"
+                  onChange={handleChange}
+                  required
+                  type="string"
+                  value={values.actionId || ''}
+                  variant="outlined"
+                >
+                  {actions.map(action => (
+                    <MenuItem
+                      key={action.id}
+                      value={action.id}
+                    >
+                      {action.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+                <FormHelperText>Selecione qual ação irá ser enviada</FormHelperText>
+              </FormControl>
             </Grid>
             <Grid
               item
               xs={12}
             >
-              <Select
-                fullWidth
-                label="Nível"
-                margin="dense"
-                name="gameId"
-                onChange={handleChange}
-                required
-                type="string"
-                value={values.gameId || ''}
-                variant="outlined"
-              >
-                {games.map(game => (
-                  <MenuItem value={game.id}>{game.name}</MenuItem>
-                ))}
-              </Select>
-              <Typography variant="body1">
-                Selecione o jogo para disponibilizar os usuários
-              </Typography>
+              <FormControl fullWidth>
+                <InputLabel htmlFor="gameIdUserActions">
+                  Jogo
+                </InputLabel>
+                <Select
+                  fullWidth
+                  inputProps={{
+                    id: 'gameIdUserActions'
+                  }}
+                  label="Nível"
+                  margin="dense"
+                  name="gameId"
+                  onChange={handleChange}
+                  required
+                  type="string"
+                  value={values.gameId || ''}
+                  variant="outlined"
+                >
+                  {games.map(game => (
+                    <MenuItem
+                      key={game.id}
+                      value={game.id}
+                    >
+                      {game.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+                <FormHelperText>Selecione o jogo em que a ação será lançada</FormHelperText>
+              </FormControl>
             </Grid>
             <Grid
               item
               xs={12}
             >
-              <Select
-                fullWidth
-                label="Nível"
-                margin="dense"
-                name="userId"
-                onChange={handleChange}
-                required
-                type="string"
-                value={values.userId || ''}
-                variant="outlined"
-              >
-                {users.map(user => (
-                  <MenuItem value={user.id}>{user.name}</MenuItem>
-                ))}
-              </Select>
-              <Typography variant="body1">
-                Selecione o jogo para disponibilizar os usuários
-              </Typography>
+              <FormControl fullWidth>
+                <InputLabel htmlFor="usuarioIdUserActions">
+                  Usuário
+                </InputLabel>
+                <Select
+                  fullWidth
+                  inputProps={{
+                    id: 'usuarioIdUserActions'
+                  }}
+                  label="Nível"
+                  margin="dense"
+                  name="userId"
+                  onChange={handleChange}
+                  required
+                  type="string"
+                  value={values.userId || ''}
+                  variant="outlined"
+                >
+                  {users.map(user => (
+                    <MenuItem
+                      key={user.id}
+                      value={user.id}
+                    >
+                      {user.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+                <FormHelperText>Selecione o usuário em que irá receber a ação</FormHelperText>
+              </FormControl>
             </Grid>
           </Grid>
         </CardContent>
@@ -183,9 +221,6 @@ const UserActionsForm = props => {
 
 UserActionsForm.propTypes = {
   className: PropTypes.string,
-  history: PropTypes.shape({
-    goBack: PropTypes.func.isRequired,
-  }).isRequired,
 };
 
-export default withRouter(UserActionsForm);
+export default UserActionsForm;

@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { Op, literal } = require('sequelize');
+const { Op, literal, fn, col } = require('sequelize');
 const { User, Game } = require('../models/index');
 
 const router = new Router();
@@ -72,14 +72,21 @@ router.get('/users/:userId/games', (req, res) => {
 
   return Game
     .findAll({
-      attributes: {
-        include: [
-          [
-            literal(`(SELECT SUM(score) FROM answers WHERE answers.userId = ${userId} AND answers.gameId = games.id)`),
-            'score'
-          ],
-        ]
-      },
+      attributes: [
+        'id',
+        'name',
+        'description',
+        [literal(`((SELECT SUM(score) FROM answers WHERE gameId = games.id AND userId = ${userId}) + (SELECT SUM(score) FROM users_actions WHERE gameId = games.id AND userId = ${userId}))`), 'score']
+      ],
+      include: [
+        {
+          association: Game.User,
+          where: {
+            id: userId,
+          },
+          attributes: [],
+        },
+      ],
       where: {
         startDate: {
           [Op.lte]: new Date().toISOString(),
@@ -88,17 +95,14 @@ router.get('/users/:userId/games', (req, res) => {
           [Op.gte]: new Date().toISOString(),
         },
       },
-      include: [
-        {
-          association: Game.User,
-          where: {
-            id: userId,
-          },
-        },
+      group: [
+        'id',
+        'name',
+        'description',
       ],
     })
     .then(games => res.status(200).json(games))
-    .catch(err => res.status(500).json(err))
+    // .catch(err => res.status(500).json(err))
 });
 
 module.exports = router;

@@ -1,29 +1,39 @@
 const { Router } = require('express');
-const { fn, col } = require('sequelize');
-const { Answer, User } = require('../models/index');
+const { literal } = require('sequelize');
+const { User } = require('../models/index');
+const { LEVEL_USER } = require('../constants');
 
 const router = new Router();
 
 router.get('/dashboard/ranking', (req, res) => {
-  const { gameId } = req.query;
+  const { companyId, gameId } = req.query;
 
-  return Answer.findAll({
-    include: [
-      {
-        association: Answer.GameQuestion,
-        where: gameId ? { gameId } : undefined,
-        attributes: [],
-      },
-      {
-        association: Answer.User,
-        attributes: ['name'],
-      },
-    ],
+  const whereGameId = gameId ? ` AND gameId = ${gameId}` : '';
+
+  return User.findAll({
     attributes: [
-      [fn('SUM', col('answers.score')), 'score'],
+      'id',
+      'name',
+      [
+        literal(`((SELECT SUM(score) FROM answers WHERE userId = user.id${whereGameId}) + (SELECT SUM(score) FROM users_actions WHERE userId = user.id${whereGameId}))`),
+        'score',
+      ],
     ],
-    group: [[User, 'id'], [User, 'name']],
-    order: [[fn('SUM', col('answers.score')), 'DESC']],
+    where: {
+      companyId,
+      level: LEVEL_USER,
+    },
+    group: [
+      literal('1'), 
+      literal('2'), 
+      'name',
+    ],
+    order: [
+      [
+        literal('3'), 
+        'DESC',
+      ],
+    ],
   })
     .then(games => res.status(200).json(games));
 });

@@ -31,13 +31,13 @@ export default class App extends Component {
   render() {
     return (
       <Provider>
-        <SnackbarProvider>
-          <ThemeProvider theme={theme}>
+        <ThemeProvider theme={theme}>
+          <SnackbarProvider>
             <Router history={browserHistory}>
               <Routes />
             </Router>
-          </ThemeProvider>
-        </SnackbarProvider>
+          </SnackbarProvider>
+        </ThemeProvider>
       </Provider>
     );
   }

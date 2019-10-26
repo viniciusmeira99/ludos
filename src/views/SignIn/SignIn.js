@@ -131,7 +131,7 @@ const SignIn = props => {
   const { history } = props;
 
   const [isLoading, setIsLoading] = useState(false);
-  const { setUser } = useContext(Context);
+  const { setUser, setSelectedGame } = useContext(Context);
   const classes = useStyles();
 
   const [formState, setFormState] = useState({
@@ -143,7 +143,8 @@ const SignIn = props => {
 
   useEffect(() => {
     setUser(null);
-  }, [setUser]);
+    setSelectedGame(null);
+  }, [setUser, setSelectedGame]);
 
   useEffect(() => {
     const errors = validate(formState.values, schema);

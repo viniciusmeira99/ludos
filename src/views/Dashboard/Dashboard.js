@@ -84,7 +84,7 @@ const Dashboard = () => {
           xl={9}
           xs={12}
         >
-          <GameRanking gameId={selectedGame.id} />
+          <GameRanking />
         </Grid>
         <Grid
           item

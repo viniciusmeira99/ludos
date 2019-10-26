@@ -21,12 +21,10 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const GameRanking = props => {
-  const { gameId } = props;
-
+const GameRanking = () => {
   const classes = useStyles();
 
-  const gameRaking = useGameRanking(gameId);
+  const gameRaking = useGameRanking();
 
   return (
     <Card className={classes.root}>
@@ -47,7 +45,6 @@ const GameRanking = props => {
 
 GameRanking.propTypes = {
   className: PropTypes.string,
-  gameId: PropTypes.number.isRequired,
 };
 
 export default GameRanking;

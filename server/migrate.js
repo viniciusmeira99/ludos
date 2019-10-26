@@ -18,10 +18,10 @@ const drop = async () => {
   await Answer.drop();
   await GameQuestion.drop();
   await Alternative.drop();
-  await Question.drop();
   await UsersGames.drop();
   await User.drop();
   await Game.drop();
+  await Question.drop();
   await Action.drop();
   await Company.drop();
 };

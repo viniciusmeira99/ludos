@@ -72,6 +72,18 @@ const Sidebar = props => {
       icon: <QuestionIcon />,
       devel: false,
     },
+    user.level === LEVEL_ADMIN && {
+      title: 'Ações dos usuários',
+      href: '/user-actions',
+      icon: <QuestionIcon />,
+      devel: false,
+    },
+    user.level === LEVEL_USER && {
+      title: 'Minhas ações',
+      href: '/my-actions',
+      icon: <ActionIcon />,
+      devel: false,
+    },
     user.level === LEVEL_USER && {
       title: 'Perguntas',
       href: '/user-questions',

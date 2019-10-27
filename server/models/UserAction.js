@@ -1,4 +1,4 @@
-const { DECIMAL, INTEGER } = require('sequelize');
+const { DECIMAL, INTEGER, STRING } = require('sequelize');
 const sequelize = require('../sequelize');
 
 const UserAction = sequelize.define('users_actions', {
@@ -12,6 +12,10 @@ const UserAction = sequelize.define('users_actions', {
     type: DECIMAL(4, 2),
     allowNull: false
   },
+  identifier_value: {
+    type: STRING,
+    allowNull: true
+  }
 });
 
 module.exports = UserAction;

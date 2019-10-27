@@ -37,7 +37,7 @@ router.get('/user-actions', (req, res) => {
 });
 
 router.post('/user-actions', (req, res) => {
-  const { userId, gameId, actionId, companyId } = req.body;
+  const { userId, gameId, actionId, companyId, identifier_value } = req.body;
   return Action
     .findByPk(actionId)
     .then(({ score }) => (
@@ -48,6 +48,7 @@ router.post('/user-actions', (req, res) => {
           actionId,
           score,
           companyId,
+          identifier_value,
         })
         .then(action => res.status(201).json(action))
     ));

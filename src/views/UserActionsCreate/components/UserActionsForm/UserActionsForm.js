@@ -15,14 +15,19 @@ import {
   InputLabel,
   FormControl,
   FormHelperText,
+  TextField,
 } from '@material-ui/core';
 import Context from 'Context';
 import api from 'api';
 import { BackButton } from 'components';
 import { useSnackbar } from 'notistack';
 
+
 const useStyles = makeStyles(() => ({
-  root: {}
+  root: {},
+  hiddenText : {
+    display: 'none'
+  }
 }));
 
 const UserActionsForm = () => {
@@ -35,6 +40,8 @@ const UserActionsForm = () => {
   const [games, setGames] = useState([]);
   const [actions, setActions] = useState([]);
   const [users, setUsers] = useState([]);
+  const [identifier, setIdentifier] = useState([]);
+  const [hidden, setHidden] = useState([]);
 
   const [values, setValues] = useState({});
 
@@ -62,11 +69,24 @@ const UserActionsForm = () => {
   }, [values.gameId]);
 
   const handleChange = event => {
+
+    if(event.target.name == 'actionId'){
+      var actionValue = event.target.value.split("/");
+      event.target.value = actionValue[0];
+      if(actionValue[1] != 'null'){
+        setIdentifier(actionValue[1]);
+        setHidden('false');
+      }else{
+        setHidden('true'); 
+      } 
+    }
+    
     const newValues = {
       ...values,
       [event.target.name]: event.target.value
     };
     setValues(newValues);
+    
   };
 
   const handleSubmit = (e) => {
@@ -112,7 +132,7 @@ const UserActionsForm = () => {
                   inputProps={{
                     id: 'actionIdUserActions',
                   }}
-                  label="Nível"
+                  label="Ação"
                   margin="dense"
                   name="actionId"
                   onChange={handleChange}
@@ -124,13 +144,13 @@ const UserActionsForm = () => {
                   {actions.map(action => (
                     <MenuItem
                       key={action.id}
-                      value={action.id}
+                      value={action.id + '/' + action.identifier}
                     >
                       {action.name}
                     </MenuItem>
                   ))}
                 </Select>
-                <FormHelperText>Selecione qual ação irá ser enviada</FormHelperText>
+                <FormHelperText>Selecione qual ação será lançada</FormHelperText>
               </FormControl>
             </Grid>
             <Grid
@@ -198,8 +218,23 @@ const UserActionsForm = () => {
                     </MenuItem>
                   ))}
                 </Select>
-                <FormHelperText>Selecione o usuário em que irá receber a ação</FormHelperText>
+                <FormHelperText>Selecione o usuário que receberá a ação</FormHelperText>
               </FormControl>
+            </Grid>
+            <Grid
+              item
+              xs={12}
+            >
+               <TextField
+                fullWidth
+                label={identifier}
+                margin="dense"
+                name="identifier_value"
+                onChange={handleChange}
+                value={values.identifier_value || ''}
+                variant="outlined"
+                className={hidden == 'false' ? '' : classes.hiddenText}
+              />
             </Grid>
           </Grid>
         </CardContent>

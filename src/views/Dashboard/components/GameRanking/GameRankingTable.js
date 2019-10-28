@@ -50,7 +50,7 @@ GameRankingTable.propTypes = {
   gameRaking: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
-    score: PropTypes.number.isRequired,
+    score: PropTypes.number,
   })).isRequired,
 };
 

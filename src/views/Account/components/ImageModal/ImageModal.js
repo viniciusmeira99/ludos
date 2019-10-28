@@ -22,7 +22,7 @@ export default function TransitionsModal() {
   const classes = useStyles();
   const [result, setResult] = useState();
   const [selectedFile, setSelectedFile] = useState();
-  const { user } = useContext(Context);
+  const { user, setUser } = useContext(Context);
 
   const handleOpen = () => {
     setOpen(true);
@@ -46,7 +46,8 @@ export default function TransitionsModal() {
   const handleSubmit = e => {
     e.preventDefault();
     api.post(`/users/${user.id}/image`, new FormData(document.forms.namedItem('formulario-upload-imagem')))
-      .then((response) => {
+      .then(() => {
+        setUser(user => ({ ...user, image: `/users/${user.id}/image` }))
       })
       .catch(() => null)
       .then(() => {

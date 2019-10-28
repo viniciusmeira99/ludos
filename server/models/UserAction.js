@@ -12,7 +12,7 @@ const UserAction = sequelize.define('users_actions', {
     type: DECIMAL(4, 2),
     allowNull: false
   },
-  identifier_value: {
+  identifierValue: {
     type: STRING,
     allowNull: true
   }

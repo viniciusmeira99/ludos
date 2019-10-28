@@ -25,9 +25,6 @@ import { useSnackbar } from 'notistack';
 
 const useStyles = makeStyles(() => ({
   root: {},
-  hiddenText : {
-    display: 'none'
-  }
 }));
 
 const UserActionsForm = () => {
@@ -40,10 +37,9 @@ const UserActionsForm = () => {
   const [games, setGames] = useState([]);
   const [actions, setActions] = useState([]);
   const [users, setUsers] = useState([]);
-  const [identifier, setIdentifier] = useState([]);
-  const [hidden, setHidden] = useState([]);
-
   const [values, setValues] = useState({});
+
+  const action = actions.find(action => action.id === values.actionId);
 
   useEffect(() => {
     api
@@ -69,18 +65,6 @@ const UserActionsForm = () => {
   }, [values.gameId]);
 
   const handleChange = event => {
-
-    if(event.target.name == 'actionId'){
-      var actionValue = event.target.value.split("/");
-      event.target.value = actionValue[0];
-      if(actionValue[1] != 'null'){
-        setIdentifier(actionValue[1]);
-        setHidden('false');
-      }else{
-        setHidden('true'); 
-      } 
-    }
-    
     const newValues = {
       ...values,
       [event.target.name]: event.target.value
@@ -144,7 +128,7 @@ const UserActionsForm = () => {
                   {actions.map(action => (
                     <MenuItem
                       key={action.id}
-                      value={action.id + '/' + action.identifier}
+                      value={action.id}
                     >
                       {action.name}
                     </MenuItem>
@@ -221,21 +205,22 @@ const UserActionsForm = () => {
                 <FormHelperText>Selecione o usuário que receberá a ação</FormHelperText>
               </FormControl>
             </Grid>
-            <Grid
-              item
-              xs={12}
-            >
-               <TextField
-                fullWidth
-                label={identifier}
-                margin="dense"
-                name="identifier_value"
-                onChange={handleChange}
-                value={values.identifier_value || ''}
-                variant="outlined"
-                className={hidden == 'false' ? '' : classes.hiddenText}
-              />
-            </Grid>
+            {action && action.identifier && (
+              <Grid
+                item
+                xs={12}
+              >
+                <TextField
+                  fullWidth
+                  label={action.identifier}
+                  margin="dense"
+                  name="identifierValue"
+                  onChange={handleChange}
+                  value={values.identifierValue || ''}
+                  variant="outlined"
+                />
+              </Grid>
+            )}
           </Grid>
         </CardContent>
         <Divider />

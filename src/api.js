@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const baseURL = window.location.hostname === 'localhost' 
+export const baseURL = window.location.hostname === 'localhost' 
   ? 'http://localhost:8080/api'
   : window.location.origin + '/api';
 

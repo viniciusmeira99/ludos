@@ -8,6 +8,7 @@ const User = require('./User');
 const Answer = require('./Answer');
 const Action = require('./Action');
 const UserAction = require('./UserAction');
+const UserImage = require('./UserImage');
 
 Company.User            = Company.hasMany(User);
 Company.Game            = Company.hasMany(Game);
@@ -21,6 +22,7 @@ User.Company            = User.belongsTo(Company);
 User.Answer             = User.hasMany(Answer);
 User.Game               = User.belongsToMany(Game, { through: UsersGames, as: 'games' });
 User.UserAction         = User.hasMany(UserAction);
+User.UserImage          = User.hasMany(UserImage);
 
 Game.User               = Game.belongsToMany(User, { through: UsersGames, as: 'players' });
 Game.Question           = Game.belongsToMany(Question, { through: GameQuestion, as: 'questions' });
@@ -44,6 +46,8 @@ UserAction.Action       = UserAction.belongsTo(Action);
 UserAction.User         = UserAction.belongsTo(User);
 UserAction.Game         = UserAction.belongsTo(Game);
 
+UserImage.User          = UserImage.belongsTo(User);
+
 module.exports = {
   Company,
   User,
@@ -55,4 +59,5 @@ module.exports = {
   Action,
   Answer,
   UserAction,
+  UserImage,
 };

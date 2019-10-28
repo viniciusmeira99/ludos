@@ -13,7 +13,7 @@ import {
   LinearProgress
 } from '@material-ui/core';
 import Context from 'Context';
-import { getInitials } from 'helpers';
+import { getInitials, getImage } from 'helpers';
 import { ImageModal } from '../../components';
 
 const useStyles = makeStyles(theme => ({
@@ -75,7 +75,7 @@ const AccountProfile = props => {
           </div>
           <Avatar
             className={classes.avatar}
-            src={user.avatar}
+            src={getImage(user)}
           >
             {getInitials(user.name)}
           </Avatar>
@@ -92,7 +92,7 @@ const AccountProfile = props => {
       </CardContent>
       <Divider />
       <CardActions>
-        <ImageModal></ImageModal>
+        <ImageModal />
         <Button variant="text">
           Remover foto
         </Button>

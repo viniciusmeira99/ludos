@@ -7,6 +7,7 @@ const action = require('./actions');
 const answers = require('./answers');
 const dashboard = require('./dashboard');
 const userActions = require('./userActions');
+const userImage = require('./userImage');
 
 const router = new Router();
 router.use(users);
@@ -17,5 +18,6 @@ router.use(action);
 router.use(answers);
 router.use(dashboard);
 router.use(userActions)
+router.use(userImage)
 
 module.exports = router;

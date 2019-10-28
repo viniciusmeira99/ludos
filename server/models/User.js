@@ -25,10 +25,6 @@ const User = sequelize.define('user', {
     allowNull: false,
     defaultValue: LEVEL_ADMIN,
   },
-  image: {
-    type: BLOB,
-    allowNull: true,
-  }
 });
 
 module.exports = User;

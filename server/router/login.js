@@ -1,7 +1,8 @@
 const { Router } = require('express');
-const { User, Company } = require('../models/index');
+const { User } = require('../models/index');
 
 const router = new Router();
+
 
 router.post('/login', (req, res) => {
   const { email, password } = req.body;
@@ -10,8 +11,13 @@ router.post('/login', (req, res) => {
       where: {
         email,
       },
+      attributes: {
+        include: [
+          ['(SELECT CASE (SELECT 1 FROM ludos.user_images WHERE userId = user.id AND image IS NOT NULL) WHEN 1 THEN CONCAT("/users/", user.id, "/image") END)', 'image']
+        ],
+      },
       include: [
-        { model: Company }
+        User.Company,
       ],
     })
     .then((user) => {
@@ -32,16 +38,13 @@ router.post('/login', (req, res) => {
         });
         return;
       }
-
       
-      res.status(200).json({
+      return res.status(200).json({
         ...user.toJSON(),
         password: undefined,
       });
     })
-    .catch((err) => {
-      res.status(500).json(err);
-    });
+    .catch(err => res.status(500).json(err));
 });
 
 module.exports = router;

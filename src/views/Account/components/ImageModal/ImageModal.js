@@ -1,160 +1,126 @@
+/* eslint-disable react/jsx-sort-props */
 import React, { useState, useContext } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
-import Fade from '@material-ui/core/Fade';
+import { makeStyles } from '@material-ui/styles';
 import {
-    Button,
-    Grid
+  Button,
+  Grid,
+  DialogTitle,
+  Dialog,
+  DialogContent,
+  DialogActions
 } from '@material-ui/core';
 import Context from 'Context';
 import api from 'api';
 
-const useStyles = makeStyles(theme => ({
-    modal: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    paper: {
-        backgroundColor: theme.palette.background.paper,
-        border: '2px solid #000',
-        boxShadow: theme.shadows[5],
-        padding: theme.spacing(2, 4, 3),
-    },
+const useStyles = makeStyles(() => ({
+  preview: { width: '100%' },
 }));
 
 export default function TransitionsModal() {
-    const classes = useStyles();
-    const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(false);
+  const classes = useStyles();
+  const [result, setResult] = useState();
+  const [selectedFile, setSelectedFile] = useState();
+  const { user } = useContext(Context);
 
-    const [selectedFile, setSelectedFile] = useState([]);
-    const { user, setUser } = useContext(Context);
-    const [values, setValues] = useState({ ...user });
-    const [errors, setErrors] = useState({});
+  const handleOpen = () => {
+    setOpen(true);
+  };
 
-    const handleOpen = () => {
-        setOpen(true);
-    };
+  const handleClose = () => {
+    setOpen(false);
+  };
 
-    const handleClose = () => {
+  const handleImgChange = event => {
+    setSelectedFile(event.target.files[0]);
+    setResult();
+    const reader = new FileReader();
+    reader.addEventListener('load', () => {
+      setResult(reader.result)
+    });
+    reader.readAsDataURL(event.target.files[0]);
+  };
+
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    api.post(`/users/${user.id}/image`, new FormData(document.forms.namedItem('formulario-upload-imagem')))
+      .then((response) => {
+      })
+      .catch(() => null)
+      .then(() => {
         setOpen(false);
-    };
+        setResult();
+      })
+  };
 
-
-    function readFile(event) {
-        const newValues = {
-            ...values,
-            "image": event.target.result
-        };
-        setValues(newValues);
-
-        api.put(`/users/${values.id}`, values)
-            .then((response) => {
-                // put não entra no then
-            }).catch((err) => {
-                if (err.errors) {
-                    setErrors(err.errors);
-                }
-            });
-        setUser(values);
-        setOpen(false);
-    }
-
-    const handleImgChange = event => {
-        setSelectedFile(event.target.files[0]);
-    };
-
-
-    const handleSubmit = e => {
-        e.preventDefault();
-        var file = selectedFile;
-        var reader = new FileReader();
-        reader.addEventListener('load', readFile);
-        reader.readAsText(file);
-    };
-
-    return (
-        <div>
-            <Button variant="text" onClick={handleOpen}>
-                Enviar foto
+  return (
+    <div>
+      <Button
+        onClick={handleOpen}
+        variant="text"
+      >
+        Enviar foto
       </Button>
-            <Modal
-                aria-labelledby="transition-modal-title"
-                aria-describedby="transition-modal-description"
-                className={classes.modal}
-                open={open}
-                onClose={handleClose}
-                closeAfterTransition
-                BackdropComponent={Backdrop}
-                BackdropProps={{
-                    timeout: 500,
-                }}
+      <Dialog
+        aria-describedby="transition-modal-description"
+        aria-labelledby="transition-modal-title"
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500,
+        }}
+        closeAfterTransition
+        onClose={handleClose}
+        open={open}
+      >
+        <DialogTitle>
+          {!selectedFile ? 'Selecione uma foto de perfil' : ''}
+          {selectedFile ? `Arquivo selecionado: ${selectedFile.name}` : ''}
+        </DialogTitle>
+        <form
+          autoComplete="off"
+          noValidate
+          onSubmit={handleSubmit}
+          id="formulario-upload-imagem"
+        >
+          <DialogContent>
+            <Grid
+              container
             >
-                <Fade in={open}>
-                    <form
-                        autoComplete="off"
-                        noValidate
-                        onSubmit={handleSubmit}
-                    >
-                        <div className={classes.paper} >
-                            <Grid
-                                container
-                                spacing={4}
-                            >
-                                <Grid
-                                    item
-                                    xs={12}
-                                >
-                                    <h3 id="transition-modal-title">Arquivo selecionado: {selectedFile.name} </h3>
-                                </Grid>
-                                <br></br>
-                                <Grid
-                                    item
-                                    xs={7}
-                                >
-                                    <Button
-                                        variant="contained"
-                                        component="label"
-                                    >
-                                        Selecionar foto
-                                    <input
-                                            type="file"
-                                            accept="image/*"
-                                            onChange={handleImgChange}
-                                            style={{ display: "none" }}
-                                        />
-                                    </Button>
-                                </Grid>
-                                <Grid
-                                    item
-                                    xs={2}
-                                >
-                                    <Button
-                                        variant="contained"
-                                        component="label"
-                                        onClick={handleSubmit}
-                                    >
-                                        Salvar
-                                </Button>
-                                </Grid>
-                                <Grid
-                                    item
-                                    xs={3}
-                                >
-                                    <Button
-                                        variant="contained"
-                                        component="label"
-                                        onClick={handleClose}
-                                    >
-                                        Cancelar
-                                </Button>
-                                </Grid>
-                            </Grid>
-                        </div>
-                    </form>
-                </Fade>
-            </Modal>
-        </div >
-    );
+              {result && (
+                <img
+                  alt="Preview"
+                  src={result}
+                  className={classes.preview}
+                />
+              )}
+              <input
+                accept="image/*"
+                onChange={handleImgChange}
+                type="file"
+                name="image"
+                required
+              />
+            </Grid>
+          </DialogContent>
+          <DialogActions>
+            <Button
+              onClick={handleClose}
+              color="primary"
+            >
+              Cancelar
+            </Button>
+            <Button
+              color="primary"
+              autoFocus
+              type="submit"
+            >
+              Salvar
+            </Button>
+          </DialogActions>
+        </form>
+      </Dialog>
+    </div >
+  );
 }

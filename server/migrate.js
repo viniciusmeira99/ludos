@@ -9,11 +9,13 @@ const {
   Alternative,
   Action,
   UserAction,
+  UserImage,
 } = require('./models/index');
 
 const { fakeQuestions, fakeGames, fakeUsers, fakeActions } = require('./fakeData');
 
 const drop = async () => {
+  await UserImage.drop();
   await UserAction.drop();
   await Answer.drop();
   await GameQuestion.drop();
@@ -49,6 +51,7 @@ const create = async () => {
   await Action.sync();
   await Answer.sync();
   await UserAction.sync();
+  await UserImage.sync();
 };
 
 const migrate = () =>

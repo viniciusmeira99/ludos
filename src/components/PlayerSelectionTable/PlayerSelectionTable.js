@@ -14,7 +14,7 @@ import {
   Typography,
 } from '@material-ui/core';
 
-import { getInitials } from 'helpers';
+import { getInitials, getImage } from 'helpers';
 
 const useStyles = makeStyles(theme => ({
   root: {},
@@ -104,7 +104,7 @@ const PlayerSelectionTable = props => {
                   <div className={classes.nameContainer}>
                     <Avatar
                       className={classes.avatar}
-                      src={user.avatarUrl}
+                      src={getImage(user)}
                     >
                       {getInitials(user.name)}
                     </Avatar>

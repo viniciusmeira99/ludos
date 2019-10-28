@@ -16,7 +16,7 @@ router.get('/dashboard/ranking', (req, res) => {
       'name',
       USER_IMAGE_COLUMN,
       [
-        literal(`((SELECT SUM(score) FROM answers WHERE userId = user.id${whereGameId}) + (SELECT SUM(score) FROM users_actions WHERE userId = user.id${whereGameId}))`),
+        literal(`((SELECT COALESCE(SUM(score), 0) FROM answers WHERE userId = user.id${whereGameId}) + (SELECT COALESCE(SUM(score), 0) FROM users_actions WHERE userId = user.id${whereGameId}))`),
         'score',
       ],
     ],

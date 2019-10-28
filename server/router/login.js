@@ -1,8 +1,8 @@
 const { Router } = require('express');
 const { User } = require('../models/index');
+const { USER_IMAGE_COLUMN } = require('../constants');
 
 const router = new Router();
-
 
 router.post('/login', (req, res) => {
   const { email, password } = req.body;
@@ -13,7 +13,7 @@ router.post('/login', (req, res) => {
       },
       attributes: {
         include: [
-          ['(SELECT CASE (SELECT 1 FROM ludos.user_images WHERE userId = user.id AND image IS NOT NULL) WHEN 1 THEN CONCAT("/users/", user.id, "/image") END)', 'image']
+          USER_IMAGE_COLUMN,
         ],
       },
       include: [

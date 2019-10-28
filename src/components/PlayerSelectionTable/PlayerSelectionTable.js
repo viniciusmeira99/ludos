@@ -4,17 +4,15 @@ import moment from 'moment';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import { makeStyles } from '@material-ui/styles';
 import {
-  Avatar,
   Checkbox,
   Table,
   TableBody,
   TableCell,
   TableHead,
   TableRow,
-  Typography,
 } from '@material-ui/core';
 
-import { getInitials, getImage } from 'helpers';
+import { UserTableCell } from 'components';
 
 const useStyles = makeStyles(theme => ({
   root: {},
@@ -100,17 +98,10 @@ const PlayerSelectionTable = props => {
                     value="true"
                   />
                 </TableCell>
-                <TableCell>
-                  <div className={classes.nameContainer}>
-                    <Avatar
-                      className={classes.avatar}
-                      src={getImage(user)}
-                    >
-                      {getInitials(user.name)}
-                    </Avatar>
-                    <Typography variant="body1">{user.name}</Typography>
-                  </div>
-                </TableCell>
+                <UserTableCell 
+                  image={user.image} 
+                  name={user.name} 
+                />
                 <TableCell>
                   {moment(user.createdAt).format('DD/MM/YYYY')}
                 </TableCell>

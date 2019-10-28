@@ -8,6 +8,7 @@ import {
   TableHead,
   TableRow,
 } from '@material-ui/core';
+import { UserTableCell } from 'components';
 
 const useStyles = makeStyles(() => ({
   classificacao: {
@@ -30,13 +31,16 @@ const GameRankingTable = props => {
         </TableRow>
       </TableHead>
       <TableBody>
-        {gameRaking.map(({ score, name, id }, index) => (
+        {gameRaking.map(({ score, name, image, id }, index) => (
           <TableRow
             hover
             key={id}
           >
             <TableCell>{index <= 2 ? `${index + 1}°` : ''}</TableCell>
-            <TableCell>{name}</TableCell>
+            <UserTableCell
+              image={image}
+              name={name}
+            />
             <TableCell>{score}</TableCell>
           </TableRow>
         ))}

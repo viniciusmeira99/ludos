@@ -1,5 +1,6 @@
 const { Router } = require('express');
 const { User, Company, Game } = require('../models/index');
+const { USER_IMAGE_COLUMN } = require('../constants');
 
 const router = new Router();
 
@@ -40,7 +41,14 @@ router.get('/users/:id', (req, res) => User
 router.get('/users', (req, res) => {
   const { companyId } = req.query;
   return User
-    .findAll({ where: { companyId } })
+    .findAll({ 
+      where: { companyId },
+      attributes: {
+        include: [
+          USER_IMAGE_COLUMN,
+        ],
+      }
+    })
     .then(users => res.status(200).json(users))
     .catch(err => res.status(400).json({ err: err.message }))
 });

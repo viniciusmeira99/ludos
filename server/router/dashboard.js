@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const { literal } = require('sequelize');
 const { User } = require('../models/index');
-const { LEVEL_USER } = require('../constants');
+const { LEVEL_USER, USER_IMAGE_COLUMN } = require('../constants');
 
 const router = new Router();
 
@@ -14,6 +14,7 @@ router.get('/dashboard/ranking', (req, res) => {
     attributes: [
       'id',
       'name',
+      USER_IMAGE_COLUMN,
       [
         literal(`((SELECT SUM(score) FROM answers WHERE userId = user.id${whereGameId}) + (SELECT SUM(score) FROM users_actions WHERE userId = user.id${whereGameId}))`),
         'score',

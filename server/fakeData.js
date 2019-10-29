@@ -197,7 +197,7 @@ const fakeGames = [
     startDate: '2019-10-01',
     endDate: '2019-11-11',
     companyId: 1,
-    gameQuestion: [
+    gameQuestions: [
       { questionId: 1, score: 2 },
       { questionId: 2, score: 1.5 },
       { questionId: 3, score: 1.5 },
@@ -212,7 +212,7 @@ const fakeGames = [
     startDate: '2019-10-01',
     endDate: '2019-11-11',
     companyId: 1,
-    gameQuestion: [
+    gameQuestions: [
       { questionId: 1, score: 1.5 },
       { questionId: 2, score: 2 },
       { questionId: 3, score: 1.5 },
@@ -227,7 +227,7 @@ const fakeGames = [
     startDate: '2019-10-01',
     endDate: '2019-11-11',
     companyId: 1,
-    gameQuestion: [
+    gameQuestions: [
       { questionId: 1, score: 2 },
       { questionId: 2, score: 1.5 },
       { questionId: 3, score: 1.5 },

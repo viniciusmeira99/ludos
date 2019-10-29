@@ -1,4 +1,5 @@
 import React from 'react';
+import { useParams } from 'react-router-dom';
 import { makeStyles } from '@material-ui/styles';
 import { Grid } from '@material-ui/core';
 
@@ -12,6 +13,7 @@ const useStyles = makeStyles(theme => ({
 
 const GameCreate = () => {
   const classes = useStyles();
+  const { gameId } = useParams();
 
   return (
     <div className={classes.root}>
@@ -32,7 +34,7 @@ const GameCreate = () => {
           xl={6}
           xs={12}
         >
-          <GameDetails />
+          <GameDetails gameId={gameId} />
         </Grid>
       </Grid>
     </div>

@@ -26,12 +26,12 @@ User.UserImage          = User.hasMany(UserImage);
 
 Game.User               = Game.belongsToMany(User, { through: UsersGames, as: 'players' });
 Game.Question           = Game.belongsToMany(Question, { through: GameQuestion, as: 'questions' });
-Game.GameQuestion       = Game.hasMany(GameQuestion, { as: 'gameQuestion' });
+Game.GameQuestion       = Game.hasMany(GameQuestion, { as: 'gameQuestions' });
 Game.UserAction         = Game.hasMany(UserAction);
 
 Question.Alternative    = Question.hasMany(Alternative);
 Question.Game           = Question.belongsToMany(Game, { through: GameQuestion, as: 'game' });
-Question.GameQuestion   = Question.hasMany(GameQuestion, { as: 'gameQuestion' });
+Question.GameQuestion   = Question.hasMany(GameQuestion, { as: 'gameQuestions' });
 
 GameQuestion.Game       = GameQuestion.belongsTo(Game);
 GameQuestion.Question   = GameQuestion.belongsTo(Question);

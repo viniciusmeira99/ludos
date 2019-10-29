@@ -1,9 +1,9 @@
 const { Router } = require('express');
-const { Op, literal, fn, col } = require('sequelize');
-const { User, Game } = require('../models/index');
+const { Op, literal } = require('sequelize');
+const { Game } = require('../models/index');
 
 const router = new Router();
-const validarBodyPostGames = body => {
+const validarBodyGames = body => {
   const errors = {};
   if (!body.companyId) {
     errors.companyId = ['Informe a empresa'];
@@ -28,7 +28,7 @@ const validarBodyPostGames = body => {
 
 router.post('/games', (req, res) => {
   const { body } = req;
-  const errors = validarBodyPostGames(body);
+  const errors = validarBodyGames(body);
   if (Object.values(errors).length) {
     return res.status(400).json({ errors });
   }
@@ -43,12 +43,44 @@ router.post('/games', (req, res) => {
     .catch(err => res.status(500).json(err));
 });
 
+router.put('/games/:gameId', (req, res) => {
+  const { body, params: { gameId } } = req;
+  const errors = validarBodyGames(body);
+  if (Object.values(errors).length) {
+    return res.status(400).json({ errors });
+  }
+
+  return Game.findByPk(gameId, { include: [Game.GameQuestion] })
+    .then(game => game.update(body))
+    .then(game =>
+      Promise.all([
+        game.setGameQuestions(body.gameQuestions),
+        game.setPlayers(body.playersIds),
+      ])
+        .then(() => res.status(200).json(game.toJSON())),
+    )
+    .catch(err => res.status(500).json(err));
+});
+
 router.get('/games', (req, res) => {
   const { companyId } = req.query;
 
-
   return Game.findAll({
     where: { companyId },
+    include: [
+      Game.User,
+      Game.GameQuestion,
+    ],
+  })
+    .then(games => res.status(200).json(games))
+    .catch(err => res.status(400).json({ err: err.message }));
+});
+
+router.get('/games/:gameId', (req, res) => {
+  const { gameId } = req.params;
+
+
+  return Game.findByPk(gameId, {
     include: [
       Game.User,
       Game.GameQuestion,

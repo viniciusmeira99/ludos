@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import { makeStyles } from '@material-ui/styles';
 import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
 import {
   Card,
   CardActions,
@@ -92,6 +94,13 @@ const GamesTable = props => {
                       {moment(game.createdAt).format('DD/MM/YYYY')}
                     </TableCell>
                     <TableCell>
+                      <Link to={`/games/${game.id}/edit`}>
+                        <IconButton
+                          aria-label="edit"
+                        >
+                          <EditIcon fontSize="small" />
+                        </IconButton>
+                      </Link>
                       <IconButton
                         aria-label="delete"
                         onClick={() => deleteGame(game.id)}

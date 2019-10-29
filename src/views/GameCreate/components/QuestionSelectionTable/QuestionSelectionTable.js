@@ -25,7 +25,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const QuestionSelectionTable = props => {
-  const { companyId, questions, setQuestions } = props;
+  const { companyId, gameQuestions, setGameQuestions } = props;
   const classes = useStyles();
 
   const [loadedQuestions, setLoadedQuestions] = useState([]);
@@ -38,7 +38,7 @@ const QuestionSelectionTable = props => {
   }, [companyId]);
 
   const handleSelectAll = event => {
-    setQuestions(
+    setGameQuestions(
       event.target.checked
         ? loadedQuestions.map(question => ({
           questionId: question.id,
@@ -49,14 +49,14 @@ const QuestionSelectionTable = props => {
   };
 
   const handleSelectOne = (event, id) => {
-    setQuestions(
+    setGameQuestions(
       event.target.checked
-        ? questions.concat({ questionId: id, score: 0 })
-        : questions.filter(({ questionId }) => questionId !== id),
+        ? gameQuestions.concat({ questionId: id, score: 0 })
+        : gameQuestions.filter(({ questionId }) => questionId !== id),
     );
   };
 
-  const getQuestion = id => questions.find(({ questionId }) => questionId === id);
+  const getQuestion = id => gameQuestions.find(({ questionId }) => questionId === id);
   const isSelected = id => !!getQuestion(id);
 
   const getError = (id) => {
@@ -67,7 +67,7 @@ const QuestionSelectionTable = props => {
   const hasError = id => !!getError(id);
 
   const setScore = (id, score) => {
-    setQuestions(questions.map((selectedQuestion) => {
+    setGameQuestions(gameQuestions.map((selectedQuestion) => {
       if (selectedQuestion.questionId !== id) {
         return selectedQuestion;
       }
@@ -86,11 +86,11 @@ const QuestionSelectionTable = props => {
             <TableRow>
               <TableCell padding="checkbox">
                 <Checkbox
-                  checked={questions.length === loadedQuestions.length}
+                  checked={gameQuestions.length === loadedQuestions.length}
                   color="primary"
                   indeterminate={
-                    questions.length > 0 &&
-                    questions.length < loadedQuestions.length
+                    gameQuestions.length > 0 &&
+                    gameQuestions.length < loadedQuestions.length
                   }
                   onChange={handleSelectAll}
                 />
@@ -147,8 +147,8 @@ const QuestionSelectionTable = props => {
 
 QuestionSelectionTable.propTypes = {
   companyId: PropTypes.number.isRequired,
-  questions: PropTypes.array.isRequired,
-  setQuestions: PropTypes.func.isRequired,
+  gameQuestions: PropTypes.array.isRequired,
+  setGameQuestions: PropTypes.func.isRequired,
 };
 
 export default QuestionSelectionTable;

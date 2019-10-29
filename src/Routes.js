@@ -72,6 +72,14 @@ const Routes = () => {
         path="/games/create"
       />
       <RouteWithLayout
+        component={GameCreateView}
+        exact
+        isAdminOnly
+        isPrivate
+        layout={MainLayout}
+        path="/games/:gameId/edit"
+      />
+      <RouteWithLayout
         component={QuestionListView}
         exact
         isAdminOnly

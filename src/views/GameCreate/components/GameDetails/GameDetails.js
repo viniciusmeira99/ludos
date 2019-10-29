@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { withRouter } from 'react-router-dom';
+import moment from 'moment';
+import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
 import {
@@ -28,7 +29,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 const GameDetails = props => {
-  const { history } = props;
+  const history = useHistory();
   const { enqueueSnackbar } = useSnackbar();
 
   const classes = useStyles();
@@ -46,6 +47,20 @@ const GameDetails = props => {
       .then(response => setUsers(response.data.filter(user => user.level === LEVEL_USER)))
   }, [user.companyId]);
 
+  useEffect(() => {
+    if (!props.gameId) {
+      return;
+    }
+    
+    api.get(`/games/${props.gameId}`)
+      .then(({ data: { startDate, endDate, players, ...game } }) => setValues({
+        ...game,
+        playersIds: players.map(player => player.id),
+        startDate: moment(startDate).format('YYYY-MM-DD'),
+        endDate: moment(endDate).format('YYYY-MM-DD'),
+      }))
+  }, [props.gameId]);
+
   const handleChange = event => {
     const newValues = {
       ...values,
@@ -55,8 +70,28 @@ const GameDetails = props => {
     setValues(newValues);
   };
 
+  const setResponseError = (err) => {
+    if (err.response && err.response.data && err.response.data.errors) {
+      setErrors(err.response.data.errors);
+    }
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (props.gameId) {
+      api.put(`/games/${props.gameId}`, {
+        ...values,
+        companyId: user.companyId,
+      })
+        .then(() => {
+          setValues({});
+          enqueueSnackbar('Jogo editado', { variant: 'success', });
+          history.goBack();
+        })
+        .catch(setResponseError);
+      return;
+    }
+
     api.post('/games', {
       ...values,
       companyId: user.companyId,
@@ -65,11 +100,8 @@ const GameDetails = props => {
         setValues({});
         enqueueSnackbar('Jogo cadastrado', { variant: 'success', });
         history.goBack();
-      }).catch((err) => {
-        if (err.response.data.errors) {
-          setErrors(err.response.data.errors);
-        }
-      });
+      })
+      .catch(setResponseError);
   };
 
   const hasError = name => Boolean(errors[name]);
@@ -199,19 +231,19 @@ const GameDetails = props => {
             >
               <FormGroup>
                 <FormLabel
-                  error={hasError('questions')}
+                  error={hasError('gameQuestions')}
                 >
                   Selecione as perguntas do jogo:
                 </FormLabel>
                 <br />
                 <QuestionSelectionTable
                   companyId={user.company.id}
-                  questions={values.questions || []}
-                  setQuestions={questions => setValues(values => ({ ...values, questions }))}
+                  gameQuestions={values.gameQuestions || []}
+                  setGameQuestions={gameQuestions => setValues(values => ({ ...values, gameQuestions }))}
                 />
-                {hasError('questions') && (
+                {hasError('gameQuestions') && (
                   <FormHelperText error>
-                    {getError('questions')}
+                    {getError('gameQuestions')}
                   </FormHelperText>
                 )}
               </FormGroup>
@@ -225,7 +257,7 @@ const GameDetails = props => {
             type="submit"
             variant="contained"
           >
-            Criar jogo
+            {props.gameId ? 'Editar jogo' : 'Criar jogo'}
           </Button>
           <BackButton />
         </CardActions>
@@ -236,9 +268,7 @@ const GameDetails = props => {
 
 GameDetails.propTypes = {
   className: PropTypes.string,
-  history: PropTypes.shape({
-    goBack: PropTypes.func.isRequired,
-  }).isRequired,
+  gameId: PropTypes.string,
 };
 
-export default withRouter(GameDetails);
+export default GameDetails;

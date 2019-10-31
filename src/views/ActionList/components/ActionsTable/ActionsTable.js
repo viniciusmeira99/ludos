@@ -106,6 +106,7 @@ const ActionsTable = props => {
         <TablePagination
           component="div"
           count={actions.length}
+          labelRowsPerPage="Linhas por páginas"
           onChangePage={handlePageChange}
           onChangeRowsPerPage={handleRowsPerPageChange}
           page={page}
@@ -118,9 +119,9 @@ const ActionsTable = props => {
 };
 
 ActionsTable.propTypes = {
+  actions: PropTypes.array.isRequired,
   className: PropTypes.string,
   deleteAction: PropTypes.func.isRequired,
-  actions: PropTypes.array.isRequired,
 };
 
 export default ActionsTable;

@@ -5,8 +5,6 @@ import { Link } from 'react-router-dom'
 import { makeStyles } from '@material-ui/styles';
 import { Button } from '@material-ui/core';
 
-import { SearchInput } from 'components';
-
 const useStyles = makeStyles(theme => ({
   root: {},
   row: {
@@ -49,12 +47,6 @@ const ActionsToolbar = props => {
             Criar ação
           </Button>
         </Link>
-      </div>
-      <div className={classes.row}>
-        <SearchInput
-          className={classes.searchInput}
-          placeholder="Buscar ações"
-        />
       </div>
     </div>
   );

@@ -97,6 +97,7 @@ const MyActionsTable = props => {
         <TablePagination
           component="div"
           count={userActions.length}
+          labelRowsPerPage="Linhas por páginas"
           onChangePage={handlePageChange}
           onChangeRowsPerPage={handleRowsPerPageChange}
           page={page}

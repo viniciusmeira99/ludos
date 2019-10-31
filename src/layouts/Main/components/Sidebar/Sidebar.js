@@ -6,14 +6,10 @@ import { Divider, Drawer } from '@material-ui/core';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import GamepadIcon from '@material-ui/icons/Gamepad';
 import PeopleIcon from '@material-ui/icons/People';
-import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
-import TextFieldsIcon from '@material-ui/icons/TextFields';
-import ImageIcon from '@material-ui/icons/Image';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
-import SettingsIcon from '@material-ui/icons/Settings';
 import QuestionIcon from '@material-ui/icons/QuestionAnswer'
+import SendIcon from '@material-ui/icons/Send'
 import ActionIcon from '@material-ui/icons/Assignment'
-
 import { Profile, SidebarNav } from './components';
 import Context from 'Context';
 import { LEVEL_ADMIN, LEVEL_USER } from 'consts';
@@ -52,83 +48,59 @@ const Sidebar = props => {
       title: 'Dashboard',
       href: '/',
       icon: <DashboardIcon />,
-      devel: false,
     },
-    user.level === LEVEL_ADMIN && {
-      title: 'Usuários',
-      href: '/users',
-      icon: <PeopleIcon />,
-      devel: false,
-    },
-    user.level === LEVEL_ADMIN && {
-      title: 'Jogos',
-      href: '/games',
-      icon: <GamepadIcon />,
-      devel: false,
-    },
-    user.level === LEVEL_ADMIN && {
-      title: 'Perguntas',
-      href: '/questions',
-      icon: <QuestionIcon />,
-      devel: false,
-    },
-    user.level === LEVEL_ADMIN && {
-      title: 'Ações dos usuários',
-      href: '/user-actions',
-      icon: <QuestionIcon />,
-      devel: false,
-    },
-    user.level === LEVEL_USER && {
-      title: 'Minhas ações',
-      href: '/my-actions',
-      icon: <ActionIcon />,
-      devel: false,
-    },
-    user.level === LEVEL_USER && {
-      title: 'Perguntas',
-      href: '/user-questions',
-      icon: <QuestionIcon />,
-      devel: false,
-    },
-    user.level === LEVEL_ADMIN && {
-      title: 'Ações',
-      href: '/actions',
-      icon: <ActionIcon />,
-      devel: false,
-    },
-    {
-      title: 'Produtos',
-      href: '/products',
-      icon: <ShoppingBasketIcon />,
-      devel: true,
-    },
-    {
-      title: 'Tipografia',
-      href: '/typography',
-      icon: <TextFieldsIcon />,
-      devel: true,
-    },
-    {
-      title: 'Icones',
-      href: '/icons',
-      icon: <ImageIcon />,
-      devel: true,
-    },
-    {
-      title: 'Minha conta',
-      href: '/account',
-      icon: <AccountBoxIcon />,
-      devel: false,
-    },
-    {
-      title: 'Configurações',
-      href: '/settings',
-      icon: <SettingsIcon />,
-      devel: true,
-    }
-  ]
-    .filter(page => !(process.env.NODE_ENV === 'production' && page.devel))
-    .filter(Boolean);
+  ].concat(
+    user.level === LEVEL_ADMIN
+      ? [
+        {
+          title: 'Usuários',
+          href: '/users',
+          icon: <PeopleIcon />,
+        },
+        {
+          title: 'Jogos',
+          href: '/games',
+          icon: <GamepadIcon />,
+        },
+        {
+          title: 'Perguntas',
+          href: '/questions',
+          icon: <QuestionIcon />,
+        },
+        {
+          title: 'Lançamento de ações',
+          href: '/user-actions',
+          icon: <SendIcon />,
+        },
+        {
+          title: 'Ações',
+          href: '/actions',
+          icon: <ActionIcon />,
+        },
+      ] : []
+  ).concat(
+    user.level === LEVEL_USER
+      ? [
+        {
+          title: 'Minhas ações',
+          href: '/my-actions',
+          icon: <ActionIcon />,
+        },
+        {
+          title: 'Perguntas',
+          href: '/user-questions',
+          icon: <QuestionIcon />,
+        },
+      ] : []
+  ).concat(
+    [
+      {
+        title: 'Minha conta',
+        href: '/account',
+        icon: <AccountBoxIcon />,
+      },
+    ]
+  );
 
   return (
     <Drawer

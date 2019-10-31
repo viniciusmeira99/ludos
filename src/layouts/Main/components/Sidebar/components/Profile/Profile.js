@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
@@ -37,9 +36,7 @@ const Profile = props => {
       <Avatar
         alt="Person"
         className={classes.avatar}
-        component={RouterLink}
         src={getImage(user)}
-        to="/settings"
       >
         {getInitials(user.name)}
       </Avatar>

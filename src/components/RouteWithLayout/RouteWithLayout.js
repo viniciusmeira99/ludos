@@ -22,7 +22,7 @@ const RouteWithLayout = props => {
       {...rest}
       render={(matchProps) => {
         if (isPrivate && !user) {
-          return <Redirect to="/entrar" />;
+          return <Redirect to="/sign-in" />;
         }
 
         if (isAdminOnly && user.level !== LEVEL_ADMIN) {

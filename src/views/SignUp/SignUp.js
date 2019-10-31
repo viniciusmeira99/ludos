@@ -179,7 +179,7 @@ const SignUp = props => {
     api.post('/users', formState.values)
       .then(() => {
         setIsLoading(false);
-        history.push('/entrar');
+        history.push('/sign-in');
       })
       .catch((err) => {
         setIsLoading(false);
@@ -328,7 +328,7 @@ const SignUp = props => {
                   Já tem uma conta?{' '}
                   <Link
                     component={RouterLink}
-                    to="/entrar"
+                    to="/sign-in"
                     variant="h6"
                   >
                     Entrar

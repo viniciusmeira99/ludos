@@ -43,9 +43,6 @@ const useStyles = makeStyles(theme => ({
   actions: {
     justifyContent: 'flex-end',
   },
-  tableHeadDescricao: {
-    width: '20%',
-  }
 }));
 
 const QuestionsTable = props => {
@@ -75,7 +72,7 @@ const QuestionsTable = props => {
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableCell classNames={classes.tableHeadDescricao}>Descrição</TableCell>
+                  <TableCell>Descrição</TableCell>
                   <TableCell>Alternativas</TableCell>
                   <TableCell>Data do cadastro</TableCell>
                   <TableCell>Opções</TableCell>
@@ -127,6 +124,7 @@ const QuestionsTable = props => {
         <TablePagination
           component="div"
           count={questions.length}
+          labelRowsPerPage="Linhas por páginas"
           onChangePage={handlePageChange}
           onChangeRowsPerPage={handleRowsPerPageChange}
           page={page}

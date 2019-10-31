@@ -303,7 +303,7 @@ const SignIn = props => {
                   Ainda não criou uma conta?{' '}
                   <Link
                     component={RouterLink}
-                    to="/criar-conta"
+                    to="/sign-up"
                     variant="h6"
                   >
                     Cadastre-se

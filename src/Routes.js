@@ -6,13 +6,9 @@ import { Main as MainLayout, Minimal as MinimalLayout } from './layouts';
 
 import {
   Dashboard as DashboardView,
-  ProductList as ProductListView,
   UserList as UserListView,
   UserCreate as UserCreateView,
-  Typography as TypographyView,
-  Icons as IconsView,
   Account as AccountView,
-  Settings as SettingsView,
   SignUp as SignUpView,
   SignIn as SignInView,
   NotFound as NotFoundView,
@@ -150,27 +146,6 @@ const Routes = () => {
         path="/user-actions/create"
       />
       <RouteWithLayout
-        component={ProductListView}
-        exact
-        isPrivate
-        layout={MainLayout}
-        path="/products"
-      />
-      <RouteWithLayout
-        component={TypographyView}
-        exact
-        isPrivate
-        layout={MainLayout}
-        path="/typography"
-      />
-      <RouteWithLayout
-        component={IconsView}
-        exact
-        isPrivate
-        layout={MainLayout}
-        path="/icons"
-      />
-      <RouteWithLayout
         component={AccountView}
         exact
         isPrivate
@@ -178,23 +153,16 @@ const Routes = () => {
         path="/account"
       />
       <RouteWithLayout
-        component={SettingsView}
-        exact
-        isPrivate
-        layout={MainLayout}
-        path="/settings"
-      />
-      <RouteWithLayout
         component={SignUpView}
         exact
         layout={MinimalLayout}
-        path="/criar-conta"
+        path="/sign-up"
       />
       <RouteWithLayout
         component={SignInView}
         exact
         layout={MinimalLayout}
-        path="/entrar"
+        path="/sign-in"
       />
       <RouteWithLayout
         component={NotFoundView}
@@ -204,7 +172,7 @@ const Routes = () => {
       />
       <Redirect
         path="/sair"
-        to="/entrar"
+        to="/sign-in"
       />
       <Redirect to="/not-found" />
     </Switch>

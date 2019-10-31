@@ -9,8 +9,6 @@ import {
   Avatar,
   Typography,
   Divider,
-  Button,
-  LinearProgress
 } from '@material-ui/core';
 import Context from 'Context';
 import { getInitials, getImage } from 'helpers';
@@ -28,9 +26,6 @@ const useStyles = makeStyles(theme => ({
     flexShrink: 0,
     flexGrow: 0
   },
-  progress: {
-    marginTop: theme.spacing(2)
-  },
   uploadButton: {
     marginRight: theme.spacing(2)
   }
@@ -41,8 +36,6 @@ const AccountProfile = props => {
 
   const { user } = useContext(Context);
   const classes = useStyles();
-
-  const porcentagemPerfilCompleto = (Object.values(user).filter(Boolean).length / Object.values(user).length * 100);
 
   return (
     <Card
@@ -80,25 +73,13 @@ const AccountProfile = props => {
             {getInitials(user.name)}
           </Avatar>
         </div>
-        <div className={classes.progress}>
-          <Typography variant="body1">
-            {`Perfil ${porcentagemPerfilCompleto.toFixed(0)}% completo.`}
-          </Typography>
-          <LinearProgress
-            value={porcentagemPerfilCompleto}
-            variant="determinate"
-          />
-        </div>
       </CardContent>
       <Divider />
       <CardActions>
         <ImageModal />
-        <Button variant="text">
-          Remover foto
-        </Button>
       </CardActions>
     </Card>
-    
+
   );
 };
 

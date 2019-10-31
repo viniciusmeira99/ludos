@@ -25,13 +25,13 @@ router.get('/dashboard/ranking', (req, res) => {
       level: LEVEL_USER,
     },
     group: [
-      literal('1'), 
-      literal('2'), 
+      literal('1'),
+      literal('2'),
       'name',
     ],
     order: [
       [
-        literal('3'), 
+        literal('4'),
         'DESC',
       ],
     ],

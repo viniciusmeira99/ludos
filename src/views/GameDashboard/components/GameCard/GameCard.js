@@ -39,7 +39,7 @@ const useStyles = makeStyles(theme => ({
     marginRight: theme.spacing(1)
   },
   cardContentFixed: {
-    height: '180px'
+    height: '10 0px'
   },
   scoreContainer: {
     display: 'flex',
@@ -61,13 +61,6 @@ const GameCard = props => {
       <CardContent
         className={clsx(classes.cardContentFixed)}
       >
-        <div className={classes.imageContainer}>
-          <img
-            alt="Product"
-            className={classes.image}
-            src="/images/products/product_2.png"
-          />
-        </div>
         <Typography
           align="center"
           gutterBottom

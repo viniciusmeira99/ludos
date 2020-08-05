@@ -38,7 +38,7 @@
     "clsx": "^1.0.4",
     "cors": "^2.8.5",
     "express": "^4.17.1",
-    "express-fileupload": "^1.1.6-alpha.6",
+    "express-fileupload": "^1.1.9",
     "history": "^4.9.0",
     "moment": "^2.24.0",
     "mysql": "^2.17.1",
